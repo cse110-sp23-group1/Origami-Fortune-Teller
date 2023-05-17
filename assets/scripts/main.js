@@ -1,21 +1,29 @@
+//Upon Page load, call activateSidebarHandler()
 document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('button');
-    const editBox = document.getElementById('editBox');
-    const save = document.querySelector('.save');
+    activateSidebarHandler();
+});
+
+// If any button is clicked in the sidebar, call editFortuneBox(button), which takes an argument of the button that was clicked
+function activateSidebarHandler() {
+    const sidebarButtons = document.querySelectorAll('.sidebarButton');
+    
+    sidebarButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            editFortune(button);
+        });
+    });
+}
+
+// Make the editFortuneBox appear, allow the user to write in their own fortune, and change the text of the button that was passed in
+function editFortune(button){
+    const editFortuneBox = document.getElementById('editFortuneBox');
+    const saveButton = document.querySelector('.saveButton');
     const userInput = document.getElementById('userInput');
 
-    buttons.forEach((button) => {
-        // When a Button is clicked, editBox appears
-	button.addEventListener('click', () => {
-		selectedButton = button;
-		editBox.style.display = 'block';
+    editFortuneBox.style.display = 'block';
 
-        // When the save button is clicked, button's text is changed to the input from editBox
-		save.addEventListener('click', () => {
-			button.textContent = userInput.value;
-			editBox.style.display = 'none';
-		});
-
-	 });
-     });
-});
+    saveButton.addEventListener('click', () => {
+        button.textContent = userInput.value;
+        editFortuneBox.style.display = 'none';
+    });
+}

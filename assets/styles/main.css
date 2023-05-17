@@ -1,4 +1,4 @@
-.button1 {
+#button1 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -12,7 +12,7 @@
 	border-radius: 10px;
 }
 
-.button2 {
+#button2 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -26,7 +26,7 @@
 	border-radius: 10px;
 }
 
-.button3 {
+#button3 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -40,7 +40,7 @@
 	border-radius: 10px;
 }
 
-.button4 {
+#button4 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -54,7 +54,7 @@
 	border-radius: 10px;
 }
 
-.button5 {
+#button5 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -68,7 +68,7 @@
 	border-radius: 10px;
 }
 
-.button6 {
+#button6 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -82,7 +82,7 @@
 	border-radius: 10px;
 }
 
-.button7 {
+#button7 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -96,7 +96,7 @@
 	border-radius: 10px;
 }
 
-.button8 {
+#button8 {
     box-sizing: border-box;
 
 	position: absolute;
@@ -111,7 +111,7 @@
 }
 
 
-#editBox{
+#editFortuneBox{
 	position: absolute;
 	width: 209px;
 	height: 73px;
