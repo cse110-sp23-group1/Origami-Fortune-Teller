@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Origami Fortune Teller</title>
-        <link rel="stylesheet" href="assets/styles/main.css" />
-        <script src="assets/scripts/main.js" type="module"></script>
-    </head>
+	<head>
+		<title>Origami Fortune Teller</title>
+		<link rel="icon" type="image/svg" href="favicon/favicon.svg">
+		<link rel="stylesheet" type="text/css" href="assets/styles/main.css">
+		<script src="assets/scripts/main.js"></script>
+	</head>
 
-    <body>
-        <!-- lorem ipsum -->
-    </body>
+	<body>
+		<div class = "sidebar">
+			<button class="sidebarButton" id = "button1">Outlook not so good</button>
+			<button class="sidebarButton" id = "button2">Signs point to yes</button>
+			<button class="sidebarButton" id = "button3">Cannot predict now</button>
+			<button class="sidebarButton" id = "button4">Reply hazy, try again later</button>
+			<button class="sidebarButton" id = "button5">It is certain</button>
+			<button class="sidebarButton" id = "button6">Don't Count on it</button>
+			<button class="sidebarButton" id = "button7">Better not tell you now</button>
+			<button class="sidebarButton" id = "button8">As I see it, yes</button>
+		</div>
+
+		<!-- Textbox that prompts user input -->
+		<div id="editFortuneBox" style="display: none;">
+			<input type="text" id="userInput" class="text-input" placeholder="Enter your text">
+			<button class = "saveButton">Save</button>
+		</div>
+	</body>
 </html>
+
+
+

@@ -1,1 +1,129 @@
-/* main.css */
+#button1 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 0px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button2 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 73px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button3 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 146px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button4 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 219px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button5 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 292px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button6 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 365px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button7 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 438px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+#button8 {
+    box-sizing: border-box;
+
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 0px;
+	top: 511px;
+
+	background: #FFFFFF;
+	border: 1px solid #000000;
+	border-radius: 10px;
+}
+
+
+#editFortuneBox{
+	position: absolute;
+	width: 209px;
+	height: 73px;
+	left: 500px;
+	top: 511px;
+
+	background: #FFFFFF;
+}
+
+.text-input {
+	width: 300px;
+	height: 40px;
+	padding: 10px;
+	font-size: 16px;
+}
