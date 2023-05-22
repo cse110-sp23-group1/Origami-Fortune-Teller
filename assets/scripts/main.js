@@ -1,4 +1,6 @@
 // main.js
+import { SideBar } from "./SideBar.js";
+
 /*
     Calls on page load
 */
