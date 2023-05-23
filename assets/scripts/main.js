@@ -1,5 +1,5 @@
 // main.js
-import { SideBar } from "./SideBar.js";
+import {SideBar} from './SideBar.js';
 
 /*
     Calls on page load
@@ -106,15 +106,23 @@ function closeFortuneInput(needTosubmitFortune=false) {
         - escape key
 */
 function activateFortuneInputHandler() {
+  let escape = false;
   getFortuneTextInput().addEventListener('keyup', (event) => {
     if (event.key === 'Enter') closeFortuneInput(true);
   });
 
   window.addEventListener('keyup', (event) => {
-    if (event.key === 'Escape') closeFortuneInput();
+    if (event.key === 'Escape') {
+      closeFortuneInput();
+      escape = true;
+    }
   });
 
   getFortuneTextInput().addEventListener('change', (event) => {
+    if (escape == true) {
+      escape = false;
+      return;
+    }
     closeFortuneInput(true);
   });
 
