@@ -32,7 +32,7 @@ export class SideBar {
 
   appendAllButtonsToContainer(container){
     if (!(container instanceof HTMLElement)) {
-      throw new Error(`SideBar fillContainer requires HTMLElement, but was given: ${typeof(container)}!`);
+      throw new Error(`SideBar.appendAllButtonsToContainer requires HTMLElement, but was given: ${typeof(container)}!`);
     }
     
     this.buttons.forEach((button) => {
