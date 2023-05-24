@@ -1,26 +1,26 @@
 // main.js
 import {SideBar} from './SideBar.js';
 
+
+let defaultFortunes; // initialize default fortunes
+
 /*
-    Calls on page load
+    Call on page load and loads in defaultFortunes
+    TODO: create fortune loading handler
+    and update button creation.
 */
 document.addEventListener('DOMContentLoaded', () => {
-  activateSidebarHandler();
-});
+  fetch('/assets/fortunes.json')
+    .then(response => response.json())
+    .then(data => {
+      defaultFortunes = data.english.default; // Assign the default fortunes to the variable
 
-// TODO: create fortune loading handler
-// and update button creation.
-// placeholder values:
-const defaultFortunes = [
-  'Outlook not so good',
-  'Signs point to yes',
-  'Cannot predict now',
-  'Reply hazy, try again later',
-  'It is certain',
-  'Don\'t Count on it',
-  'Better not tell you now',
-  'As I see it, yes',
-];
+      activateSidebarHandler();
+    })
+    .catch(error => {
+      console.error('Error fetching fortunes:', error);
+    });
+});
 
 /*
     Handler for the fortune sidebar
