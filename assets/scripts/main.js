@@ -11,15 +11,15 @@ let defaultFortunes; // initialize default fortunes
 */
 document.addEventListener('DOMContentLoaded', () => {
   fetch('/assets/fortunes.json')
-    .then(response => response.json())
-    .then(data => {
-      defaultFortunes = data.english.default; // Assign the default fortunes to the variable
+      .then((response) => response.json())
+      .then((data) => {
+        defaultFortunes = data.english.default; // Assign the default fortunes to the variable
 
-      activateSidebarHandler();
-    })
-    .catch(error => {
-      console.error('Error fetching fortunes:', error);
-    });
+        activateSidebarHandler();
+      })
+      .catch((error) => {
+        console.error('Error fetching fortunes:', error);
+      });
 });
 
 /*
