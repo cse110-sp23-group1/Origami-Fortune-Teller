@@ -3,6 +3,13 @@
 export class SideBar {
   MAX_BUTTONS = 8;
 
+  /**
+   * Represents a sidebar of buttons.
+   * @constructor
+   * @param {*} textArray - array of strings to be used as button text
+   * @param {*} buttonHeight - height of each button in pixels
+   * @throws {Error} if textArray is empty
+   */
   constructor(textArray, buttonHeight=73) {
     if (textArray.length === 0) {
       throw new Error('Sidebar cannot be empty!');
@@ -19,7 +26,10 @@ export class SideBar {
     this.#generateButtons();
   }
 
-  // generate as many buttons as entries in textValues
+  /**
+   * Generate as many buttons as entries in textValues
+   * @private
+   */
   #generateButtons() {
     this.textValues.forEach((text, index) => {
       const button = document.createElement('button');
@@ -30,6 +40,10 @@ export class SideBar {
     this.buttons.push(button);
   }
 
+  /**
+   * Appending buttons to a container
+   * @param {*} container - HTMLElement to append buttons to
+   */
   appendAllButtonsToContainer(container) {
     if (!(container instanceof HTMLElement)) {
       throw new Error(`SideBar.appendAllButtonsToContainer requires HTMLElement, but was given: ${typeof(container)}!`);

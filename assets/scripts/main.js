@@ -158,3 +158,29 @@ function getSidebarButtonContent(index) {
 function setSidebarButtonContent(index, content) {
   getSidebarButtons()[index].textContent = content;
 }
+
+/**
+ * Saves the fortune to local storage in JSON format
+ * @param {Array<Object>} fortune - Array of user inputted fortunes
+ * @returns {boolean} - Returns true if the fortune was saved successfully
+ */
+
+function saveFortuneToStorage(fortune) {
+  return localStorage.setItem('fortune', JSON.stringify(fortune));
+}
+
+/**
+ * Store all user fortunes in an array, then save to local storage
+ * Activated when the Play button is clicked
+ */
+function saveFortunes() {
+  const fortunes = [];
+  const buttons = getSidebarButtons();
+
+  buttons.forEach((button) => { // Loop through each button and put the text conent into the fortunes array
+    fortunes.push(button.textContent);
+  });
+  saveFortuneToStorage(fortunes);
+}
+
+
