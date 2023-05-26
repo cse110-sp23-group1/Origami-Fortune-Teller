@@ -1,7 +1,13 @@
 {
-    "name":"origami-fortune-teller",
+    "name": "origami-fortune-teller",
     "version": "0.0.1",
     "scripts": {
-        "test":""
+        "lint-check": "./node_modules/.bin/eslint .",
+        "lint-fix": " ./node_modules/.bin/eslint --fix ."
+    },
+    "devDependencies": {
+        "eslint": "^8.41.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-html": "^7.1.0"
     }
 }
