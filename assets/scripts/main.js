@@ -27,3 +27,4 @@ function editFortune(button){
         editFortuneBox.style.display = 'none';
     });
 }
+
