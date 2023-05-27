@@ -11,19 +11,25 @@ export class Origami {
       get its parameters (from a fetch of the svg, stored constants,
       or any preferred approach) and activate click handlers
   */
-  // constructor(){
-  //   // this.src = {'mode':aReferenceToThatSVGcode}
-  //   // this.mode = null;
-  //   // this.#init(); the constructor should set this.values and hand off
-  // }
-  
-  /*
-  activate click handlers, display the current svg, w.e else
-  */
-  // #init(){ 
+  constructor() {
+    this.container = document.getElementById("closedFortune");
+    this.mode = null;
+    this.clickableSVG = [];
+    this.#init();
+  }
 
-  // }
-
+  #init() {
+    this.clickableSVG.push("./assets/images/origami/closed.svg");
+    this.clickableSVG.push("./assets/images/origami/horizontally-opened-nums.svg");
+    this.clickableSVG.push("./assets/images/origami/vertically-opened-nums.svg");
+    this.#generateSVG();
+    //this.clickableSVG.push("lastfigma of all 8 fortunes to select");
+  }
+  #generateSVG() {
+    const closed = document.createElement("object");
+    closed.data = this.clickableSVG[0];
+    this.container.appendChild(closed);
+  }
   /*
       TODO: for an example, see SideBar.js
 
@@ -32,7 +38,18 @@ export class Origami {
         are a lot of different ways to implement this so go with
         whatever makes the most sense
   */
-  // someClickHandlerFunction(someParameter){
+  setClosedClickHandler() {
+    const closedFortune = this.clickableSVG[0];
+    const closedFortuneFlaps = closedFortune.querySelectorAll('g[id$="-default"]');
+    closedFortuneFlaps.forEach((flap) => {
+      let flapClick = flap.querySelector('[id$="-click"]');
+      flapClick.addEventListener("click", () => {
+        console.log("This is working");
+        //add what we want to happen when u click
+      });
+    });
+    
+  }
 
   // }
 

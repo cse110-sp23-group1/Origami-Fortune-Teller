@@ -1,3 +1,4 @@
+import {Origami} from "./Origami.js"
 // Upon Page load, call activateSidebarHandler()
 document.addEventListener('DOMContentLoaded', () => {
   activateSidebarHandler();
@@ -27,3 +28,7 @@ function editFortune(button) {
     editFortuneBox.style.display = 'none';
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  setClosedClickHandler();
+});
