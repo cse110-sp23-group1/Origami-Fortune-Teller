@@ -108,7 +108,7 @@ function closeFortuneInput(needTosubmitFortune=false) {
 function activateFortuneInputHandler() {
   let escape = false;
   getFortuneTextInput().addEventListener('keyup', (event) => {
-    if (event.key === 'Enter'){
+    if (event.key === 'Enter') {
       closeFortuneInput(true);
     }
   });
@@ -177,7 +177,7 @@ function saveFortuneToStorage(fortune) {
  * all of the recipes found (parsed, not in string form). If
  * nothing is found in localStorage for 'fortune', an empty array
  * is returned.
- * @returns {Array<Object>} An array of fortunes found in localStorage
+ * @return {Array<Object>} An array of fortunes found in localStorage
  */
 function getFortuneFromStorage() {
   let fortuneList = localStorage.getItem("fortune");
