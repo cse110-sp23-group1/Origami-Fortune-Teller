@@ -7,9 +7,8 @@
 	height: 73px;
 	left: 0px;
 
-	background: #FFFFFF;
+	background: rgb(250, 231, 255);
 	border: 1px solid #000000;
-	border-radius: 10px;
 	cursor: pointer;
 }
 
@@ -45,12 +44,8 @@
 .fortuneInputBox {
 	display: none;
 	position: absolute;
-	width: 209px;
-	height: 73px;
 	left: 500px;
-	top: 511px;
-
-	background: #FFFFFF;
+	top: 510px;
 }
 
 .fortuneInputBox input {
@@ -58,4 +53,31 @@
 	height: 40px;
 	padding: 10px;
 	font-size: 16px;
+	border-radius: 10px;
+}
+
+/* Save Button */
+.fortuneInputBox button.saveButton {
+	display: block;
+	margin-left: 120px;
+	margin-top: 10px;
+	width: 70px;
+	height:40px;
+
+	background: rgb(255, 255, 255);
+	border: 1px solid #000000;
+	border-radius: 10px;
+	border-color: rgb(109, 14, 109);
+	cursor: pointer;
+  }
+
+.fortuneInputBox button.saveButton:hover{
+	background: rgb(151, 98, 164);
+	border-color: rgb(109, 14, 109);
+	color: #FFFFFF;
+}
+
+.fortuneInputBox button.saveButton:active {
+	background: rgb(109, 14, 109);
+	font-weight: bold;
 }
