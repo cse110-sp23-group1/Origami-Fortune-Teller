@@ -1,3 +1,4 @@
+/* Sidebar */
 .sidebar button {
 	box-sizing: border-box;
 
@@ -9,8 +10,38 @@
 	background: #FFFFFF;
 	border: 1px solid #000000;
 	border-radius: 10px;
+	cursor: pointer;
 }
 
+.sidebar button:hover {
+	background: rgb(151, 98, 164);
+	border-color: rgb(109, 14, 109);
+	color: #FFFFFF;
+	padding-right: 25px;
+}
+
+.sidebar button::after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 25%;
+	right: -10px;
+	transition: 0.15s;
+	font-size: 24px;
+  	transform: scale(1.5);
+}
+  
+.sidebar button:hover::after {
+	opacity: 1;
+	right: 15px;
+}
+
+.sidebar button:active {
+	background: rgb(109, 14, 109);
+	font-weight: bold;
+}
+
+/* fortuneInputBox */
 .fortuneInputBox {
 	display: none;
 	position: absolute;
