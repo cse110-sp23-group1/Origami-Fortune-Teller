@@ -108,7 +108,9 @@ function closeFortuneInput(needTosubmitFortune=false) {
 function activateFortuneInputHandler() {
   let escape = false;
   getFortuneTextInput().addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') closeFortuneInput(true);
+    if (event.key === 'Enter'){
+      closeFortuneInput(true);
+    }
   });
 
   window.addEventListener('keyup', (event) => {
@@ -123,6 +125,7 @@ function activateFortuneInputHandler() {
       escape = false;
       return;
     }
+    saveFortunes();
     closeFortuneInput(true);
   });
 
@@ -167,6 +170,21 @@ function setSidebarButtonContent(index, content) {
 
 function saveFortuneToStorage(fortune) {
   return localStorage.setItem('fortune', JSON.stringify(fortune));
+}
+
+/**
+ * Reads 'fortune' from localStorage and returns an array of
+ * all of the recipes found (parsed, not in string form). If
+ * nothing is found in localStorage for 'fortune', an empty array
+ * is returned.
+ * @returns {Array<Object>} An array of fortunes found in localStorage
+ */
+function getFortuneFromStorage() {
+  let fortuneList = localStorage.getItem("fortune");
+  if (fortuneList == null) {
+    return [];
+  }
+  return JSON.parse(fortuneList);
 }
 
 /**
