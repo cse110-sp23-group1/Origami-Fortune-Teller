@@ -1,0 +1,64 @@
+// Origami.js
+/*
+  A class to support origami SVG selection,
+  display, operation
+
+  w/ suggested approach guidance as comments
+*/
+export class Origami {
+  /*
+    TODO: when a new Origami instance is created, it should
+      get its parameters (from a fetch of the svg, stored constants,
+      or any preferred approach) and activate click handlers
+  */
+  // constructor(){
+  //   // this.src = {'mode':aReferenceToThatSVGcode}
+  //   // this.mode = null;
+  //   // this.#init(); the constructor should set this.values and hand off
+  // }
+  
+  /*
+  activate click handlers, display the current svg, w.e else
+  */
+  // #init(){ 
+
+  // }
+
+  /*
+      TODO: for an example, see SideBar.js
+
+      in short, if the constructor stored the different SVGs, you
+        can iterate on them to set events for each click layer. there
+        are a lot of different ways to implement this so go with
+        whatever makes the most sense
+  */
+  // someClickHandlerFunction(someParameter){
+
+  // }
+
+  /*
+    TODO: when Origami.getSVG is called, it could return
+      the current mode's origami as an SVG HTMLElement
+    
+    an alternate approach would be to take a container as an constructor
+    parameter and modify that instead
+  */
+  // getSVG(){
+
+  // }
+
+  /*
+    TODO: when Origami.setMode is called, it could
+      update the current display mode and then
+      replace the currently displayed origami in
+      this.container with the one matching the input
+      parameter
+    TODO: decide on mode parameter type, maybe string,
+      or even consider having a function for each mode select
+      e.g. Origami.close() Origami.displayNumbers() etc
+  */
+  // setMode(newMode){
+  //   //  make sure the newMode is valid
+  //   //  if it is, set the current mode to it
+  // }
+}
