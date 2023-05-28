@@ -1,7 +1,4 @@
 // main.js
-import {SideBar} from './SideBar.js';
-
-
 let defaultFortunes; // initialize default fortunes
 
 /*
@@ -10,16 +7,20 @@ let defaultFortunes; // initialize default fortunes
     and update button creation.
 */
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/assets/fortunes.json')
-      .then((response) => response.json())
-      .then((data) => {
-        defaultFortunes = data.english.default; // Assign the default fortunes to the variable
-
-        activateSidebarHandler();
-      })
-      .catch((error) => {
-        console.error('Error fetching fortunes:', error);
-      });
+  defaultFortunes = getFortunesFromStorage();
+  if (!defaultFortunes) {
+    fetch('/assets/fortunes.json')
+        .then((response) => response.json())
+        .then((data) => {
+          defaultFortunes = data.english.default; // Assign the default fortunes to the variable
+          activateSidebarHandler();
+        })
+        .catch((error) => {
+          console.error(`Fetching fortunes failed: ${error}`);
+        });
+  } else {
+    activateSidebarHandler();
+  }
 });
 
 /*
@@ -168,21 +169,21 @@ function setSidebarButtonContent(index, content) {
  * @returns {boolean} - Returns true if the fortune was saved successfully
  */
 
-function saveFortuneToStorage(fortune) {
-  return localStorage.setItem('fortune', JSON.stringify(fortune));
+function saveFortunesToStorage(fortunes) {
+  return localStorage.setItem('fortunes', JSON.stringify(fortunes));
 }
 
 /**
- * Reads 'fortune' from localStorage and returns an array of
+ * Reads 'fortunes' from localStorage and returns an array of
  * all of the recipes found (parsed, not in string form). If
  * nothing is found in localStorage for 'fortune', an empty array
  * is returned.
  * @return {Array<Object>} An array of fortunes found in localStorage
  */
-function getFortuneFromStorage() {
-  let fortuneList = localStorage.getItem("fortune");
+function getFortunesFromStorage() {
+  const fortuneList = localStorage.getItem('fortunes');
   if (fortuneList == null) {
-    return [];
+    return false;
   }
   return JSON.parse(fortuneList);
 }
@@ -198,7 +199,5 @@ function saveFortunes() {
   buttons.forEach((button) => { // Loop through each button and put the text conent into the fortunes array
     fortunes.push(button.textContent);
   });
-  saveFortuneToStorage(fortunes);
+  saveFortunesToStorage(fortunes);
 }
-
-
