@@ -1,4 +1,4 @@
-import {Origami} from "./Origami.js"
+/*
 // Upon Page load, call activateSidebarHandler()
 document.addEventListener('DOMContentLoaded', () => {
   activateSidebarHandler();
@@ -28,7 +28,49 @@ function editFortune(button) {
     editFortuneBox.style.display = 'none';
   });
 }
+*/
+let svgPaths;
 
 document.addEventListener('DOMContentLoaded', () => {
-  setClosedClickHandler();
+  fetch('assets/SVGPaths/svgPaths.json')
+  .then((response) => response.json())
+  .then((data) => {
+    svgPaths = data.filePaths;
+    activateSVGHandler();
+  })
+  .catch((error) => {
+    console.error('Error fetching fortunes:', error);
+  });
 });
+
+
+function activateSVGHandler() {
+  activateClosedHandler();
+  //activateNumberHandler();
+  //activateFortuneClickHandler();
+}
+
+function activateClosedHandler() {
+  const closedFortune = document.createElement('object');
+  closedFortune.data = svgPaths.closed;
+  closedFortune.id = "default";
+  getFortuneTeller().appendChild(closedFortune);
+  activateClosedFlapClickHandler();
+}
+function activateClosedFlapClickHandler() {
+  getClosedFlaps().forEach((flap) => {
+    flap.addEventListener('click', () => {
+      startAnimation();
+    });
+  });
+}
+function startAnimation() {
+  console.log("this flap click worked");
+}
+function getFortuneTeller() {
+  return document.getElementById("closedFortune");
+}
+
+function getClosedFlaps() {
+  return document.getElementById('default').querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
+}

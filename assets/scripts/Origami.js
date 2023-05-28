@@ -6,16 +6,19 @@
   w/ suggested approach guidance as comments
 */
 export class Origami {
-  /*
-    TODO: when a new Origami instance is created, it should
-      get its parameters (from a fetch of the svg, stored constants,
-      or any preferred approach) and activate click handlers
-  */
-  constructor() {
-    this.container = document.getElementById("closedFortune");
-    this.mode = null;
-    this.clickableSVG = [];
-    this.#init();
+  /**
+   * @constructor
+   * @param {*} svgPaths - array of svg paths
+   */
+  constructor(svgPaths) {
+    //this number will change when we add SVG
+    if(svgPaths.length !== 5){
+      throw new Error("Not All Paths Fetched Here.");
+    }
+    this.fortuneSVGs = [];
+    this.clickableSVGs = [];
+    this.#init(); 
+
   }
 
   #init() {
