@@ -30,6 +30,7 @@ function editFortune(button) {
 }
 */
 let svgPaths;
+let svgDocument;
 
 document.addEventListener('DOMContentLoaded', () => {
   fetch('assets/SVGPaths/svgPaths.json')
@@ -55,15 +56,22 @@ function activateClosedHandler() {
   closedFortune.data = svgPaths.closed;
   closedFortune.id = "default";
   getFortuneTeller().appendChild(closedFortune);
-  activateClosedFlapClickHandler();
-}
-function activateClosedFlapClickHandler() {
-  getClosedFlaps().forEach((flap) => {
-    flap.addEventListener('click', () => {
-      startAnimation();
+  // must load SVG content fully before accessing it
+  closedFortune.addEventListener('load', function() {
+    svgDocument = closedFortune.contentDocument;
+    const closedFlaps = svgDocument.querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
+    closedFlaps.forEach((flap) => {
+      flap.addEventListener('click', () => {
+        startAnimation();
+      });
     });
   });
+  // activateClosedFlapClickHandler();
 }
+// function activateClosedFlapClickHandler() {
+//   // console.log(document.getElementById('default').contentDocument);
+
+// }
 function startAnimation() {
   console.log("this flap click worked");
 }
@@ -71,6 +79,5 @@ function getFortuneTeller() {
   return document.getElementById("closedFortune");
 }
 
-function getClosedFlaps() {
-  return document.getElementById('default').querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
-}
+// function getClosedFlaps() {
+// }
