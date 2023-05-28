@@ -13,12 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((response) => response.json())
         .then((data) => {
           defaultFortunes = data.english.default; // Assign the default fortunes to the variable
+          activateSidebarHandler();
         })
         .catch((error) => {
           console.error(`Fetching fortunes failed: ${error}`);
         });
+  } else {
+    activateSidebarHandler();
   }
-  activateSidebarHandler();
 });
 
 /*
@@ -181,7 +183,7 @@ function saveFortunesToStorage(fortunes) {
 function getFortunesFromStorage() {
   const fortuneList = localStorage.getItem('fortunes');
   if (fortuneList == null) {
-    return [];
+    return false;
   }
   return JSON.parse(fortuneList);
 }
