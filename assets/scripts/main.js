@@ -61,8 +61,9 @@ function activateClosedHandler() {
     svgDocument = closedFortune.contentDocument;
     const closedFlaps = svgDocument.querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
     closedFlaps.forEach((flap) => {
-      flap.addEventListener('click', () => {
-        startAnimation();
+      flap.addEventListener('click', (event) => {
+        let flapID = event.target.getAttribute('id');
+        startAnimation(flapID);
       });
     });
   });
@@ -72,8 +73,24 @@ function activateClosedHandler() {
 //   // console.log(document.getElementById('default').contentDocument);
 
 // }
-function startAnimation() {
-  console.log("this flap click worked");
+function startAnimation(flapID) {
+  switch(flapID) {
+    case 'upper-left-click':
+      console.log("Red Flap Clicked");
+      break;
+    case 'lower-left-click':
+      console.log("Green Flap Clicked");
+      break;
+    case 'upper-right-click':
+      console.log("Blue Flap Clicked");
+      break;
+    case 'lower-right-click':
+      console.log("Yellow Flap Clicked");
+      break;
+    default:
+      console.log("Click Random");
+      break;
+  }
 }
 function getFortuneTeller() {
   return document.getElementById("closedFortune");
