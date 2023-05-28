@@ -1,7 +1,6 @@
 // main.js
 import {SideBar} from './SideBar.js';
 
-
 let defaultFortunes; // initialize default fortunes
 
 /*
@@ -200,5 +199,3 @@ function saveFortunes() {
   });
   saveFortuneToStorage(fortunes);
 }
-
-
