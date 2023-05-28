@@ -10,6 +10,7 @@
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
   cursor: pointer;
+  animation: slideInFromBottom 1s ease-in-out;
 }
 
 .sidebar button:hover {
@@ -102,6 +103,17 @@
 @keyframes slideInFromTop {
   0% {
     transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
     opacity: 0;
   }
   100% {
