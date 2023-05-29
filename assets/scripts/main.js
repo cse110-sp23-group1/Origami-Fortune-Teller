@@ -7,8 +7,40 @@ const svgPaths = [
   "./assets/images/origami-with-ids/vertically-opened.svg"
 ]
 const closedSVG = new Origami(svgPaths[0]);
-
-closedSVG.getFlapColorClicked().then((flapColorClicked) => {
-  let numAnimations = closedSVG.startAnimation(flapColorClicked);
-  console.log(numAnimations);
+const horizontalNumsSVG = new Origami(svgPaths[1]);
+const verticalNumsSVG = new Origami(svgPaths[2]);
+const horizontalSVG = new Origami(svgPaths[3]);
+const verticalSVG = new Origami(svgPaths[4]);
+const clickableTellers = [closedSVG, horizontalNumsSVG, verticalNumsSVG];
+const animatedTellers = [horizontalSVG, verticalSVG];
+closedSVG.generateSVG();
+let CURRENTSVG = closedSVG;
+closedSVG.getFlapColorClicked().then((flapClicked) => {
+  let numAnimations = closedSVG.getNumAnimations(flapClicked);
+  startAnimation(numAnimations);
 });
+
+function startAnimation(numAnimations) {  
+  for(let i = 0; i < numAnimations - 1; i++) {
+    if(CURRENTSVG == closedSVG){
+      closedSVG.removeCurrentSVG();
+      CURRENTSVG = verticalSVG;
+    }
+    else if(CURRENTSVG == verticalSVG){
+      verticalSVG.removeCurrentSVG();
+      CURRENTSVG = horizontalSVG;
+    }
+    else if(CURRENTSVG == horizontalSVG) {
+      horizontalSVG.removeCurrentSVG();
+      CURRENTSVG = verticalSVG;
+    }
+    CURRENTSVG.generateSVG();
+  }
+  CURRENTSVG.removeCurrentSVG();
+  if(CURRENTSVG == verticalSVG) {
+    horizontalNumsSVG.generateSVG();
+  } 
+  else if(CURRENTSVG == horizontalSVG) {
+    verticalNumsSVG.generateSVG();
+  } 
+}

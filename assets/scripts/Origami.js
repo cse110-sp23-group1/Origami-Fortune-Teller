@@ -14,17 +14,13 @@ export class Origami {
     //this number will change when we add SVG
     this.svgPath = svgPath;
     this.flapColorClicked = null;
-    this.#init();
-  }
-  #init() {
-    this.generateSVG();
-    this.#addClickListeners();
   }
   generateSVG() {
     const svg = document.createElement("object");
     svg.data = this.svgPath;
     document.body.appendChild(svg);
     this.currentSVG = svg;
+    this.#addClickListeners();
   }
 
   removeCurrentSVG() {
@@ -74,7 +70,18 @@ export class Origami {
     return await this.activateClosedHandler();
   }
 
-  startAnimation(flapColor) {
-    return flapColor.length;
+  getNumAnimations(flapClicked) {
+    if(typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
+      return flapClicked;
+    }
+    else if(typeof flapClicked === 'string') {
+      return flapClicked.length;
+    }
+    
+    return 0;
+  }
+
+  getCurrentSVG() {
+    return this.svgPath
   }
 }
