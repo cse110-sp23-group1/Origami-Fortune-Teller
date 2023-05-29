@@ -5,7 +5,12 @@ const COLOR_BY_CLICK_REGION = {
   'lower-left-click': 'green',
   'lower-right-click': 'yellow',
 };
-
+const HOVER_BY_CLICK_REGION = {
+  'upper-right-click': 'darkblue',
+  'upper-left-click': 'darkred',
+  'lower-left-click': 'darkgreen',
+  'lower-right-click': 'orange',
+};
 const NUMBER_BY_SHADOW_CLICK_REGION = {
   'horizontal': {
     'shadow-top-right-click': 1,
