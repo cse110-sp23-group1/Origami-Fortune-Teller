@@ -11,48 +11,81 @@ const horizontalNumsSVG = new Origami(svgPaths[1]);
 const verticalNumsSVG = new Origami(svgPaths[2]);
 const horizontalSVG = new Origami(svgPaths[3]);
 const verticalSVG = new Origami(svgPaths[4]);
-const clickableTellers = [closedSVG, horizontalNumsSVG, verticalNumsSVG];
-const animatedTellers = [horizontalSVG, verticalSVG];
+let animationCount = 0;
+
 closedSVG.generateSVG();
 let CURRENTSVG = closedSVG;
 closedSVG.getFlapColorClicked().then((flapClicked) => {
   let numAnimations = closedSVG.getNumAnimations(flapClicked);
-  startAnimation(numAnimations);
+  startAnimation(numAnimations).then(() => {
+    if(CURRENTSVG !== closedSVG) {
+      CURRENTSVG.getFlapNumClicked().then((flapClicked) => {
+        let numAnimations = CURRENTSVG.getNumAnimations(flapClicked);
+        startAnimation(numAnimations);
+      });
+    }
+  });
 });
 
 function startAnimation(numAnimations) {
-  let animationIndex = 0;
-
-  function animate() {
-    if (animationIndex < numAnimations - 1) {
-      if (CURRENTSVG === closedSVG) {
-        closedSVG.removeCurrentSVG();
-        CURRENTSVG = verticalSVG;
+  return new Promise((resolve) => {
+    let animationIndex = 0;
+    animationCount++;
+    function animate() {
+      if (animationIndex < numAnimations - 1) {
+        switch(CURRENTSVG) {
+          case closedSVG:
+            closedSVG.removeCurrentSVG();
+            CURRENTSVG = verticalSVG;
+            break; 
+          case verticalSVG:
+            verticalSVG.removeCurrentSVG();
+            CURRENTSVG = horizontalSVG;
+            break;
+          case horizontalSVG:
+            horizontalSVG.removeCurrentSVG();
+            CURRENTSVG = verticalSVG;
+            break;
+          case verticalNumsSVG:
+            verticalNumsSVG.removeCurrentSVG();
+            CURRENTSVG = horizontalSVG;
+            break;
+          case horizontalNumsSVG:
+            horizontalNumsSVG.removeCurrentSVG();
+            CURRENTSVG = verticalSVG;
+            break;
+          default:
+            //do nothing
+            break;
+        }
+        CURRENTSVG.generateSVG();
+        animationIndex++;
+  
+        setTimeout(animate, 500);
       } 
-      else if (CURRENTSVG === verticalSVG) {
-        verticalSVG.removeCurrentSVG();
-        CURRENTSVG = horizontalSVG;
-      } 
-      else if (CURRENTSVG === horizontalSVG) {
-        horizontalSVG.removeCurrentSVG();
-        CURRENTSVG = verticalSVG;
-      }
-
-      CURRENTSVG.generateSVG();
-      animationIndex++;
-
-      setTimeout(animate, 500);
-    } 
-    else {
-      CURRENTSVG.removeCurrentSVG();
-      if (CURRENTSVG === verticalSVG) {
-        horizontalNumsSVG.generateSVG();
-      } else if (CURRENTSVG === horizontalSVG) {
-        verticalNumsSVG.generateSVG();
+      else {
+        CURRENTSVG.removeCurrentSVG();
+        if (CURRENTSVG === verticalSVG) {
+          if(animationCount === 2){
+            //show the last figma mockup
+          }
+          else {
+            horizontalNumsSVG.generateSVG();
+            CURRENTSVG = horizontalNumsSVG;
+          }
+          
+        } else if (CURRENTSVG === horizontalSVG) {
+          if(animationCount === 2){
+            //show the last figma mockup
+          }
+          else {
+            verticalNumsSVG.generateSVG();
+            CURRENTSVG = verticalNumsSVG;
+          } 
+        }
+        resolve();
       }
     }
-  }
-  animate();
+    animate();
+  });
 }
-
-

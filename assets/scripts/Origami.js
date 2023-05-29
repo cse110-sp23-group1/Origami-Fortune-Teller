@@ -13,7 +13,6 @@ export class Origami {
   constructor(svgPath) {
     //this number will change when we add SVG
     this.svgPath = svgPath;
-    this.flapColorClicked = null;
   }
   generateSVG() {
     const svg = document.createElement("object");
@@ -33,7 +32,7 @@ export class Origami {
       this.activateClosedHandler();
     }
     else if(this.currentSVG.data.endsWith('-nums.svg')){
-      //activateNumsHandler();
+      this.activateNumsHandler();
     }
   }
   idToColor(flapID) {
@@ -50,6 +49,36 @@ export class Origami {
         return "unknown";
     }
   }
+  idToNum(flapID) {
+    if(this.currentSVG.data.includes('horizontally')) {
+      switch(flapID) {
+        case 'shadow-top-right-click':
+          return 1;
+        case 'shadow-bottom-left-click':
+          return 5;
+        case 'shadow-bottom-right-click':
+          return 3;
+        case 'shadow-top-left-click':
+          return 7;
+        default:
+          return 0;
+      }
+    }      
+    else if(this.currentSVG.data.includes('vertically')) {
+      switch(flapID) {
+        case 'shadow-top-right-click':
+          return 2;
+        case 'shadow-bottom-left-click':
+          return 6;
+        case 'shadow-bottom-right-click':
+          return 4;
+        case 'shadow-top-left-click':
+          return 8;
+        default:
+          return 0;
+      }
+    }
+  }
   activateClosedHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
@@ -58,16 +87,33 @@ export class Origami {
         closedFlaps.forEach((flap) => {
           flap.addEventListener('click', (event) => {
             let flapID = flap.id;
-            this.flapColorClicked = this.idToColor(flapID);
-            resolve(this.flapColorClicked);
+            let flapColorClicked = this.idToColor(flapID);
+            resolve(flapColorClicked);
           });
         });
       });
     });
   }
-
+  activateNumsHandler() {
+    return new Promise((resolve) => {
+      this.currentSVG.addEventListener('load', () => {
+        let svgDocument = this.currentSVG.contentDocument;
+        const numFlaps = svgDocument.querySelectorAll('path[id$="-click"]');
+        numFlaps.forEach((flap) => {
+          flap.addEventListener('click', (event) => {
+            let flapID = flap.id;
+            let flapNumClicked = this.idToNum(flapID);
+            resolve(flapNumClicked);
+          });
+        });
+      });
+    });
+  }
   async getFlapColorClicked() {
     return await this.activateClosedHandler();
+  }
+  async getFlapNumClicked() {
+    return await this.activateNumsHandler();
   }
 
   getNumAnimations(flapClicked) {
