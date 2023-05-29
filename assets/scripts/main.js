@@ -20,28 +20,39 @@ closedSVG.getFlapColorClicked().then((flapClicked) => {
   startAnimation(numAnimations);
 });
 
-function startAnimation(numAnimations) {  
-  for(let i = 0; i < numAnimations - 1; i++) {
-    if(CURRENTSVG == closedSVG){
-      closedSVG.removeCurrentSVG();
-      CURRENTSVG = verticalSVG;
+function startAnimation(numAnimations) {
+  let animationIndex = 0;
+
+  function animate() {
+    if (animationIndex < numAnimations - 1) {
+      if (CURRENTSVG === closedSVG) {
+        closedSVG.removeCurrentSVG();
+        CURRENTSVG = verticalSVG;
+      } 
+      else if (CURRENTSVG === verticalSVG) {
+        verticalSVG.removeCurrentSVG();
+        CURRENTSVG = horizontalSVG;
+      } 
+      else if (CURRENTSVG === horizontalSVG) {
+        horizontalSVG.removeCurrentSVG();
+        CURRENTSVG = verticalSVG;
+      }
+
+      CURRENTSVG.generateSVG();
+      animationIndex++;
+
+      setTimeout(animate, 500);
+    } 
+    else {
+      CURRENTSVG.removeCurrentSVG();
+      if (CURRENTSVG === verticalSVG) {
+        horizontalNumsSVG.generateSVG();
+      } else if (CURRENTSVG === horizontalSVG) {
+        verticalNumsSVG.generateSVG();
+      }
     }
-    else if(CURRENTSVG == verticalSVG){
-      verticalSVG.removeCurrentSVG();
-      CURRENTSVG = horizontalSVG;
-    }
-    else if(CURRENTSVG == horizontalSVG) {
-      horizontalSVG.removeCurrentSVG();
-      CURRENTSVG = verticalSVG;
-    }
-    CURRENTSVG.generateSVG();
   }
-  CURRENTSVG.removeCurrentSVG();
-  if(CURRENTSVG == verticalSVG) {
-    horizontalNumsSVG.generateSVG();
-  } 
-  else if(CURRENTSVG == horizontalSVG) {
-    verticalNumsSVG.generateSVG();
-  } 
+  animate();
 }
+
 
