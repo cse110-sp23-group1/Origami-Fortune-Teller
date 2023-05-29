@@ -1,30 +1,47 @@
-// Upon Page load, call activateSidebarHandler()
-document.addEventListener('DOMContentLoaded', () => {
-  activateSidebarHandler();
+import { Origami } from './Origami.js';
+const svgPaths = [
+  "./assets/images/origami-with-ids/closed-new.svg",
+  "./assets/images/origami-with-ids/horizontally-opened-nums.svg",
+  "./assets/images/origami-with-ids/vertically-opened-nums.svg",
+  "./assets/images/origami-with-ids/horizontally-opened.svg",
+  "./assets/images/origami-with-ids/vertically-opened.svg"
+]
+const closedSVG = new Origami(svgPaths[0]);
+const horizontalNumsSVG = new Origami(svgPaths[1]);
+const verticalNumsSVG = new Origami(svgPaths[2]);
+const horizontalSVG = new Origami(svgPaths[3]);
+const verticalSVG = new Origami(svgPaths[4]);
+const clickableTellers = [closedSVG, horizontalNumsSVG, verticalNumsSVG];
+const animatedTellers = [horizontalSVG, verticalSVG];
+closedSVG.generateSVG();
+let CURRENTSVG = closedSVG;
+closedSVG.getFlapColorClicked().then((flapClicked) => {
+  let numAnimations = closedSVG.getNumAnimations(flapClicked);
+  startAnimation(numAnimations);
 });
 
-// If any button is clicked in the sidebar, call editFortuneBox(button), which takes an argument of the button that was clicked
-function activateSidebarHandler() {
-  const sidebarButtons = document.querySelectorAll('.sidebarButton');
-
-  sidebarButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      editFortune(button);
-    });
-  });
-}
-
-// Make the editFortuneBox appear, allow the user to write in their own fortune, and change the text of the button that was passed in
-function editFortune(button) {
-  const editFortuneBox = document.getElementById('editFortuneBox');
-  const saveButton = document.querySelector('.saveButton');
-  const userInput = document.getElementById('userInput');
-
-  editFortuneBox.style.display = 'block';
-
-    saveButton.addEventListener('click', () => {
-        button.textContent = userInput.value;
-        editFortuneBox.style.display = 'none';
-    });
+function startAnimation(numAnimations) {  
+  for(let i = 0; i < numAnimations - 1; i++) {
+    if(CURRENTSVG == closedSVG){
+      closedSVG.removeCurrentSVG();
+      CURRENTSVG = verticalSVG;
+    }
+    else if(CURRENTSVG == verticalSVG){
+      verticalSVG.removeCurrentSVG();
+      CURRENTSVG = horizontalSVG;
+    }
+    else if(CURRENTSVG == horizontalSVG) {
+      horizontalSVG.removeCurrentSVG();
+      CURRENTSVG = verticalSVG;
+    }
+    CURRENTSVG.generateSVG();
+  }
+  CURRENTSVG.removeCurrentSVG();
+  if(CURRENTSVG == verticalSVG) {
+    horizontalNumsSVG.generateSVG();
+  } 
+  else if(CURRENTSVG == horizontalSVG) {
+    verticalNumsSVG.generateSVG();
+  } 
 }
 
