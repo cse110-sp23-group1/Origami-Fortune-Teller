@@ -1,11 +1,11 @@
-import { Origami } from './Origami.js';
+import {Origami} from './Origami.js';
 const svgPaths = [
-  "./assets/images/origami-with-ids/closed-new.svg",
-  "./assets/images/origami-with-ids/horizontally-opened-nums.svg",
-  "./assets/images/origami-with-ids/vertically-opened-nums.svg",
-  "./assets/images/origami-with-ids/horizontally-opened.svg",
-  "./assets/images/origami-with-ids/vertically-opened.svg"
-]
+  './assets/images/origami-with-ids/closed-new.svg',
+  './assets/images/origami-with-ids/horizontally-opened-nums.svg',
+  './assets/images/origami-with-ids/vertically-opened-nums.svg',
+  './assets/images/origami-with-ids/horizontally-opened.svg',
+  './assets/images/origami-with-ids/vertically-opened.svg',
+];
 const closedSVG = new Origami(svgPaths[0]);
 const horizontalNumsSVG = new Origami(svgPaths[1]);
 const verticalNumsSVG = new Origami(svgPaths[2]);
@@ -16,11 +16,11 @@ let animationCount = 0;
 closedSVG.generateSVG();
 let CURRENTSVG = closedSVG;
 closedSVG.getFlapColorClicked().then((flapClicked) => {
-  let numAnimations = closedSVG.getNumAnimations(flapClicked);
+  const numAnimations = closedSVG.getNumAnimations(flapClicked);
   startAnimation(numAnimations).then(() => {
-    if(CURRENTSVG !== closedSVG) {
+    if (CURRENTSVG !== closedSVG) {
       CURRENTSVG.getFlapNumClicked().then((flapClicked) => {
-        let numAnimations = CURRENTSVG.getNumAnimations(flapClicked);
+        const numAnimations = CURRENTSVG.getNumAnimations(flapClicked);
         startAnimation(numAnimations);
       });
     }
@@ -33,11 +33,11 @@ function startAnimation(numAnimations) {
     animationCount++;
     function animate() {
       if (animationIndex < numAnimations - 1) {
-        switch(CURRENTSVG) {
+        switch (CURRENTSVG) {
           case closedSVG:
             closedSVG.removeCurrentSVG();
             CURRENTSVG = verticalSVG;
-            break; 
+            break;
           case verticalSVG:
             verticalSVG.removeCurrentSVG();
             CURRENTSVG = horizontalSVG;
@@ -55,33 +55,29 @@ function startAnimation(numAnimations) {
             CURRENTSVG = verticalSVG;
             break;
           default:
-            //do nothing
+            // do nothing
             break;
         }
         CURRENTSVG.generateSVG();
         animationIndex++;
-  
+
         setTimeout(animate, 500);
-      } 
-      else {
+      } else {
         CURRENTSVG.removeCurrentSVG();
         if (CURRENTSVG === verticalSVG) {
-          if(animationCount === 2){
-            //show the last figma mockup
-          }
-          else {
+          if (animationCount === 2) {
+            // show the last figma mockup
+          } else {
             horizontalNumsSVG.generateSVG();
             CURRENTSVG = horizontalNumsSVG;
           }
-          
         } else if (CURRENTSVG === horizontalSVG) {
-          if(animationCount === 2){
-            //show the last figma mockup
-          }
-          else {
+          if (animationCount === 2) {
+            // show the last figma mockup
+          } else {
             verticalNumsSVG.generateSVG();
             CURRENTSVG = verticalNumsSVG;
-          } 
+          }
         }
         resolve();
       }

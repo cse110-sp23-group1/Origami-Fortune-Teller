@@ -1,4 +1,27 @@
 // Origami.js
+const COLOR_BY_CLICK_REGION = {
+  'upper-right-click': 'blue',
+  'upper-left-click': 'red',
+  'lower-left-click': 'green',
+  'lower-right-click': 'yellow',
+};
+
+const NUMBER_BY_SHADOW_CLICK_REGION = {
+  'horizontal': {
+    'shadow-top-right-click': 1,
+    'shadow-bottom-left-click': 5,
+    'shadow-bottom-right-click': 3,
+    'shadow-top-left-click': 7,
+  },
+
+  'vertical': {
+    'shadow-top-right-click': 2,
+    'shadow-bottom-left-click': 6,
+    'shadow-bottom-right-click': 4,
+    'shadow-top-left-click': 8,
+  },
+};
+
 /*
   A class to support origami SVG selection,
   display, operation
@@ -11,11 +34,11 @@ export class Origami {
    * @param {>} svgPath - an svg path
    */
   constructor(svgPath) {
-    //this number will change when we add SVG
+    // this number will change when we add SVG
     this.svgPath = svgPath;
   }
   generateSVG() {
-    const svg = document.createElement("object");
+    const svg = document.createElement('object');
     svg.data = this.svgPath;
     document.body.appendChild(svg);
     this.currentSVG = svg;
@@ -28,66 +51,37 @@ export class Origami {
   }
 
   #addClickListeners() {
-    if(this.currentSVG.data.endsWith('closed-new.svg')){
+    if (this.currentSVG.data.endsWith('closed-new.svg')) {
       this.activateClosedHandler();
-    }
-    else if(this.currentSVG.data.endsWith('-nums.svg')){
+    } else if (this.currentSVG.data.endsWith('-nums.svg')) {
       this.activateNumsHandler();
     }
   }
   idToColor(flapID) {
-    switch(flapID) {
-      case 'upper-right-click':
-        return "blue";
-      case 'upper-left-click':
-        return "red";
-      case 'lower-left-click':
-        return "green";
-      case 'lower-right-click':
-        return "yellow";
-      default:
-        return "unknown";
-    }
+    return COLOR_BY_CLICK_REGION[flapID] || 'unknown';
   }
+
   idToNum(flapID) {
-    if(this.currentSVG.data.includes('horizontally')) {
-      switch(flapID) {
-        case 'shadow-top-right-click':
-          return 1;
-        case 'shadow-bottom-left-click':
-          return 5;
-        case 'shadow-bottom-right-click':
-          return 3;
-        case 'shadow-top-left-click':
-          return 7;
-        default:
-          return 0;
-      }
-    }      
-    else if(this.currentSVG.data.includes('vertically')) {
-      switch(flapID) {
-        case 'shadow-top-right-click':
-          return 2;
-        case 'shadow-bottom-left-click':
-          return 6;
-        case 'shadow-bottom-right-click':
-          return 4;
-        case 'shadow-top-left-click':
-          return 8;
-        default:
-          return 0;
-      }
+    let number;
+
+    if (this.currentSVG.data.includes('horizontally')) {
+      number = NUMBER_BY_SHADOW_CLICK_REGION.horizontal[flapID];
+    } else if (this.currentSVG.data.includes('vertically')) {
+      number = NUMBER_BY_SHADOW_CLICK_REGION.vertical[flapID];
     }
+
+    return (number !== undefined) ? number : 0;
   }
+
   activateClosedHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
-        let svgDocument = this.currentSVG.contentDocument;
+        const svgDocument = this.currentSVG.contentDocument;
         const closedFlaps = svgDocument.querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
         closedFlaps.forEach((flap) => {
           flap.addEventListener('click', (event) => {
-            let flapID = flap.id;
-            let flapColorClicked = this.idToColor(flapID);
+            const flapID = flap.id;
+            const flapColorClicked = this.idToColor(flapID);
             resolve(flapColorClicked);
           });
         });
@@ -97,12 +91,12 @@ export class Origami {
   activateNumsHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
-        let svgDocument = this.currentSVG.contentDocument;
+        const svgDocument = this.currentSVG.contentDocument;
         const numFlaps = svgDocument.querySelectorAll('path[id$="-click"]');
         numFlaps.forEach((flap) => {
           flap.addEventListener('click', (event) => {
-            let flapID = flap.id;
-            let flapNumClicked = this.idToNum(flapID);
+            const flapID = flap.id;
+            const flapNumClicked = this.idToNum(flapID);
             resolve(flapNumClicked);
           });
         });
@@ -117,17 +111,16 @@ export class Origami {
   }
 
   getNumAnimations(flapClicked) {
-    if(typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
+    if (typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
       return flapClicked;
-    }
-    else if(typeof flapClicked === 'string') {
+    } else if (typeof flapClicked === 'string') {
       return flapClicked.length;
     }
-    
+
     return 0;
   }
 
   getCurrentSVG() {
-    return this.svgPath
+    return this.svgPath;
   }
 }
