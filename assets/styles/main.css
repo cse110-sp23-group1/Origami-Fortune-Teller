@@ -89,14 +89,12 @@
   font-weight: bold;
 }
 
-#header {
+/* Title Header */
+#titleHeader {
   text-align: center;
   color: #ab50b3;
   margin-top: 5%;
   font-size: 2.5em;
-}
-
-#header {
   position: relative;
   animation: slideInFromTop 1s ease-in-out;
 }
