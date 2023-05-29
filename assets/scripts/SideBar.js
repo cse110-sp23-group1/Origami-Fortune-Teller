@@ -114,6 +114,7 @@ function activateSidebarButtons() {
   // using defaultFortunes is a convenient
   // placeholder pending externalizing fortune
   // values and modularizing defaults
+  const openSound = new Audio('assets/media/OpenFortune.mov');
   defaultFortunes.forEach((fortune, index) => {
     const button = document.createElement('button');
     button.textContent = fortune;
@@ -121,6 +122,7 @@ function activateSidebarButtons() {
     button.style.top = `${index*buttonHeight}px`;
     button.addEventListener('click', () => {
       openFortuneInput(index);
+      openSound.play();
     });
 
     getSidebar().appendChild(button);
@@ -145,7 +147,7 @@ function openFortuneInput(buttonIndex) {
 */
 function closeFortuneInput(needTosubmitFortune=false) {
   getFortuneInputBox().style.display = 'none';
-
+  const closeSound = new Audio('assets/media/CloseFortune.mov');
   if (!needTosubmitFortune) {
     return;
   } else {
@@ -156,6 +158,7 @@ function closeFortuneInput(needTosubmitFortune=false) {
     userInput.value = '';
 
     saveButton.id = null;
+    closeSound.play();
   }
 }
 
