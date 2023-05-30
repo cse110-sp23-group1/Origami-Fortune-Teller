@@ -1,6 +1,6 @@
 import {Origami} from './Origami.js';
 const svgPaths = [
-  './assets/images/origami/closed-new.svg',
+  './assets/images/origami/closed.svg',
   './assets/images/origami/horizontally-opened-nums.svg',
   './assets/images/origami/vertically-opened-nums.svg',
   './assets/images/origami/horizontally-opened.svg',
