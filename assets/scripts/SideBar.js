@@ -158,6 +158,7 @@ function closeFortuneInput(needTosubmitFortune=false) {
     userInput.value = '';
 
     saveButton.id = null;
+    saveFortunes();
     closeSound.play();
   }
 }
@@ -172,9 +173,9 @@ function closeFortuneInput(needTosubmitFortune=false) {
 
     doesn't submit when:
         - escape key
+        - clicking anything other than the sidebar, input box, or save button
 */
 function activateFortuneInputHandler() {
-  let escape = false;
   getFortuneTextInput().addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
       closeFortuneInput(true);
@@ -184,17 +185,21 @@ function activateFortuneInputHandler() {
   window.addEventListener('keyup', (event) => {
     if (event.key === 'Escape') {
       closeFortuneInput();
-      escape = true;
     }
   });
 
-  getFortuneTextInput().addEventListener('change', (event) => {
-    if (escape == true) {
-      escape = false;
-      return;
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    const fortuneInputBox = getFortuneInputBox();
+    const fortuneInputSaveButton = getFortuneInputSaveButton();
+    if (
+      fortuneInputBox.style.display === 'block' &&
+      !target.closest('.sidebar') &&
+      target !== fortuneInputSaveButton &&
+      !fortuneInputBox.contains(target)
+    ) {
+      closeFortuneInput();
     }
-    saveFortunes();
-    closeFortuneInput(true);
   });
 
   getFortuneInputSaveButton().addEventListener('click', () => {
