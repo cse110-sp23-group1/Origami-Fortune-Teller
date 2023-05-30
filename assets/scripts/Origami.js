@@ -26,6 +26,14 @@ const NUMBER_BY_SHADOW_CLICK_REGION = {
     'shadow-top-left-click': 8,
   },
 };
+const svgPaths = [
+  './assets/images/origami/closed.svg',
+  './assets/images/origami/horizontally-opened-nums.svg',
+  './assets/images/origami/vertically-opened-nums.svg',
+  './assets/images/origami/Horizontally-Open.svg',
+  './assets/images/origami/Vertically-Open.svg',
+  './assets/images/origami/'
+];
 
 /*
   A class to support origami SVG selection,

@@ -1,10 +1,10 @@
 import {Origami} from './Origami.js';
 const svgPaths = [
-  './assets/images/origami-with-ids/closed-new.svg',
-  './assets/images/origami-with-ids/horizontally-opened-nums.svg',
-  './assets/images/origami-with-ids/vertically-opened-nums.svg',
-  './assets/images/updated-origami/Horizontally-Open.svg',
-  './assets/images/updated-origami/Vertically-Open.svg'
+  './assets/images/origami/closed-new.svg',
+  './assets/images/origami/horizontally-opened-nums.svg',
+  './assets/images/origami/vertically-opened-nums.svg',
+  './assets/images/origami/horizontally-opened.svg',
+  './assets/images/origami/vertically-opened.svg'
 ];
 const closedSVG = new Origami(svgPaths[0]);
 const horizontalNumsSVG = new Origami(svgPaths[1]);
