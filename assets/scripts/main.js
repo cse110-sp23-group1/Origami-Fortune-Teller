@@ -10,16 +10,7 @@ let defaultFortunes; // initialize default fortunes
     and update button creation.
 */
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/assets/fortunes.json')
-      .then((response) => response.json())
-      .then((data) => {
-        defaultFortunes = data.english.default; // Assign the default fortunes to the variable
-
-        activateSidebarHandler();
-      })
-      .catch((error) => {
-        console.error('Error fetching fortunes:', error);
-      });
+  activateSidebarHandler();
 });
 
 /*
@@ -48,17 +39,27 @@ function activateSidebarButtons() {
 
   // using defaultFortunes is a convenient
   // placeholder pending externalizing fortune
-  // values and modularizing defaults
-  defaultFortunes.forEach((fortune, index) => {
-    const button = document.createElement('button');
-    button.textContent = fortune;
-
-    button.style.top = `${index*buttonHeight}px`;
-    button.addEventListener('click', () => {
-      openFortuneInput(index);
-    });
-
+  // values and modularizing defaults 
+  fetchFortunes()
+  .then(fortuneList => {
+    // Handle the fetched fortuneList here
+    defaultFortunes = fortuneList;
+    
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch request
+    defaultFortunes = error;
+  })
+  .finally(() => {
+    defaultFortunes.forEach((fortune, index) => {
+      const button = document.createElement('button');
+      button.textContent = fortune;
+      button.style.top = `${index*buttonHeight}px`;
+      button.addEventListener('click', () => {
+        openFortuneInput(index);
+      });
     getSidebar().appendChild(button);
+    });
   });
 }
 
@@ -201,4 +202,35 @@ function saveFortunes() {
   saveFortuneToStorage(fortunes);
 }
 
+/**
+ * gets fortunes either from local storage or local json file
+ * if this fails, returns a dummy array with "input fortune here"
+ */
+async function fetchFortunes() {
+  return new Promise((resolve, reject) => {
+    let failedFortunes = ['Input fortune here','Input fortune here','Input fortune here','Input fortune here','Input fortune here','Input fortune here','Input fortune here','Input fortune here'];
+    // first try to access fortunes from local storage
+    let fortuneList = getFortuneFromStorage();
+    if (fortuneList.length > 0){
+      resolve(fortuneList);
+    }
 
+    // local storage was empty, fetch JSON
+    let url = '/assets/fortunes.json';
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        fortuneList = data.english.default;
+        if (fortuneList.length > 0){
+          // successful fetch from json
+          resolve(fortuneList);
+        }
+        // no fortunes were fetched due to some error (not sure if necessary)
+        reject(failedFortunes);
+      })
+      
+      .catch(error =>{ // catch 404 error
+        reject(failedFortunes);
+      })  
+  });
+}
