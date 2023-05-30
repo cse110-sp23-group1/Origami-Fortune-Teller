@@ -1,39 +1,44 @@
 // Origami.js
 const COLOR_BY_CLICK_REGION = {
-  'upper-right-click': 'blue',
-  'upper-left-click': 'red',
-  'lower-left-click': 'green',
-  'lower-right-click': 'yellow',
-};
-const HOVER_BY_CLICK_REGION = {
-  'upper-right-click': 'darkblue',
-  'upper-left-click': 'darkred',
-  'lower-left-click': 'darkgreen',
-  'lower-right-click': 'orange',
-};
-const NUMBER_BY_SHADOW_CLICK_REGION = {
-  'horizontal': {
-    'shadow-top-right-click': 1,
-    'shadow-bottom-left-click': 5,
-    'shadow-bottom-right-click': 3,
-    'shadow-top-left-click': 7,
-  },
-
-  'vertical': {
-    'shadow-top-right-click': 2,
-    'shadow-bottom-left-click': 6,
-    'shadow-bottom-right-click': 4,
-    'shadow-top-left-click': 8,
-  },
+  '#118AB2': 'blue',
+  '#EF476F': 'red',
+  '#06D6A0': 'green',
+  '#FFD166': 'yellow',
 };
 const svgPaths = [
   './assets/images/origami/closed.svg',
   './assets/images/origami/horizontally-opened-nums.svg',
   './assets/images/origami/vertically-opened-nums.svg',
-  './assets/images/origami/Horizontally-Open.svg',
-  './assets/images/origami/Vertically-Open.svg',
-  './assets/images/origami/'
+  './assets/images/origami/horizontally-opened.svg',
+  './assets/images/origami/vertically-opened.svg',
+  './assets/images/origami/opened.svg',
+  './assets/images/origami/1-opened.svg',
+  './assets/images/origami/2-opened.svg',
+  './assets/images/origami/3-opened.svg',
+  './assets/images/origami/4-opened.svg',
+  './assets/images/origami/5-opened.svg',
+  './assets/images/origami/6-opened.svg',
+  './assets/images/origami/7-opened.svg',
+  './assets/images/origami/8-opened.svg',
 ];
+
+const fileNames = [
+  'closed.svg',
+  'horizontally-opened-nums.svg',
+  'vertically-opened-nums.svg',
+  'horizontally-opened.svg',
+  'vertically-opened.svg',
+  'opened.svg',
+  '1-opened.svg',
+  '2-opened.svg',
+  '3-opened.svg',
+  '4-opened.svg',
+  '5-opened.svg',
+  '6-opened.svg',
+  '7-opened.svg',
+  '8-opened.svg',
+];
+
 
 /*
   A class to support origami SVG selection,
@@ -44,49 +49,134 @@ export class Origami {
    * @constructor
    * @param {>} svgPath - an svg path
    */
-  constructor(svgPath) {
+  constructor() {
     // this number will change when we add SVG
-    this.svgPath = svgPath;
+    this.CLOSEDSVG = svgPaths[0];
+    this.OPENEDHORIZONTALNUMS = svgPaths[1];
+    this.OPENEDVERTICALNUMS = svgPaths[2];
+    this.OPENEDHORIZONTAL = svgPaths[3];
+    this.OPENEDVERTICAL = svgPaths[4];
+    this.OPENEDALL = svgPaths[5];
+    this.OPENED1 = svgPaths[6];
+    this.OPENED2 = svgPaths[7];
+    this.OPENED3 = svgPaths[8];
+    this.OPENED4 = svgPaths[9];
+    this.OPENED5 = svgPaths[10];
+    this.OPENED6 = svgPaths[11];
+    this.OPENED7 = svgPaths[12];
+    this.OPENED8 = svgPaths[13];
+    this.currentSVGPath = null;
+    this.CURRENTSVG = null;
+    this.turnCount = 0;
+    this.#init();
   }
-  
+  #init() {
+    this.generateSVG(this.CLOSEDSVG);
+  }
   /**
    * Creates an SVG object called "currentSVG" and adds click listeners
    */
-  generateSVG() {
-    const svg = document.createElement('object');
-    svg.data = this.svgPath;
-    document.body.appendChild(svg);
-    this.currentSVG = svg;
+  generateSVG(currentSVGPath) {
+    this.currentSVGPath = currentSVGPath;
+    this.CURRENTSVG = document.querySelector('object');
+    if(this.CURRENTSVG.hasAttribute('data')){
+      this.CURRENTSVG.removeAttribute('data');
+    }
+    this.CURRENTSVG.data = this.currentSVGPath;
     this.#addClickListeners();
   }
 
-  removeCurrentSVG() {
-    this.currentSVG.remove();
-    this.currentSVG = null;
-  }
-
   #addClickListeners() {
-    if (this.currentSVG.data.endsWith('closed-new.svg')) {
-      this.activateClosedHandler();
-    } else if (this.currentSVG.data.endsWith('-nums.svg')) {
-      this.activateNumsHandler();
+    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(fileNames[1] || this.CURRENTSVG.data.endsWith(fileNames[2]))) {
+      this.activateHandler();
     }
   }
+  activateHandler() {
+    this.CURRENTSVG.addEventListener('load', () => {
+      const flaps = this.CURRENTSVG.contentDocument.querySelectorAll('path[id$="-click"]');
+      flaps.forEach((flap) => {
+        flap.addEventListener('click', (event) => {
+          if(this.currentSVGPath.endsWith('closed.svg')){
+            let numAnimations = COLOR_BY_CLICK_REGION[flap.getAttribute('fill')].length;
+            this.turnCount++;
+            console.log("# turns: " + this.turnCount);
+            this.startAnimation(numAnimations);  
+          }
+          if(this.currentSVGPath.endsWith('nums.svg')){
+            let numAnimations = parseInt(flap.id[0]);
+            this.turnCount++;
+            console.log("# turns: " + this.turnCount);
+            this.startAnimation(numAnimations);
+          }
+        });
+      });
+    });
+  }
+
+  startAnimation(numAnimations) {
+    let count = 1;
+    const interval = setInterval(() => {
+      if(count >= numAnimations){
+        clearInterval(interval);
+        //if the last animation is horizontal, show vertical w nums
+        if(this.CURRENTSVG.data.endsWith(fileNames[3])) {
+          this.generateSVG(this.OPENEDVERTICALNUMS)
+        }
+        //if last animation is vertical, show horizontal w nums
+        else if(this.CURRENTSVG.data.endsWith(fileNames[4])){
+          this.generateSVG(this.OPENEDHORIZONTALNUMS);
+        }
+        count = 1;
+        return;
+      }
+      //if file is closed, show vertical opened
+      if(this.CURRENTSVG.data.endsWith(fileNames[0])){
+        this.generateSVG(this.OPENEDVERTICAL);
+      }
+      //if file is horizontal, show vertical opened
+      else if(this.CURRENTSVG.data.endsWith(fileNames[3])){
+        this.generateSVG(this.OPENEDVERTICAL);
+      }
+      //if file is vertical, show horizontal opened
+      else if(this.CURRENTSVG.data.endsWith(fileNames[4])){
+        this.generateSVG(this.OPENEDHORIZONTAL)
+      }
+      //if file is vertical w nums, show horizontal opened
+      else if(this.CURRENTSVG.data.endsWith(fileNames[1])){
+        this.generateSVG(this.OPENEDHORIZONTAL);
+      }
+      //if file is horizontal w nums, show vertical opened
+      else if(this.CURRENTSVG.data.endsWith(fileNames[2])){
+        this.generateSVG(this.OPENEDVERTICAL)
+      }
+      count++;
+    }, 500);
+  }
+
+}
+
+
+
+
+
+
+
+
   /**
    * Function that converts ID of flap to its color.
    * @param {string} - string that identifies which flap it is on the fortune teller
    * @returns {number} - unknown if invalid input, or a string that represents color of flap
    */
-  idToColor(flapID) {
+  /*idToColor(flapID) {
     return COLOR_BY_CLICK_REGION[flapID] || 'unknown';
-  }
+  }*/
     
   /**
    * Function that converts ID of flap to its number specifically for SVGs with numbers.
    * @param {string} - string that identifies which flap it is on the fortune teller
    * @returns {number} - 0 if invalid input, or a number that is associated with the flap
    */
-  idToNum(flapID) {
+  /*idToNum(flapID) {
     let number;
 
     if (this.currentSVG.data.includes('horizontally')) {
@@ -96,12 +186,13 @@ export class Origami {
     }
 
     return (number !== undefined) ? number : 0;
-  }
+  }*/
 
   /**
    * Activates and handles click logic for the initial closed fortune teller SVG.
    * @returns {Promise} - Promise object that adds a click event listener to each flap
    */
+  /*
   activateClosedHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
@@ -116,13 +207,13 @@ export class Origami {
         });
       });
     });
-  }
+  }*/
 
   /**
    * Activates and handles click logic for the open fortune teller SVGs.
    * @returns {Promise} - Promise object that adds a click event listener to each flap
    */
-  activateNumsHandler() {
+  /*activateNumsHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
         const svgDocument = this.currentSVG.contentDocument;
@@ -142,14 +233,14 @@ export class Origami {
   }
   async getFlapNumClicked() {
     return await this.activateNumsHandler();
-  }
+  }*/
 
   /**
    * Function that calculates the number of times needed to alternate between horizontally and vertically opened SVGs.
    * @param {string, number} - String of color for closed SVG flap, or number for open SVG flaps with numbers
    * @returns {number} - 0 if invalid input, or a positive number that represents number of times needed to animate
    */
-  getNumAnimations(flapClicked) {
+/*  getNumAnimations(flapClicked) {
     if (typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
       return flapClicked;
     } else if (typeof flapClicked === 'string') {
@@ -161,5 +252,5 @@ export class Origami {
 
   getCurrentSVG() {
     return this.svgPath;
-  }
-}
+  }*/
+
