@@ -12,7 +12,6 @@ const verticalNumsSVG = new Origami(svgPaths[2]);
 const horizontalSVG = new Origami(svgPaths[3]);
 const verticalSVG = new Origami(svgPaths[4]);
 let animationCount = 0;
-
 closedSVG.generateSVG();
 let CURRENTSVG = closedSVG;
 closedSVG.getFlapColorClicked().then((flapClicked) => {
@@ -27,6 +26,12 @@ closedSVG.getFlapColorClicked().then((flapClicked) => {
   });
 });
 
+/**
+ * Handles logic for the front-end animation of the fortune teller.
+ * @param {number} - Number of animations needed 
+ * @returns {Promise} - Promise object that animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.
+ * After the animation, show the last Figma mockup.
+ */
 function startAnimation(numAnimations) {
   return new Promise((resolve) => {
     let animationIndex = 0;

@@ -30,8 +30,6 @@ const NUMBER_BY_SHADOW_CLICK_REGION = {
 /*
   A class to support origami SVG selection,
   display, operation
-
-  w/ suggested approach guidance as comments
 */
 export class Origami {
   /**
@@ -42,6 +40,10 @@ export class Origami {
     // this number will change when we add SVG
     this.svgPath = svgPath;
   }
+  
+  /**
+   * Creates an SVG object called "currentSVG" and adds click listeners
+   */
   generateSVG() {
     const svg = document.createElement('object');
     svg.data = this.svgPath;
@@ -62,10 +64,20 @@ export class Origami {
       this.activateNumsHandler();
     }
   }
+  /**
+   * Function that converts ID of flap to its color.
+   * @param {string} - string that identifies which flap it is on the fortune teller
+   * @returns {number} - unknown if invalid input, or a string that represents color of flap
+   */
   idToColor(flapID) {
     return COLOR_BY_CLICK_REGION[flapID] || 'unknown';
   }
-
+    
+  /**
+   * Function that converts ID of flap to its number specifically for SVGs with numbers.
+   * @param {string} - string that identifies which flap it is on the fortune teller
+   * @returns {number} - 0 if invalid input, or a number that is associated with the flap
+   */
   idToNum(flapID) {
     let number;
 
@@ -78,6 +90,10 @@ export class Origami {
     return (number !== undefined) ? number : 0;
   }
 
+  /**
+   * Activates and handles click logic for the initial closed fortune teller SVG.
+   * @returns {Promise} - Promise object that adds a click event listener to each flap
+   */
   activateClosedHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
@@ -93,6 +109,11 @@ export class Origami {
       });
     });
   }
+
+  /**
+   * Activates and handles click logic for the open fortune teller SVGs.
+   * @returns {Promise} - Promise object that adds a click event listener to each flap
+   */
   activateNumsHandler() {
     return new Promise((resolve) => {
       this.currentSVG.addEventListener('load', () => {
@@ -115,6 +136,11 @@ export class Origami {
     return await this.activateNumsHandler();
   }
 
+  /**
+   * Function that calculates the number of times needed to alternate between horizontally and vertically opened SVGs.
+   * @param {string, number} - String of color for closed SVG flap, or number for open SVG flaps with numbers
+   * @returns {number} - 0 if invalid input, or a positive number that represents number of times needed to animate
+   */
   getNumAnimations(flapClicked) {
     if (typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
       return flapClicked;
