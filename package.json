@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "scripts": {
         "lint-check": "./node_modules/.bin/eslint .",
-        "lint-fix": " ./node_modules/.bin/eslint --fix ."
+        "lint-fix": " ./node_modules/.bin/eslint --fix .",
+        "test": ""
     },
     "devDependencies": {
         "eslint": "^8.41.0",
