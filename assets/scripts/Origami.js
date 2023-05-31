@@ -7,39 +7,21 @@ const COLOR_BY_CLICK_REGION = {
   '#CCA751': 'yellow',
 };
 const svgPaths = [
-  './assets/images/origami/closed.svg',
-  './assets/images/origami/horizontally-opened-nums.svg',
-  './assets/images/origami/vertically-opened-nums.svg',
-  './assets/images/origami/horizontally-opened.svg',
-  './assets/images/origami/vertically-opened.svg',
-  './assets/images/origami/opened.svg',
-  './assets/images/origami/1-opened.svg',
-  './assets/images/origami/2-opened.svg',
-  './assets/images/origami/3-opened.svg',
-  './assets/images/origami/4-opened.svg',
-  './assets/images/origami/5-opened.svg',
-  './assets/images/origami/6-opened.svg',
-  './assets/images/origami/7-opened.svg',
-  './assets/images/origami/8-opened.svg',
+  'assets/images/origami/closed.svg',
+  'assets/images/origami/horizontally-opened-nums.svg',
+  'assets/images/origami/vertically-opened-nums.svg',
+  'assets/images/origami/horizontally-opened.svg',
+  'assets/images/origami/vertically-opened.svg',
+  'assets/images/origami/opened.svg',
+  'assets/images/origami/1-opened.svg',
+  'assets/images/origami/2-opened.svg',
+  'assets/images/origami/3-opened.svg',
+  'assets/images/origami/4-opened.svg',
+  'assets/images/origami/5-opened.svg',
+  'assets/images/origami/6-opened.svg',
+  'assets/images/origami/7-opened.svg',
+  'assets/images/origami/8-opened.svg',
 ];
-
-const fileNames = [
-  'closed.svg',
-  'horizontally-opened-nums.svg',
-  'vertically-opened-nums.svg',
-  'horizontally-opened.svg',
-  'vertically-opened.svg',
-  'opened.svg',
-  '1-opened.svg',
-  '2-opened.svg',
-  '3-opened.svg',
-  '4-opened.svg',
-  '5-opened.svg',
-  '6-opened.svg',
-  '7-opened.svg',
-  '8-opened.svg',
-];
-
 
 /*
   A class to support origami SVG selection,
@@ -90,7 +72,7 @@ export class Origami {
   }
 
   #addClickListeners() {
-    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(fileNames[1]) || this.CURRENTSVG.data.endsWith(fileNames[2])) {
+    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(svgPaths[1]) || this.CURRENTSVG.data.endsWith(svgPaths[2])) {
       this.activateHandler();
     }
   }
@@ -166,11 +148,11 @@ export class Origami {
       if(count >= numAnimations){
         clearInterval(interval);
         //if the last animation is horizontal, show vertical w nums
-        if(this.CURRENTSVG.data.endsWith(fileNames[3]) && this.currentTurn < 2) {
+        if(this.CURRENTSVG.data.endsWith(svgPaths[3]) && this.currentTurn < 2) {
           this.generateSVG(this.OPENEDVERTICALNUMS);
         }
         //if last animation is vertical, show horizontal w nums
-        else if(this.CURRENTSVG.data.endsWith(fileNames[4])&& this.currentTurn < 2){
+        else if(this.CURRENTSVG.data.endsWith(svgPaths[4])&& this.currentTurn < 2){
           this.generateSVG(this.OPENEDHORIZONTALNUMS);
         }
         else {
@@ -181,26 +163,26 @@ export class Origami {
         return;
       }
       //if file is closed, show vertical opened
-      if(this.CURRENTSVG.data.endsWith(fileNames[0])){
+      if(this.CURRENTSVG.data.endsWith(svgPaths[0])){
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is horizontal, show vertical opened
-      else if(this.CURRENTSVG.data.endsWith(fileNames[3])){
+      else if(this.CURRENTSVG.data.endsWith(svgPaths[3])){
         if(this.currentTurn === 2) {
           this.generateSVG(this.OPENEDALL);
         }
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is vertical, show horizontal opened
-      else if(this.CURRENTSVG.data.endsWith(fileNames[4])){
+      else if(this.CURRENTSVG.data.endsWith(svgPaths[4])){
         this.generateSVG(this.OPENEDHORIZONTAL)
       }
       //if file is horizontal w nums, show horizontal opened
-      else if(this.CURRENTSVG.data.endsWith(fileNames[1])){
+      else if(this.CURRENTSVG.data.endsWith(svgPaths[1])){
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is vertical w nums, show vertical opened
-      else if(this.CURRENTSVG.data.endsWith(fileNames[2])){
+      else if(this.CURRENTSVG.data.endsWith(svgPaths[2])){
         this.generateSVG(this.OPENEDHORIZONTAL)
       }
       count++;
