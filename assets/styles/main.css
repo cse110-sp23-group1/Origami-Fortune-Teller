@@ -1,7 +1,7 @@
 object{
 	/* width, height values from Figma prototype */
-	width: 455.36px; 
-	height: 436.35px;
+	width: auto; 
+	height: auto;
 	/* CSS to center image horizontally */
 	display: block;
 	margin-left: auto;
