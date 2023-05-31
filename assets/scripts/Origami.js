@@ -67,7 +67,7 @@ export class Origami {
     this.OPENED8 = svgPaths[13];
     this.currentSVGPath = null;
     this.CURRENTSVG = null;
-    this.turnCount = 0;
+    this.currentTurn = 0;
     this.#init();
   }
   #init() {
@@ -87,7 +87,7 @@ export class Origami {
   }
 
   #addClickListeners() {
-    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(fileNames[1] || this.CURRENTSVG.data.endsWith(fileNames[2]))) {
+    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(fileNames[1]) || this.CURRENTSVG.data.endsWith(fileNames[2])) {
       this.activateHandler();
     }
   }
@@ -95,38 +95,51 @@ export class Origami {
     this.CURRENTSVG.addEventListener('load', () => {
       const flaps = this.CURRENTSVG.contentDocument.querySelectorAll('path[id$="-click"]');
       flaps.forEach((flap) => {
-        flap.addEventListener('click', (event) => {
-          if(this.currentSVGPath.endsWith('closed.svg')){
-            let numAnimations = COLOR_BY_CLICK_REGION[flap.getAttribute('fill')].length;
-            this.turnCount++;
-            console.log("# turns: " + this.turnCount);
-            this.startAnimation(numAnimations);  
-          }
-          if(this.currentSVGPath.endsWith('nums.svg')){
-            let numAnimations = parseInt(flap.id[0]);
-            this.turnCount++;
-            console.log("# turns: " + this.turnCount);
-            this.startAnimation(numAnimations);
-          }
-        });
+        flap.removeEventListener('click', this.handleFlapClick); // Remove the event listener if it's already added
+        flap.addEventListener('click', this.handleFlapClick); // Add the event listener
       });
     });
   }
-
-  startAnimation(numAnimations) {
+  
+  handleFlapClick = (event) => {
+    if(this.CURRENTSVG.data.endsWith('closed.svg')) {
+      let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
+      this.currentTurn++;
+      this.startAnimation(numAnimations);
+    }
+    if(this.CURRENTSVG.data.endsWith('nums.svg')) {
+      let numAnimations = parseInt(event.target.id[0]);
+      this.currentTurn++;
+      this.startAnimation(numAnimations);
+    }
+    if(this.CURRENTSVG.data.endsWith('opened.svg')) {
+      let flapToOpen = parseInt(event.target.id[0]);
+      this.openFlap(flapToOpen);
+    }
+  };
+  
+  openFlap(flapToOpen) {
+    this.generateSVG("./assets/images/origami/" + flapToOpen + "-opened.svg");
+  }
+  startAnimation(numAnimations) {  
     let count = 1;
     const interval = setInterval(() => {
+      this.isAnimationRunning = true;
       if(count >= numAnimations){
         clearInterval(interval);
         //if the last animation is horizontal, show vertical w nums
-        if(this.CURRENTSVG.data.endsWith(fileNames[3])) {
-          this.generateSVG(this.OPENEDVERTICALNUMS)
+        if(this.CURRENTSVG.data.endsWith(fileNames[3]) && this.currentTurn < 2) {
+          this.generateSVG(this.OPENEDVERTICALNUMS);
         }
         //if last animation is vertical, show horizontal w nums
-        else if(this.CURRENTSVG.data.endsWith(fileNames[4])){
+        else if(this.CURRENTSVG.data.endsWith(fileNames[4])&& this.currentTurn < 2){
           this.generateSVG(this.OPENEDHORIZONTALNUMS);
         }
+        else {
+          this.generateSVG(this.OPENEDALL);
+        }
         count = 1;
+        this.isAnimationRunning = false;
         return;
       }
       //if file is closed, show vertical opened
@@ -135,6 +148,9 @@ export class Origami {
       }
       //if file is horizontal, show vertical opened
       else if(this.CURRENTSVG.data.endsWith(fileNames[3])){
+        if(this.currentTurn === 2) {
+          this.generateSVG(this.OPENEDALL);
+        }
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is vertical, show horizontal opened
@@ -150,6 +166,7 @@ export class Origami {
         this.generateSVG(this.OPENEDVERTICAL)
       }
       count++;
+
     }, 500);
   }
 
