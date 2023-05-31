@@ -107,12 +107,12 @@ export class Origami {
       this.currentTurn++;
       this.startAnimation(numAnimations);
     }
-    if(this.CURRENTSVG.data.endsWith('nums.svg')) {
+    else if(this.CURRENTSVG.data.endsWith('nums.svg')) {
       let numAnimations = parseInt(event.target.id[0]);
       this.currentTurn++;
       this.startAnimation(numAnimations);
     }
-    if(this.CURRENTSVG.data.endsWith('opened.svg')) {
+    else if(this.CURRENTSVG.data.endsWith('opened.svg')) {
       let flapToOpen = parseInt(event.target.id[0]);
       this.openFlap(flapToOpen);
     }
@@ -157,13 +157,13 @@ export class Origami {
       else if(this.CURRENTSVG.data.endsWith(fileNames[4])){
         this.generateSVG(this.OPENEDHORIZONTAL)
       }
-      //if file is vertical w nums, show horizontal opened
+      //if file is horizontal w nums, show horizontal opened
       else if(this.CURRENTSVG.data.endsWith(fileNames[1])){
-        this.generateSVG(this.OPENEDHORIZONTAL);
+        this.generateSVG(this.OPENEDVERTICAL);
       }
-      //if file is horizontal w nums, show vertical opened
+      //if file is vertical w nums, show vertical opened
       else if(this.CURRENTSVG.data.endsWith(fileNames[2])){
-        this.generateSVG(this.OPENEDVERTICAL)
+        this.generateSVG(this.OPENEDHORIZONTAL)
       }
       count++;
 
