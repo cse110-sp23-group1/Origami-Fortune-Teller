@@ -40,6 +40,10 @@ export class Origami {
     this.OPENEDHORIZONTAL = svgPaths[3];
     this.OPENEDVERTICAL = svgPaths[4];
     this.OPENEDALL = svgPaths[5];
+    /*
+    Currently not being used 6 - 13, not sure if I should try to use them for style
+      or take them out completley? 
+    */
     this.OPENED1 = svgPaths[6];
     this.OPENED2 = svgPaths[7];
     this.OPENED3 = svgPaths[8];
@@ -53,6 +57,7 @@ export class Origami {
     this.currentTurn = 0;
     this.currFlapColor = null;
     this.fortunes = null;
+    this.isAnimationRunning = false;
     this.#init();
   }
   #init() {
@@ -75,7 +80,7 @@ export class Origami {
    * Activates handler for closed SVG or SVG with nums.
    */
   #addClickListeners() {
-    if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(svgPaths[1]) || this.CURRENTSVG.data.endsWith(svgPaths[2])) {
+    if(this.isClosed() || this.isHorizontalWithNums() || this.isVerticalWithNums()) {
       this.activateHandler();
     }
   }
@@ -160,7 +165,6 @@ export class Origami {
     let darkB = Math.floor(b * darkFactor);
     let newColor = `#${darkR.toString(16).padStart(2, '0')}${darkG.toString(16).padStart(2, '0')}${darkB.toString(16).padStart(2, '0')}`;
     newColor = newColor.toUpperCase();
-    console.log(newColor);
     return newColor;
   }
 
@@ -187,11 +191,11 @@ export class Origami {
       if(count >= numAnimations){
         clearInterval(interval);
         //if the last animation is horizontal, show vertical w nums
-        if(this.CURRENTSVG.data.endsWith(svgPaths[3]) && this.currentTurn < 2) {
+        if(this.isHorizontal() && this.currentTurn < 2) {
           this.generateSVG(this.OPENEDVERTICALNUMS);
         }
         //if last animation is vertical, show horizontal w nums
-        else if(this.CURRENTSVG.data.endsWith(svgPaths[4])&& this.currentTurn < 2){
+        else if(this.isVertical() && this.currentTurn < 2){
           this.generateSVG(this.OPENEDHORIZONTALNUMS);
         }
         else {
@@ -202,26 +206,26 @@ export class Origami {
         return;
       }
       //if file is closed, show vertical opened
-      if(this.CURRENTSVG.data.endsWith(svgPaths[0])){
+      if(this.isClosed()){
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is horizontal, show vertical opened
-      else if(this.CURRENTSVG.data.endsWith(svgPaths[3])){
+      else if(this.isHorizontal()){
         if(this.currentTurn === 2) {
           this.generateSVG(this.OPENEDALL);
         }
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is vertical, show horizontal opened
-      else if(this.CURRENTSVG.data.endsWith(svgPaths[4])){
+      else if(this.isVertical()){
         this.generateSVG(this.OPENEDHORIZONTAL)
       }
       //if file is horizontal w nums, show horizontal opened
-      else if(this.CURRENTSVG.data.endsWith(svgPaths[1])){
+      else if(this.isHorizontalWithNums()){
         this.generateSVG(this.OPENEDVERTICAL);
       }
       //if file is vertical w nums, show vertical opened
-      else if(this.CURRENTSVG.data.endsWith(svgPaths[2])){
+      else if(this.isVerticalWithNums()){
         this.generateSVG(this.OPENEDHORIZONTAL)
       }
       count++;
@@ -229,6 +233,25 @@ export class Origami {
     }, 500);
   }
 
+  isVertical() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[4]);
+  }
+
+  isVerticalWithNums() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[2]);
+  }
+
+  isHorizontal() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[3]);
+  }
+
+  isHorizontalWithNums() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[1]);
+  }
+
+  isClosed() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[0]);
+  }
 }
 
 
