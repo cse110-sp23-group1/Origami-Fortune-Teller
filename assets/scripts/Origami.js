@@ -1,9 +1,10 @@
 // Origami.js
+import { saveFortunesOnClick } from './SideBar.js'
 const COLOR_BY_CLICK_REGION = {
-  '#118AB2': 'blue',
-  '#EF476F': 'red',
-  '#06D6A0': 'green',
-  '#FFD166': 'yellow',
+  '#0D6E8E': 'blue',
+  '#BF3858': 'red',
+  '#04AB80': 'green',
+  '#CCA751': 'yellow',
 };
 const svgPaths = [
   './assets/images/origami/closed.svg',
@@ -68,6 +69,8 @@ export class Origami {
     this.currentSVGPath = null;
     this.CURRENTSVG = null;
     this.currentTurn = 0;
+    this.currFlapColor = null;
+    this.fortunes = null;
     this.#init();
   }
   #init() {
@@ -95,15 +98,33 @@ export class Origami {
     this.CURRENTSVG.addEventListener('load', () => {
       const flaps = this.CURRENTSVG.contentDocument.querySelectorAll('path[id$="-click"]');
       flaps.forEach((flap) => {
-        flap.removeEventListener('click', this.handleFlapClick); // Remove the event listener if it's already added
-        flap.addEventListener('click', this.handleFlapClick); // Add the event listener
+        flap.addEventListener('click', this.handleFlapClick);
+        flap.addEventListener('mouseover', this.handleFlapMouseOver);
+        flap.addEventListener('mouseout', this.handleFlapMouseOut);
       });
     });
   }
-  
+
+  handleFlapMouseOver = (event) => {
+    let currColor = event.target.getAttribute('fill');
+    this.currFlapColor = currColor;
+    let darkerShade = this.getDarkerShade(currColor);
+    event.target.setAttribute('fill', darkerShade);
+  };
+
+  handleFlapMouseOut = (event) => {
+    event.target.setAttribute('fill', this.currFlapColor);
+  }
+
   handleFlapClick = (event) => {
+    event.target.removeEventListener('click', this.handleFlapClick);
     if(this.CURRENTSVG.data.endsWith('closed.svg')) {
+      this.fortunes = saveFortunesOnClick();
       let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
+      let sideBar = document.querySelector('.sidebar');
+      if(sideBar) {
+        sideBar.style.display = 'none';
+      }
       this.currentTurn++;
       this.startAnimation(numAnimations);
     }
@@ -117,10 +138,27 @@ export class Origami {
       this.openFlap(flapToOpen);
     }
   };
-  
+  getDarkerShade(color) {
+    let darkFactor = 0.8;
+    let r = parseInt(color.substr(1,2), 16);
+    let g = parseInt(color.substr(3,2), 16);
+    let b = parseInt(color.substr(5,2), 16);
+    let darkR = Math.floor(r * darkFactor);
+    let darkG = Math.floor(g * darkFactor);
+    let darkB = Math.floor(b * darkFactor);
+    let newColor = `#${darkR.toString(16).padStart(2, '0')}${darkG.toString(16).padStart(2, '0')}${darkB.toString(16).padStart(2, '0')}`;
+    newColor = newColor.toUpperCase();
+    console.log(newColor);
+    return newColor;
+  }
+
   openFlap(flapToOpen) {
     this.generateSVG("./assets/images/origami/" + flapToOpen + "-opened.svg");
+    let randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
+    console.log(randomFortune);
+
   }
+
   startAnimation(numAnimations) {  
     let count = 1;
     const interval = setInterval(() => {
