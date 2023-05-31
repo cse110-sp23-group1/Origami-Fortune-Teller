@@ -6,6 +6,16 @@ const COLOR_BY_CLICK_REGION = {
   '#04AB80': 'green',
   '#CCA751': 'yellow',
 };
+const NUMBER_BY_COLOR = {
+  '1': '#073E51',
+  '2': '#073E51',
+  '3': '#917535',
+  '4': '#917535',
+  '5': '#00664C',
+  '6': '#00664C',
+  '7': '#962B44',
+  '8': '#962B44',
+};
 const svgPaths = [
   'assets/images/origami/closed.svg',
   'assets/images/origami/horizontally-opened-nums.svg',
@@ -117,6 +127,11 @@ export class Origami {
   * @param {Event} event - The mouse out event object.
   */
   handleFlapMouseOut = (event) => {
+    if(this.currentTurn == 1){
+      let color = NUMBER_BY_COLOR[event.target.getAttribute('id').substring(0, 1)];
+      event.target.setAttribute('fill', color);
+      return;
+    }
     event.target.setAttribute('fill', this.currFlapColor);
   };
 
@@ -135,10 +150,8 @@ export class Origami {
       this.fortunes = saveFortunesOnClick();
       let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
       let sideBar = document.querySelector('.sidebar');
-      let fortuneBox = document.querySelector('.fortuneInputBox');
       if(sideBar) {
         sideBar.style.display = 'none';
-        fortuneBox.style.display = 'none';
       }
       this.currentTurn++;
       this.startAnimation(numAnimations);
