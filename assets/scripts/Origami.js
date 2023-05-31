@@ -77,7 +77,7 @@ export class Origami {
   }
 
   #addClickListeners() {
-    if(this.isClosed() || this.isHorizontalWithNums() || this.isVerticalWithNums()) {
+    if(this.isClosed() || this.isHorizontalWithNums() || this.isVerticalWithNums() || this.isOpen()) {
       this.activateHandler();
     }
   }
@@ -88,6 +88,7 @@ export class Origami {
         flap.addEventListener('click', this.handleFlapClick);
         flap.addEventListener('mouseover', this.handleFlapMouseOver);
         flap.addEventListener('mouseout', this.handleFlapMouseOut);
+        
       });
     });
   }
@@ -105,7 +106,7 @@ export class Origami {
 
   handleFlapClick = (event) => {
     event.target.removeEventListener('click', this.handleFlapClick);
-    if(this.CURRENTSVG.data.endsWith('closed.svg')) {
+    if(this.isClosed()) {
       this.fortunes = saveFortunesOnClick();
       let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
       let sideBar = document.querySelector('.sidebar');
@@ -115,12 +116,12 @@ export class Origami {
       this.currentTurn++;
       this.startAnimation(numAnimations);
     }
-    else if(this.CURRENTSVG.data.endsWith('nums.svg')) {
+    else if(this.isVerticalWithNums() || this.isHorizontalWithNums()) {
       let numAnimations = parseInt(event.target.id[0]);
       this.currentTurn++;
       this.startAnimation(numAnimations);
     }
-    else if(this.CURRENTSVG.data.endsWith('opened.svg')) {
+    else if(this.isOpen()) {
       let flapToOpen = parseInt(event.target.id[0]);
       this.openFlap(flapToOpen);
     }
@@ -139,10 +140,12 @@ export class Origami {
   }
 
   openFlap(flapToOpen) {
+    console.log(flapToOpen);
     this.generateSVG("./assets/images/origami/" + flapToOpen + "-opened.svg");
     let randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
-    console.log(randomFortune);
-
+    console.log(this.CURRENTSVG.contentDocument);
+    let fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('path[id="fortuneText"]');
+    fortuneTextElement.textContent = randomFortune;
   }
 
   startAnimation(numAnimations) {  
@@ -213,104 +216,8 @@ export class Origami {
   isClosed() {
     return this.CURRENTSVG.data.endsWith(svgPaths[0]);
   }
+
+  isOpen() {
+    return this.CURRENTSVG.data.endsWith(svgPaths[5]);
+  }
 }
-
-
-
-
-
-
-
-
-  /**
-   * Function that converts ID of flap to its color.
-   * @param {string} - string that identifies which flap it is on the fortune teller
-   * @returns {number} - unknown if invalid input, or a string that represents color of flap
-   */
-  /*idToColor(flapID) {
-    return COLOR_BY_CLICK_REGION[flapID] || 'unknown';
-  }*/
-    
-  /**
-   * Function that converts ID of flap to its number specifically for SVGs with numbers.
-   * @param {string} - string that identifies which flap it is on the fortune teller
-   * @returns {number} - 0 if invalid input, or a number that is associated with the flap
-   */
-  /*idToNum(flapID) {
-    let number;
-
-    if (this.currentSVG.data.includes('horizontally')) {
-      number = NUMBER_BY_SHADOW_CLICK_REGION.horizontal[flapID];
-    } else if (this.currentSVG.data.includes('vertically')) {
-      number = NUMBER_BY_SHADOW_CLICK_REGION.vertical[flapID];
-    }
-
-    return (number !== undefined) ? number : 0;
-  }*/
-
-  /**
-   * Activates and handles click logic for the initial closed fortune teller SVG.
-   * @returns {Promise} - Promise object that adds a click event listener to each flap
-   */
-  /*
-  activateClosedHandler() {
-    return new Promise((resolve) => {
-      this.currentSVG.addEventListener('load', () => {
-        const svgDocument = this.currentSVG.contentDocument;
-        const closedFlaps = svgDocument.querySelectorAll('g[id$="-flap-d"] path[id$="-click"]');
-        closedFlaps.forEach((flap) => {
-          flap.addEventListener('click', (event) => {
-            const flapID = flap.id;
-            const flapColorClicked = this.idToColor(flapID);
-            resolve(flapColorClicked);
-          });
-        });
-      });
-    });
-  }*/
-
-  /**
-   * Activates and handles click logic for the open fortune teller SVGs.
-   * @returns {Promise} - Promise object that adds a click event listener to each flap
-   */
-  /*activateNumsHandler() {
-    return new Promise((resolve) => {
-      this.currentSVG.addEventListener('load', () => {
-        const svgDocument = this.currentSVG.contentDocument;
-        const numFlaps = svgDocument.querySelectorAll('path[id$="-click"]');
-        numFlaps.forEach((flap) => {
-          flap.addEventListener('click', (event) => {
-            const flapID = flap.id;
-            const flapNumClicked = this.idToNum(flapID);
-            resolve(flapNumClicked);
-          });
-        });
-      });
-    });
-  }
-  async getFlapColorClicked() {
-    return await this.activateClosedHandler();
-  }
-  async getFlapNumClicked() {
-    return await this.activateNumsHandler();
-  }*/
-
-  /**
-   * Function that calculates the number of times needed to alternate between horizontally and vertically opened SVGs.
-   * @param {string, number} - String of color for closed SVG flap, or number for open SVG flaps with numbers
-   * @returns {number} - 0 if invalid input, or a positive number that represents number of times needed to animate
-   */
-/*  getNumAnimations(flapClicked) {
-    if (typeof flapClicked === 'number' && Number.isInteger(flapClicked)) {
-      return flapClicked;
-    } else if (typeof flapClicked === 'string') {
-      return flapClicked.length;
-    }
-
-    return 0;
-  }
-
-  getCurrentSVG() {
-    return this.svgPath;
-  }*/
-
