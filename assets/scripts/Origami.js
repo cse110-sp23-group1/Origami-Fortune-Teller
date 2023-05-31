@@ -59,7 +59,8 @@ export class Origami {
     this.generateSVG(this.CLOSEDSVG);
   }
   /**
-   * Creates an SVG object called "currentSVG" and adds click listeners
+   * Creates object for the current SVG and adds click listeners.
+   * @param {string} currentSVGPath - string that represents path of SVG file in our repo
    */
   generateSVG(currentSVGPath) {
     this.currentSVGPath = currentSVGPath;
@@ -70,12 +71,17 @@ export class Origami {
     this.CURRENTSVG.data = this.currentSVGPath;
     this.#addClickListeners();
   }
-
+  /**
+   * Activates handler for closed SVG or SVG with nums.
+   */
   #addClickListeners() {
     if(this.CURRENTSVG.data.endsWith('closed.svg') || this.CURRENTSVG.data.endsWith(svgPaths[1]) || this.CURRENTSVG.data.endsWith(svgPaths[2])) {
       this.activateHandler();
     }
   }
+  /**
+   * Adds click and hover functionality event listeners for the current SVG.
+   */
   activateHandler() {
     this.CURRENTSVG.addEventListener('load', () => {
       const flaps = this.CURRENTSVG.contentDocument.querySelectorAll('path[id$="-click"]');
@@ -87,6 +93,11 @@ export class Origami {
     });
   }
 
+  /**
+  * Handles the mouse over event for a flap element.
+  * Updates the fill attribute of the event target to a darker shade of a current flap color.
+  * @param {Event} event - The mouse over event object.
+  */
   handleFlapMouseOver = (event) => {
     let currColor = event.target.getAttribute('fill');
     this.currFlapColor = currColor;
@@ -94,10 +105,24 @@ export class Origami {
     event.target.setAttribute('fill', darkerShade);
   };
 
+  /**
+  * Handles the mouse out event for a flap element.
+  * Updates the fill attribute of the event target to the current flap color.
+  * @param {Event} event - The mouse out event object.
+  */
   handleFlapMouseOut = (event) => {
     event.target.setAttribute('fill', this.currFlapColor);
-  }
+  };
 
+  /**
+  * Handles the click event for a flap element.
+  * Calculates number of animations based on which flap is clicked.
+  * Performs different actions based on the state of the flap element.
+  * If the current SVG is closed, then remove sidebar after a flap is clicked and start animation
+  * If current SVG is opened with numbers, then start animation.
+  * If the current SVG is completely opened, then open flap and display fortune.
+  * @param {Event} event - The click event object.
+  */
   handleFlapClick = (event) => {
     event.target.removeEventListener('click', this.handleFlapClick);
     if(this.CURRENTSVG.data.endsWith('closed.svg')) {
@@ -120,6 +145,11 @@ export class Origami {
       this.openFlap(flapToOpen);
     }
   };
+  /**
+   * Calculates and returns a darker shade of the given color.
+   * @param {string} color - The color in hexadecimal format (#RRGGBB).
+   * @returns {string} The darker shade of the color in hexadecimal format (#RRGGBB).
+   */
   getDarkerShade(color) {
     let darkFactor = 0.8;
     let r = parseInt(color.substr(1,2), 16);
@@ -134,13 +164,22 @@ export class Origami {
     return newColor;
   }
 
+  /**
+   * Opens the specified flap and displays fortune.
+   * @param {number} flapToOpen - The number of the flap to open.
+   */
   openFlap(flapToOpen) {
     this.generateSVG("./assets/images/origami/" + flapToOpen + "-opened.svg");
     let randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     console.log(randomFortune);
-
   }
 
+  /**
+   * Starts the animation with the specified number of animations and handles animation logic.
+   * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times. 
+   * Then it generates the next current SVG and displays it on the webpage.
+   * @param {number} numAnimations - The number of animations to perform.
+   */
   startAnimation(numAnimations) {  
     let count = 1;
     const interval = setInterval(() => {
