@@ -135,8 +135,10 @@ export class Origami {
       this.fortunes = saveFortunesOnClick();
       let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
       let sideBar = document.querySelector('.sidebar');
+      let fortuneBox = document.querySelector('.fortuneInputBox');
       if(sideBar) {
         sideBar.style.display = 'none';
+        fortuneBox.style.display = 'none';
       }
       this.currentTurn++;
       this.startAnimation(numAnimations);
