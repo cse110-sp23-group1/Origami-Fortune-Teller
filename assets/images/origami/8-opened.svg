@@ -33,7 +33,7 @@
 </g>
 <g id="Top-Left-8-Opened">
 <path id="Top-Left-1-Flap-Opened" d="M216 3L3 221.5H216V3Z" fill="#EF476F" stroke="#962B44" stroke-width="2"/>
-<text id="fortuneText" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" font-weight="600" letter-spacing="0em"><tspan x="117.99" y="149.864">Don&#x2019;t count </tspan><tspan x="138.861" y="164.864">on it</tspan></text>
+<text id="fortuneText" transform="matrix(0 1 -1 0 150 180)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" font-weight="600" letter-spacing="0em"><tspan x="34.8633" y="11.8636">Don&#x2019;t count on it</tspan></text>
 </g>
 </g>
 </svg>
