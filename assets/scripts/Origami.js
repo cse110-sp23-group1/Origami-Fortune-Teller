@@ -174,11 +174,12 @@ export class Origami {
    * @param {number} flapToOpen - The number of the flap to open.
    */
   openFlap(flapToOpen) {
-    this.generateSVG("./assets/images/origami/" + flapToOpen + "-opened.svg");
+    this.generateSVG("./assets/images/origami/" + flapToOpen + "-Opened.svg");
     let randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
-    console.log(this.CURRENTSVG.contentDocument);
-    let fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('path[id="fortuneText"]');
-    fortuneTextElement.textContent = randomFortune;
+    this.CURRENTSVG.onload = () => {
+      let fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
+      fortuneTextElement.textContent = randomFortune;
+    };
   }
 
   /**
