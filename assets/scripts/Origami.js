@@ -124,6 +124,7 @@ export class Origami {
     this.currFlapColor = currColor;
     let darkerShade = this.getDarkerShade(currColor);
     event.target.setAttribute('fill', darkerShade);
+    event.target.style.cursor = 'pointer'; 
   };
 
   /**
