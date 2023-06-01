@@ -152,7 +152,6 @@ export class Origami {
 
     // otherwise, just set it to previous color.
     event.target.setAttribute('fill', this.currFlapColor);
-    console.log(this.getOriginalColor('#FFD166'));
   };
 
   /**
