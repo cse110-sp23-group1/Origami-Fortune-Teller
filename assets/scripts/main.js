@@ -42,15 +42,26 @@ function activateSidebarButtons() {
   // values and modularizing defaults 
   fetchFortunes()
   .then(fortuneList => {
-    // Handle the fetched fortuneList here
+    /*
+      - Handle the fetched fortuneList here
+      - loads from local storage or json
+    */
     defaultFortunes = fortuneList;
     
   })
   .catch(error => {
-    // Handle any errors that occurred during the fetch request
+    /*
+      - Handle any errors that occurred during the fetch request
+      - Catching error results in a failedFortunes array being returned
+      - Side bar will prompt user to input every fortune
+    */
     defaultFortunes = error;
   })
   .finally(() => {
+    /*
+      - continue with button creation after fortunes saved
+      - executes regardless of fetch success/failure
+    */
     defaultFortunes.forEach((fortune, index) => {
       const button = document.createElement('button');
       button.textContent = fortune;
