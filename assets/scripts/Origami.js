@@ -6,7 +6,7 @@ const COLOR_BY_CLICK_REGION = {
   '#04AB80': 'green',
   '#CCA751': 'yellow',
 };
-const NUMBER_BY_COLOR = {
+const NUMBER_TO_DARK_COLOR = {
   '1': '#073E51',
   '2': '#073E51',
   '3': '#917535',
@@ -15,6 +15,12 @@ const NUMBER_BY_COLOR = {
   '6': '#00664C',
   '7': '#962B44',
   '8': '#962B44',
+};
+const DARK_COLOR_TO_COLOR = {
+  '#118AB2': '#0D6E8E', // blue
+  '#962B44': '#BF3858', // red
+  '#00664C': '#04AB80', // green
+  '#FFD166': '#CCA751', // yellow
 };
 const svgPaths = [
   'assets/images/origami/closed.svg',
@@ -104,7 +110,6 @@ export class Origami {
         flap.addEventListener('click', this.handleFlapClick);
         flap.addEventListener('mouseover', this.handleFlapMouseOver);
         flap.addEventListener('mouseout', this.handleFlapMouseOut);
-        
       });
     });
   }
@@ -127,12 +132,27 @@ export class Origami {
   * @param {Event} event - The mouse out event object.
   */
   handleFlapMouseOut = (event) => {
+    // ensures that original color is kept if cursor hovers over an inner flap in opened SVGs.
     if(this.currentTurn == 1){
-      let color = NUMBER_BY_COLOR[event.target.getAttribute('id').substring(0, 1)];
-      event.target.setAttribute('fill', color);
+      let originalColor = NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)];
+      event.target.setAttribute('fill', originalColor);
       return;
     }
+    if(this.currentTurn == 2) {
+      let lightColor = DARK_COLOR_TO_COLOR[event.target.getAttribute('fill')];
+      // if getAttribute did not return any of the dark colors, set color to previous color.
+      if(lightColor == null){
+        event.target.setAttribute('fill', this.currFlapColor);
+        return;
+      }
+      // if getAttribute returned a dark color, then lightColor is equal to getDarkerShade(originalColor).
+      event.target.setAttribute('fill', this.getOriginalColor(lightColor));
+      return;
+    }
+
+    // otherwise, just set it to previous color.
     event.target.setAttribute('fill', this.currFlapColor);
+    console.log(this.getOriginalColor('#FFD166'));
   };
 
   /**
@@ -182,6 +202,24 @@ export class Origami {
     let newColor = `#${darkR.toString(16).padStart(2, '0')}${darkG.toString(16).padStart(2, '0')}${darkB.toString(16).padStart(2, '0')}`;
     newColor = newColor.toUpperCase();
     return newColor;
+  }
+
+  /**
+   * Calculates and returns the original color when a darker shade is passed.
+   * @param {string} darkerColor - The darker shade color in hexadecimal format (#RRGGBB).
+   * @returns {string} The original color in hexadecimal format (#RRGGBB).
+   */
+  getOriginalColor(darkerColor) {
+    let darkFactor = 0.8;
+    let darkR = parseInt(darkerColor.substr(1, 2), 16);
+    let darkG = parseInt(darkerColor.substr(3, 2), 16);
+    let darkB = parseInt(darkerColor.substr(5, 2), 16);
+    let r = Math.ceil(darkR / darkFactor);
+    let g = Math.ceil(darkG / darkFactor);
+    let b = Math.ceil(darkB / darkFactor);
+    let originalColor = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    originalColor = originalColor.toUpperCase();
+    return originalColor;
   }
 
   /**
