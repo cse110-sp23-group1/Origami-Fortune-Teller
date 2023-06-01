@@ -128,17 +128,18 @@ export class Origami {
 
   /**
   * Handles the mouse out event for a flap element.
-  * Updates the fill attribute of the event target to the current flap color.
+  * Updates the fill attribute of the event target to the current flap color. 
+  * Handles logic for consistent colors when cursor hovering over inner flaps.
   * @param {Event} event - The mouse out event object.
   */
   handleFlapMouseOut = (event) => {
     // ensures that original color is kept if cursor hovers over an inner flap in opened SVGs.
-    if(this.currentTurn == 1){
-      let originalColor = NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)];
+    if(this.currentTurn == 1){ // SVGs with numbers
+      let originalColor = NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]; // array element represents number of flap.
       event.target.setAttribute('fill', originalColor);
       return;
     }
-    if(this.currentTurn == 2) {
+    if(this.currentTurn == 2) { // fully opened SVG
       let lightColor = DARK_COLOR_TO_COLOR[event.target.getAttribute('fill')];
       // if getAttribute did not return any of the dark colors, set color to previous color.
       if(lightColor == null){
