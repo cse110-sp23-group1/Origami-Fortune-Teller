@@ -1,3 +1,14 @@
+object{
+	/* width, height values from Figma prototype */
+	width: auto; 
+	height: auto;
+	/* CSS to center image horizontally */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+}
+
 /* Sidebar */
 .sidebar button {
   box-sizing: border-box;
