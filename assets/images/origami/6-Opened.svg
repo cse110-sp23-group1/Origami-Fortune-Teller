@@ -1,0 +1,39 @@
+<svg width="646" height="442" viewBox="0 0 646 442" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="6-Opened">
+<g id="Bottom-Right-4">
+<path id="Bottom-Left-2-Flap" d="M430 219.5L643 438H430V219.5Z" fill="#FFD166" stroke="#917535" stroke-width="2"/>
+<text id="4" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="476.684" y="389.909">4</tspan></text>
+</g>
+<g id="Bottom-Right-3">
+<path id="Bottom-Left-1-Flap" d="M642.5 438.5L429.5 220H642.5V438.5Z" fill="#FFD166" stroke="#917535" stroke-width="2"/>
+<text id="3" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="549.064" y="299.909">3</tspan></text>
+</g>
+<g id="Top-Right-2">
+<path id="Top-Left-1-Flap" d="M643.5 2.99951L430 219H643L643.5 2.99951Z" fill="#118AB2" stroke="#073E51" stroke-width="2"/>
+<text id="2" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="545.852" y="178.909">2</tspan></text>
+</g>
+<g id="Top-Right-1">
+<path id="Top-Left-1-Flap_2" d="M430 221L643 2.5H430V221Z" fill="#118AB2" stroke="#073E51" stroke-width="2"/>
+<text id="1" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="479.508" y="96.9086">1</tspan></text>
+</g>
+<g id="Bottom-Left-5">
+<path id="Bottom-Left-2-Flap_2" d="M430 219.5L217 438H430V219.5Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
+<text id="5" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="332.547" y="389.909">5</tspan></text>
+</g>
+<g id="Bottom-Left-6">
+<path id="Bottom-Left-1-Flap_2" d="M216.5 438L429.5 219.5H216.5V438Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
+</g>
+<g id="Bottom-Left-6-Opened">
+<path id="Bottom-Left-1-Flap-Opened" d="M216 439.5L3 221H216V439.5Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
+<text id="fortuneText" transform="matrix(1 0 0 1 200 300)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" font-weight="600" letter-spacing="0em"><tspan x="34.8633" y="11.8636">Don&#x2019;t count on it</tspan></text>
+</g>
+<g id="Top-Left-7">
+<path id="Top-Left-1-Flap_3" d="M216.5 2.5L429.5 221H216.5V2.5Z" fill="#EF476F" stroke="#C2395A" stroke-width="2"/>
+<text id="7" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="271.74" y="163.909">7</tspan></text>
+</g>
+<g id="Top-Left-8">
+<path id="Top-Left-1-Flap_4" d="M429 220.5L216 2H429V220.5Z" fill="#EF476F" stroke="#962B44" stroke-width="2"/>
+<text id="8" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="342.217" y="96.9086">8</tspan></text>
+</g>
+</g>
+</svg>

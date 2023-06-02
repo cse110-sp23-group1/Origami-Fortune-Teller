@@ -9,5 +9,6 @@ parserOptions:
 plugins: ["html"]
 rules: {
   "max-len": "off",
-  "require-jsdoc": "off"
+  "require-jsdoc": "off",
+  "valid-jsdoc": "off"
 }
