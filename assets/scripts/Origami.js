@@ -132,6 +132,13 @@ export class Origami {
       let lightColor = DARK_COLOR_TO_COLOR[event.target.getAttribute('fill')];
       // if getAttribute did not return any of the dark colors, set color to previous color.
       if(lightColor == null){
+        let originalColor = DARK_COLOR_TO_COLOR[NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]];
+        // if user hovers out of flap with a dark color, correct the color
+        if(this.getDarkerShade(event.target.getAttribute('fill')) == originalColor){ 
+          this.currFlapColor = originalColor;
+          event.target.setAttribute('fill', this.getOriginalColor(this.currFlapColor));
+          return;
+        }
         event.target.setAttribute('fill', this.currFlapColor);
         return;
       }
