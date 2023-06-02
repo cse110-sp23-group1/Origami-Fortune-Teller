@@ -56,18 +56,6 @@ export class Origami {
     this.OPENEDHORIZONTAL = svgPaths[3];
     this.OPENEDVERTICAL = svgPaths[4];
     this.OPENEDALL = svgPaths[5];
-    /*
-    Currently not being used 6 - 13, not sure if I should try to use them for style
-      or take them out completley? 
-    */
-    this.OPENED1 = svgPaths[6];
-    this.OPENED2 = svgPaths[7];
-    this.OPENED3 = svgPaths[8];
-    this.OPENED4 = svgPaths[9];
-    this.OPENED5 = svgPaths[10];
-    this.OPENED6 = svgPaths[11];
-    this.OPENED7 = svgPaths[12];
-    this.OPENED8 = svgPaths[13];
     this.currentSVGPath = null;
     this.CURRENTSVG = null;
     this.currentTurn = 0;
