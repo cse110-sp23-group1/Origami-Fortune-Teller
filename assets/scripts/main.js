@@ -227,7 +227,7 @@ async function fetchFortunes() {
     }
 
     // local storage was empty, fetch JSON
-    let url = '/assets/fortunes.json';
+    let url = 'https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/assets/fortunes.json';
     fetch(url)
       .then(response => response.json())
       .then(data => {
