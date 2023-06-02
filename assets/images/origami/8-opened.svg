@@ -1,0 +1,39 @@
+<svg width="433" height="660" viewBox="0 0 433 660" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="8-Opened">
+<g id="Bottom-Right-4">
+<path id="Bottom-Left-2-Flap" d="M217 438.5L430 657H217V438.5Z" fill="#FFD166" stroke="#917535" stroke-width="2"/>
+<text id="4" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="263.684" y="608.909">4</tspan></text>
+</g>
+<g id="Bottom-Right-3">
+<path id="Bottom-Left-1-Flap" d="M429.5 657.5L216.5 439H429.5V657.5Z" fill="#FFD166" stroke="#917535" stroke-width="2"/>
+<text id="3" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="336.064" y="518.909">3</tspan></text>
+</g>
+<g id="Top-Right-2">
+<path id="Top-Left-1-Flap" d="M430.5 222L217 438H430L430.5 222Z" fill="#118AB2" stroke="#073E51" stroke-width="2"/>
+<text id="2" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="332.852" y="397.909">2</tspan></text>
+</g>
+<g id="Top-Right-1">
+<path id="Top-Left-1-Flap_2" d="M217 440L430 221.5H217V440Z" fill="#118AB2" stroke="#073E51" stroke-width="2"/>
+<text id="1" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="266.508" y="315.909">1</tspan></text>
+</g>
+<g id="Bottom-Left-5">
+<path id="Bottom-Left-2-Flap_2" d="M217 438.5L4 657H217V438.5Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
+<text id="5" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="119.547" y="608.909">5</tspan></text>
+</g>
+<g id="Bottom-Left-6">
+<path id="Bottom-Left-1-Flap_2" d="M3.5 657L216.5 438.5H3.5V657Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
+<text id="6" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="57.1406" y="518.909">6</tspan></text>
+</g>
+<g id="Top-Left-7">
+<path id="Top-Left-1-Flap_3" d="M3.5 221.5L216.5 440H3.5V221.5Z" fill="#EF476F" stroke="#C2395A" stroke-width="2"/>
+<text id="7" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="58.7402" y="382.909">7</tspan></text>
+</g>
+<g id="Top-Left-8">
+<path id="Top-Left-1-Flap_4" d="M216 439.5L3 221H216V439.5Z" fill="#EF476F" stroke="#962B44" stroke-width="2"/>
+</g>
+<g id="Top-Left-8-Opened">
+<path id="Top-Left-1-Flap-Opened" d="M216 3L3 221.5H216V3Z" fill="#EF476F" stroke="#962B44" stroke-width="2"/>
+<text id="fortuneText" transform="matrix(0 1 -1 0 150 180)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" font-weight="600" letter-spacing="0em"><tspan x="34.8633" y="11.8636">Don&#x2019;t count on it</tspan></text>
+</g>
+</g>
+</svg>

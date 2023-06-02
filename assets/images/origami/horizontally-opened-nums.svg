@@ -1,0 +1,28 @@
+<svg width="456" height="461" viewBox="0 0 456 461" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="Group 1">
+        <path id="Rectangle 4" d="M2.04105 1.85226C14.541 -8.56442 223.541 28.3523 223.541 28.3523V213.024H38.5413C38.5413 213.024 -10.4589 12.2689 2.04105 1.85226Z" fill="#EF476F"/>
+    </g>
+    <g id="Group 2">
+        <path id="Rectangle 4_2" d="M446.065 2.20449C433.565 -8.21219 224.564 28.7045 224.564 28.7045V213.376H409.564C409.564 213.376 458.565 12.6212 446.065 2.20449Z" fill="#118AB2"/>
+        <path id="Line 1" d="M224 28L224 210" stroke="#962B44" stroke-width="2"/>
+    </g>
+    
+    <path id="Line 3" d="M445.007 2.42149L222.459 213.148" stroke="#094559" stroke-width="2.00707"/>
+    <path id="Line 1_2" d="M3.69214 1.77823L222.692 211.778" stroke="#962B44" stroke-width="2"/>
+    <path id="1-click" d="M309.465 140.34L224.915 77.2075L225.022 211.887L408.976 213.204L309.465 140.34Z" fill="#073E51"/>
+    <path id="Polygon 3" d="M137 141L224.312 78L224.312 212.839L40.2041 214.435L137 141Z" fill="#962B44"/>
+    <path id="7-click" d="M137 141L224.312 78L224.312 212.839L40.2041 214.435L137 141Z" fill="#962B44"/>
+    <path id="Rectangle 4_3" d="M12.8523 433.5C2.43558 421 39.3523 212 39.3523 212H224.024V397C224.024 397 23.2689 446 12.8523 433.5Z" fill="#06D6A0"/>
+    <path id="Rectangle 5" d="M435.171 434.853C445.588 422.353 408.671 213.352 408.671 213.352H224V398.352C224 398.352 424.755 447.352 435.171 434.853Z" fill="#FFD166"/>
+    <line id="Line 1_3" x1="223.179" y1="212.454" x2="438.179" y2="435.454" stroke="#917535" stroke-width="2"/>
+    <line id="Line 2" x1="223.187" y1="213.839" x2="13.7137" y2="434.39" stroke="#00664C" stroke-width="2.00707"/>
+    <path id="Polygon 4" d="M140.045 281.066L224.528 341L224.528 210.57L39.7731 210.156L140.045 281.066Z" fill="#00664C"/>
+    <path id="5-click" d="M140.045 281.066L224.528 341L224.528 210.57L39.7731 210.156L140.045 281.066Z" fill="#00664C"/>
+    <path id="Polygon 5" d="M307.995 282.023L222.179 342.157L224.605 210.667L408.971 212.653L307.995 282.023Z" fill="#917535"/>
+    <path id="3-click" d="M307.995 282.023L222.179 342.157L224.605 210.667L408.971 212.653L307.995 282.023Z" fill="#917535"/>
+    <line id="Line 4" x1="222.003" y1="210.989" x2="224.003" y2="398.989" stroke="#00664C" stroke-width="2.00707"/>
+    <text id="1" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="262.508" y="188.409" pointer-events="none">1</tspan></text>
+    <text id="5" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="158.547" y="275.409" pointer-events="none">5</tspan></text>
+    <text id="3" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="258.064" y="275.409" pointer-events="none">3</tspan></text>
+    <text id="7" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="159.74" y="188.409" pointer-events="none">7</tspan></text>
+</svg>

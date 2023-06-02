@@ -273,3 +273,9 @@ function saveFortunes() {
   });
   saveFortunesToStorage(fortunes);
 }
+
+export function saveFortunesOnClick() {
+  saveFortunes();
+  const fortunes = getFortunesFromStorage();
+  return fortunes;
+}
