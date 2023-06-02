@@ -276,6 +276,6 @@ function saveFortunes() {
 
 export function saveFortunesOnClick() {
   saveFortunes();
-  let fortunes = getFortunesFromStorage();
+  const fortunes = getFortunesFromStorage();
   return fortunes;
 }

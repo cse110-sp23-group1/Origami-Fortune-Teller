@@ -1,5 +1,5 @@
 // Origami.js
-import { saveFortunesOnClick } from './SideBar.js'
+import {saveFortunesOnClick} from './SideBar.js';
 const COLOR_BY_CLICK_REGION = {
   '#0D6E8E': 'blue',
   '#BF3858': 'red',
@@ -74,7 +74,7 @@ export class Origami {
   generateSVG(currentSVGPath) {
     this.currentSVGPath = currentSVGPath;
     this.CURRENTSVG = document.querySelector('object');
-    if(this.CURRENTSVG.hasAttribute('data')){
+    if (this.CURRENTSVG.hasAttribute('data')) {
       this.CURRENTSVG.removeAttribute('data');
     }
     this.CURRENTSVG.data = this.currentSVGPath;
@@ -84,7 +84,7 @@ export class Origami {
    * Activates handler for closed SVG or SVG with nums.
    */
   #addClickListeners() {
-    if(this.isClosed() || this.isHorizontalWithNums() || this.isVerticalWithNums() || this.isOpen()) {
+    if (this.isClosed() || this.isHorizontalWithNums() || this.isVerticalWithNums() || this.isOpen()) {
       this.activateHandler();
     }
   }
@@ -108,33 +108,33 @@ export class Origami {
   * @param {Event} event - The mouse over event object.
   */
   handleFlapMouseOver = (event) => {
-    let currColor = event.target.getAttribute('fill');
+    const currColor = event.target.getAttribute('fill');
     this.currFlapColor = currColor;
-    let darkerShade = this.getDarkerShade(currColor);
+    const darkerShade = this.getDarkerShade(currColor);
     event.target.setAttribute('fill', darkerShade);
-    event.target.style.cursor = 'pointer'; 
+    event.target.style.cursor = 'pointer';
   };
 
   /**
   * Handles the mouse out event for a flap element.
-  * Updates the fill attribute of the event target to the current flap color. 
+  * Updates the fill attribute of the event target to the current flap color.
   * Handles logic for consistent colors when cursor hovering over inner flaps.
   * @param {Event} event - The mouse out event object.
   */
   handleFlapMouseOut = (event) => {
     // ensures that original color is kept if cursor hovers over an inner flap in opened SVGs.
-    if(this.currentTurn == 1){ // SVGs with numbers
-      let originalColor = NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]; // array element represents number of flap.
+    if (this.currentTurn == 1) { // SVGs with numbers
+      const originalColor = NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]; // array element represents number of flap.
       event.target.setAttribute('fill', originalColor);
       return;
     }
-    if(this.currentTurn == 2) { // fully opened SVG
-      let lightColor = DARK_COLOR_TO_COLOR[event.target.getAttribute('fill')];
+    if (this.currentTurn == 2) { // fully opened SVG
+      const lightColor = DARK_COLOR_TO_COLOR[event.target.getAttribute('fill')];
       // if getAttribute did not return any of the dark colors, set color to previous color.
-      if(lightColor == null){
-        let originalColor = DARK_COLOR_TO_COLOR[NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]];
+      if (lightColor == null) {
+        const originalColor = DARK_COLOR_TO_COLOR[NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]];
         // if user hovers out of flap with a dark color, correct the color
-        if(this.getDarkerShade(event.target.getAttribute('fill')) == originalColor){ 
+        if (this.getDarkerShade(event.target.getAttribute('fill')) == originalColor) {
           this.currFlapColor = originalColor;
           event.target.setAttribute('fill', this.getOriginalColor(this.currFlapColor));
           return;
@@ -162,39 +162,37 @@ export class Origami {
   */
   handleFlapClick = (event) => {
     event.target.removeEventListener('click', this.handleFlapClick);
-    if(this.isClosed()) {
+    if (this.isClosed()) {
       this.fortunes = saveFortunesOnClick();
-      let numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
-      let sideBar = document.querySelector('.sidebar');
-      if(sideBar) {
+      const numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
+      const sideBar = document.querySelector('.sidebar');
+      if (sideBar) {
         sideBar.style.display = 'none';
       }
       this.currentTurn++;
       this.startAnimation(numAnimations);
-    }
-    else if(this.isVerticalWithNums() || this.isHorizontalWithNums()) {
-      let numAnimations = parseInt(event.target.id[0]);
+    } else if (this.isVerticalWithNums() || this.isHorizontalWithNums()) {
+      const numAnimations = parseInt(event.target.id[0]);
       this.currentTurn++;
       this.startAnimation(numAnimations);
-    }
-    else if(this.isOpen()) {
-      let flapToOpen = parseInt(event.target.id[0]);
+    } else if (this.isOpen()) {
+      const flapToOpen = parseInt(event.target.id[0]);
       this.openFlap(flapToOpen);
     }
   };
   /**
    * Calculates and returns a darker shade of the given color.
    * @param {string} color - The color in hexadecimal format (#RRGGBB).
-   * @returns {string} The darker shade of the color in hexadecimal format (#RRGGBB).
+   * @return {string} The darker shade of the color in hexadecimal format (#RRGGBB).
    */
   getDarkerShade(color) {
-    let darkFactor = 0.8;
-    let r = parseInt(color.substr(1,2), 16);
-    let g = parseInt(color.substr(3,2), 16);
-    let b = parseInt(color.substr(5,2), 16);
-    let darkR = Math.floor(r * darkFactor);
-    let darkG = Math.floor(g * darkFactor);
-    let darkB = Math.floor(b * darkFactor);
+    const darkFactor = 0.8;
+    const r = parseInt(color.substr(1, 2), 16);
+    const g = parseInt(color.substr(3, 2), 16);
+    const b = parseInt(color.substr(5, 2), 16);
+    const darkR = Math.floor(r * darkFactor);
+    const darkG = Math.floor(g * darkFactor);
+    const darkB = Math.floor(b * darkFactor);
     let newColor = `#${darkR.toString(16).padStart(2, '0')}${darkG.toString(16).padStart(2, '0')}${darkB.toString(16).padStart(2, '0')}`;
     newColor = newColor.toUpperCase();
     return newColor;
@@ -203,16 +201,16 @@ export class Origami {
   /**
    * Calculates and returns the original color when a darker shade is passed.
    * @param {string} darkerColor - The darker shade color in hexadecimal format (#RRGGBB).
-   * @returns {string} The original color in hexadecimal format (#RRGGBB).
+   * @return {string} The original color in hexadecimal format (#RRGGBB).
    */
   getOriginalColor(darkerColor) {
-    let darkFactor = 0.8;
-    let darkR = parseInt(darkerColor.substr(1, 2), 16);
-    let darkG = parseInt(darkerColor.substr(3, 2), 16);
-    let darkB = parseInt(darkerColor.substr(5, 2), 16);
-    let r = Math.ceil(darkR / darkFactor);
-    let g = Math.ceil(darkG / darkFactor);
-    let b = Math.ceil(darkB / darkFactor);
+    const darkFactor = 0.8;
+    const darkR = parseInt(darkerColor.substr(1, 2), 16);
+    const darkG = parseInt(darkerColor.substr(3, 2), 16);
+    const darkB = parseInt(darkerColor.substr(5, 2), 16);
+    const r = Math.ceil(darkR / darkFactor);
+    const g = Math.ceil(darkG / darkFactor);
+    const b = Math.ceil(darkB / darkFactor);
     let originalColor = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
     originalColor = originalColor.toUpperCase();
     return originalColor;
@@ -223,66 +221,59 @@ export class Origami {
    * @param {number} flapToOpen - The number of the flap to open.
    */
   openFlap(flapToOpen) {
-    this.generateSVG("./assets/images/origami/" + flapToOpen + "-Opened.svg");
-    let randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
+    this.generateSVG('./assets/images/origami/' + flapToOpen + '-Opened.svg');
+    const randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     this.CURRENTSVG.onload = () => {
-      let fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
+      const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
       fortuneTextElement.textContent = randomFortune;
     };
   }
 
   /**
    * Starts the animation with the specified number of animations and handles animation logic.
-   * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times. 
+   * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.
    * Then it generates the next current SVG and displays it on the webpage.
    * @param {number} numAnimations - The number of animations to perform.
    */
-  startAnimation(numAnimations) {  
+  startAnimation(numAnimations) {
     let count = 1;
     const interval = setInterval(() => {
       this.isAnimationRunning = true;
-      if(count >= numAnimations){
+      if (count >= numAnimations) {
         clearInterval(interval);
-        //if the last animation is horizontal, show vertical w nums
-        if(this.isHorizontal() && this.currentTurn < 2) {
+        // if the last animation is horizontal, show vertical w nums
+        if (this.isHorizontal() && this.currentTurn < 2) {
+          // if last animation is vertical, show horizontal w nums
           this.generateSVG(this.OPENEDVERTICALNUMS);
-        }
-        //if last animation is vertical, show horizontal w nums
-        else if(this.isVertical() && this.currentTurn < 2){
+        } else if (this.isVertical() && this.currentTurn < 2) {
           this.generateSVG(this.OPENEDHORIZONTALNUMS);
-        }
-        else {
+        } else {
           this.generateSVG(this.OPENEDALL);
         }
         count = 1;
         this.isAnimationRunning = false;
         return;
       }
-      //if file is closed, show vertical opened
-      if(this.isClosed()){
+      // if file is closed, show vertical opened
+      if (this.isClosed()) {
         this.generateSVG(this.OPENEDVERTICAL);
-      }
-      //if file is horizontal, show vertical opened
-      else if(this.isHorizontal()){
-        if(this.currentTurn === 2) {
+      } else if (this.isHorizontal()) {
+        // if file is horizontal, show vertical opened
+        if (this.currentTurn === 2) {
           this.generateSVG(this.OPENEDALL);
         }
         this.generateSVG(this.OPENEDVERTICAL);
-      }
-      //if file is vertical, show horizontal opened
-      else if(this.isVertical()){
-        this.generateSVG(this.OPENEDHORIZONTAL)
-      }
-      //if file is horizontal w nums, show horizontal opened
-      else if(this.isHorizontalWithNums()){
+      } else if (this.isVertical()) {
+        // if file is vertical, show horizontal opened
+        this.generateSVG(this.OPENEDHORIZONTAL);
+      } else if (this.isHorizontalWithNums()) {
+        // if file is horizontal w nums, show horizontal opened
         this.generateSVG(this.OPENEDVERTICAL);
-      }
-      //if file is vertical w nums, show vertical opened
-      else if(this.isVerticalWithNums()){
-        this.generateSVG(this.OPENEDHORIZONTAL)
+      } else if (this.isVerticalWithNums()) {
+        // if file is vertical w nums, show vertical opened
+        this.generateSVG(this.OPENEDHORIZONTAL);
       }
       count++;
-
     }, 500);
   }
 
