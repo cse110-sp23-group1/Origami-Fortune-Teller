@@ -236,7 +236,8 @@ export class Origami {
    * @param {string} fortune - The fortune to display
    */
   displayFortune(flapToOpen, fortune) {
-  // Check which flap is open with switch statement, based on the flapToOpen parameter, it would change the css attribute of the content class in style.css.
+  // Check which flap is open with switch statement, based on the flapToOpen parameter
+  // It would change the css attribute of the content class in style.css.
     switch (flapToOpen) {
       case 1:
         document.querySelector('.content').style.left = '50%';
