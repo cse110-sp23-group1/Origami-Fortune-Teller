@@ -1,4 +1,4 @@
-object{
+object {
 	/* width, height values from Figma prototype */
 	width: auto; 
 	height: auto;
@@ -12,12 +12,10 @@ object{
 /* Sidebar */
 .sidebar button {
   box-sizing: border-box;
-
   position: absolute;
   width: 209px;
   height: 73px;
   left: 0px;
-
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
   cursor: pointer;
@@ -107,7 +105,6 @@ object{
   margin-top: 5%;
   font-size: 2.5em;
   position: relative;
-  animation: slideInFromTop 1s ease-in-out;
 }
 
 @keyframes slideInFromTop {
@@ -130,4 +127,29 @@ object{
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.slide-in {
+  animation: slideInFromTop 1s ease-in-out;
+}
+
+/* Reset Buttons */
+.restart,
+.resetSide {
+  background-color: rgb(250, 231, 255);
+  color: black;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  display: block;
+}
+
+.restart, .resetSide:hover {
+	background: rgb(151, 98, 164);
+	border-color: rgb(109, 14, 109);
+	color: #ffffff;
 }

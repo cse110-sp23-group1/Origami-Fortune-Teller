@@ -1,5 +1,6 @@
 // Origami.js
 import {saveFortunesOnClick} from './SideBar.js';
+import {resetSidebar} from './SideBar.js';
 const COLOR_BY_CLICK_REGION = {
   '#0D6E8E': 'blue',
   '#BF3858': 'red',
@@ -63,6 +64,7 @@ export class Origami {
     this.fortunes = null;
     this.isAnimationRunning = false;
     this.#init();
+    document.querySelector('.restart').style.display = 'none';
   }
   #init() {
     this.generateSVG(this.CLOSEDSVG);
@@ -166,11 +168,12 @@ export class Origami {
       this.fortunes = saveFortunesOnClick();
       const numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
       const sideBar = document.querySelector('.sidebar');
-      let fortuneBox = document.querySelector('.fortuneInputBox');
-      if(sideBar) {
+      const fortuneBox = document.querySelector('.fortuneInputBox');
+      if (sideBar) {
         sideBar.style.display = 'none';
         fortuneBox.style.display = 'none';
       }
+      document.querySelector('.resetSide').style.display = 'none';
       this.currentTurn++;
       this.startAnimation(numAnimations);
     } else if (this.isVerticalWithNums() || this.isHorizontalWithNums()) {
@@ -228,6 +231,7 @@ export class Origami {
     this.CURRENTSVG.onload = () => {
       const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
       fortuneTextElement.textContent = randomFortune;
+      document.querySelector('.restart').style.display = '';
     };
   }
 
@@ -303,3 +307,36 @@ export class Origami {
     return this.CURRENTSVG.data.endsWith(svgPaths[5]);
   }
 }
+
+/**
+ * Adds an event listener to the "restart" button and reloads the page.
+ * @function
+ */
+document.querySelector('.restart').addEventListener('click', () => {
+  document.querySelector('.resetSide').style.display = '';
+  location.reload();
+});
+
+/**
+ * Adds an event listener to the "resetSide" button, calls the resetSidebar function, and reloads the page without playing animations.
+ * @function
+ */
+document.querySelector('.resetSide').addEventListener('click', () => {
+  resetSidebar();
+  sessionStorage.setItem('animationEnabled', 'false');
+  location.reload();
+});
+
+const titleHeader = document.getElementById('titleHeader');
+
+function toggleAnimation() {
+  const animationEnabled = sessionStorage.getItem('animationEnabled');
+  if (animationEnabled !== 'false') {
+    titleHeader.classList.add('slide-in');
+  }
+}
+
+window.addEventListener('load', function() {
+  toggleAnimation();
+  sessionStorage.removeItem('animationEnabled');
+});

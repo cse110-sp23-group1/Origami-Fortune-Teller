@@ -271,3 +271,14 @@ export function saveFortunesOnClick() {
   const fortunes = getFortunesFromStorage();
   return fortunes;
 }
+
+/**
+ * Resets the sidebar by clearing its content, generating new buttons, and clearing localStorage.
+ * @function
+ */
+export function resetSidebar() {
+  const sidebar = getSidebar();
+  sidebar.innerHTML = '';
+  activateSidebarButtons();
+  localStorage.clear();
+}
