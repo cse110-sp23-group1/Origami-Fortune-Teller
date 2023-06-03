@@ -1,5 +1,5 @@
 // SideBar.js
-import {fortunes} from '../fortunes';
+import {fortunes} from '../fortunes.js';
 
 export class SideBar {
   MAX_BUTTONS = 8;
