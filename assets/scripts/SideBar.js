@@ -1,4 +1,5 @@
 // SideBar.js
+import {fortunes} from '../fortunes.js';
 
 export class SideBar {
   MAX_BUTTONS = 8;
@@ -73,18 +74,9 @@ let defaultFortunes; // initialize default fortunes
 document.addEventListener('DOMContentLoaded', () => {
   defaultFortunes = getFortunesFromStorage();
   if (!defaultFortunes) {
-    fetch('/assets/fortunes.json')
-        .then((response) => response.json())
-        .then((data) => {
-          defaultFortunes = data.english.default; // Assign the default fortunes to the variable
-          activateSidebarHandler();
-        })
-        .catch((error) => {
-          console.error(`Fetching fortunes failed: ${error}`);
-        });
-  } else {
-    activateSidebarHandler();
+    defaultFortunes = fortunes;
   }
+  activateSidebarHandler();
 });
 
 /*
