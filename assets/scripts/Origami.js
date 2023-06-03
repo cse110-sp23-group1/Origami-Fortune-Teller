@@ -224,11 +224,94 @@ export class Origami {
     this.generateSVG('./assets/images/origami/' + flapToOpen + '-Opened.svg');
     const randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     this.CURRENTSVG.onload = () => {
-      const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
-      fortuneTextElement.textContent = randomFortune;
+      this.displayFortune(flapToOpen, randomFortune);
+      // const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
+      // fortuneTextElement.textContent = randomFortune;
     };
   }
 
+  /**
+   * Display fortune on the correct position of the svg
+   * @param {number} flapToOpen - The number of the flap to add the fortune in
+   * @param {string} fortune - The fortune to display
+   */
+  displayFortune(flapToOpen, fortune) {
+  // Check which flap is open with switch statement, based on the flapToOpen parameter, it would change the css attribute of the content class in style.css.
+    switch (flapToOpen) {
+      case 1:
+        document.querySelector('.content').style.left = '50%';
+        document.querySelector('.content').style.top = '15%';
+        const para = document.createElement('p');
+        para.textContent = fortune;
+        para.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para);
+        break;
+
+      case 2:
+        document.querySelector('.content').style.left = '57%';
+        document.querySelector('.content').style.top = '20%';
+        const para2 = document.createElement('p');
+        para2.textContent = fortune;
+        para2.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para2);
+        break;
+
+      case 3:
+        document.querySelector('.content').style.left = '57%';
+        document.querySelector('.content').style.top = '50%';
+        const para3 = document.createElement('p');
+        para3.textContent = fortune;
+        para3.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para3);
+        break;
+
+      case 4:
+        document.querySelector('.content').style.left = '50%';
+        document.querySelector('.content').style.top = '70%';
+        const para4 = document.createElement('p');
+        para4.textContent = fortune;
+        para4.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para4);
+        break;
+
+      case 5:
+        document.querySelector('.content').style.left = '41%';
+        document.querySelector('.content').style.top = '65%';
+        const para5 = document.createElement('p');
+        para5.textContent = fortune;
+        para5.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para5);
+        break;
+
+      case 6:
+        document.querySelector('.content').style.left = '33%';
+        document.querySelector('.content').style.top = '50%';
+        const para6 = document.createElement('p');
+        para6.textContent = fortune;
+        para6.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para6);
+        break;
+
+      case 7:
+        document.querySelector('.content').style.left = '34%';
+        document.querySelector('.content').style.top = '20%';
+        const para7 = document.createElement('p');
+        para7.textContent = fortune;
+        para7.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para7);
+        break;
+
+      case 8:
+        document.querySelector('.content').style.left = '41%';
+        document.querySelector('.content').style.top = '15%';
+        const para8 = document.createElement('p');
+        para8.textContent = fortune;
+        para8.style.fontSize = '1.5em';
+        document.querySelector('.content').appendChild(para8);
+        break;
+    }
+    return;
+  }
   /**
    * Starts the animation with the specified number of animations and handles animation logic.
    * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.
