@@ -74,7 +74,7 @@ let defaultFortunes; // initialize default fortunes
 document.addEventListener('DOMContentLoaded', () => {
   defaultFortunes = getFortunesFromStorage();
   if (!defaultFortunes) {
-    defaultFortunes = fortunes;
+    defaultFortunes = fortunes.english.default;
   }
   activateSidebarHandler();
 });
