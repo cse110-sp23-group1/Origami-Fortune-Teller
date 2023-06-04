@@ -10,16 +10,5 @@ jobs:
     name: Code Climate Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v4.0.0
-        env:
-          CC_TEST_REPORTER_ID: d1bafee7824ad1509fdab2540e4a1649565f407c2244b0e70c0f9dd69bca826a
-        with:
-          coverageCommand: npm run coverage
-          debug: true
-
-      - name: Code Climate Coverage Action
+      - name: Code Coverage
         uses: paambaati/codeclimate-action@v4.0.0
