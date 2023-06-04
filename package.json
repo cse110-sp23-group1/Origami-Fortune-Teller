@@ -9,7 +9,6 @@
     "devDependencies": {
         "eslint": "^8.41.0",
         "eslint-config-google": "^0.14.0",
-        "eslint-plugin-html": "^7.1.0",
-        "nyc": "^15.1.0"
+        "eslint-plugin-html": "^7.1.0"
     }
 }
