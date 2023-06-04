@@ -12,3 +12,5 @@ jobs:
     steps:
       - name: Code Coverage
         uses: paambaati/codeclimate-action@v4.0.0
+        with:
+          coverageCommand: npx nyc report --reporter=lcov
