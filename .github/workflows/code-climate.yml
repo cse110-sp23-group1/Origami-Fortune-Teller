@@ -1,10 +1,25 @@
-steps:
-  - name: Test & publish code coverage
-    uses: paambaati/codeclimate-action@v4.0.0
-    env:
-      CC_TEST_REPORTER_ID: d1bafee7824ad1509fdab2540e4a1649565f407c2244b0e70c0f9dd69bca826a
-    with:
-      coverageCommand: npm run coverage
-      debug: true
-  - name: Code Climate Coverage Action
-  uses: paambaati/codeclimate-action@v4.0.0
+name: Code Coverage Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code_coverage_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v4.0.0
+        env:
+          CC_TEST_REPORTER_ID: d1bafee7824ad1509fdab2540e4a1649565f407c2244b0e70c0f9dd69bca826a
+        with:
+          coverageCommand: npm run coverage
+          debug: true
+
+      - name: Code Climate Coverage Action
+        uses: paambaati/codeclimate-action@v4.0.0
