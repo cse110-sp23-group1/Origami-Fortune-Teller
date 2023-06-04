@@ -1,4 +1,4 @@
-name: Code Coverage Workflow
+name: Code Climate Check
 
 on:
   pull_request:
@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  code_coverage_job:
+  main:
+    name: Code Climate Check
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
