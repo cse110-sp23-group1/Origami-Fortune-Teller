@@ -1,8 +1,33 @@
-steps:
-  - name: Test & publish code coverage
-    uses: paambaati/codeclimate-action@v2.5.7
-    env:
-      CC_TEST_REPORTER_ID: CODECLIMATE_REPO_TOKEN
-    with:
-      coverageCommand: npm run coverage
-      debug: true
+name: CodeClimate
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  codeclimate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Install CodeClimate CLI
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Upload coverage data to CodeClimate
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
+        run: |
+          ./cc-test-reporter before-build
+          ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json
+          ./cc-test-reporter upload-coverage
