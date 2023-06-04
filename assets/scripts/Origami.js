@@ -238,79 +238,52 @@ export class Origami {
   displayFortune(flapToOpen, fortune) {
   // Check which flap is open with switch statement, based on the flapToOpen parameter
   // It would change the css attribute of the content class in style.css.
+    const content = document.querySelector('.content');
     switch (flapToOpen) {
       case 1:
-        document.querySelector('.content').style.left = '50%';
-        document.querySelector('.content').style.top = '15%';
-        const para = document.createElement('p');
-        para.textContent = fortune;
-        para.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para);
+        content.style.left = '50%';
+        content.style.top = '15%';
         break;
 
       case 2:
-        document.querySelector('.content').style.left = '57%';
-        document.querySelector('.content').style.top = '20%';
-        const para2 = document.createElement('p');
-        para2.textContent = fortune;
-        para2.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para2);
+        content.style.left = '57%';
+        content.style.top = '20%';
         break;
 
       case 3:
-        document.querySelector('.content').style.left = '57%';
-        document.querySelector('.content').style.top = '50%';
-        const para3 = document.createElement('p');
-        para3.textContent = fortune;
-        para3.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para3);
+        content.style.left = '57%';
+        content.style.top = '50%';
         break;
 
       case 4:
-        document.querySelector('.content').style.left = '50%';
-        document.querySelector('.content').style.top = '70%';
-        const para4 = document.createElement('p');
-        para4.textContent = fortune;
-        para4.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para4);
+        content.style.left = '50%';
+        content.style.top = '70%';
         break;
 
       case 5:
-        document.querySelector('.content').style.left = '41%';
-        document.querySelector('.content').style.top = '65%';
-        const para5 = document.createElement('p');
-        para5.textContent = fortune;
-        para5.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para5);
+        content.style.left = '41%';
+        content.style.top = '65%';
         break;
 
       case 6:
-        document.querySelector('.content').style.left = '33%';
-        document.querySelector('.content').style.top = '50%';
-        const para6 = document.createElement('p');
-        para6.textContent = fortune;
-        para6.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para6);
+        content.style.left = '33%';
+        content.style.top = '50%';
         break;
 
       case 7:
-        document.querySelector('.content').style.left = '34%';
-        document.querySelector('.content').style.top = '20%';
-        const para7 = document.createElement('p');
-        para7.textContent = fortune;
-        para7.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para7);
+        content.style.left = '34%';
+        content.style.top = '20%';
         break;
 
       case 8:
-        document.querySelector('.content').style.left = '41%';
-        document.querySelector('.content').style.top = '15%';
-        const para8 = document.createElement('p');
-        para8.textContent = fortune;
-        para8.style.fontSize = '1.5em';
-        document.querySelector('.content').appendChild(para8);
+        content.style.left = '41%';
+        content.style.top = '15%';
         break;
     }
+    const fortuneText = document.createElement('p');
+    fortuneText.textContent = fortune;
+    fortuneText.style.fontSize = '1.5em';
+    content.appendChild(fortuneText);
     return;
   }
   /**
