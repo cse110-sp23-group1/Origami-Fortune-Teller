@@ -14,6 +14,22 @@ const svgPaths = [
   'assets/images/origami/7-opened.svg',
   'assets/images/origami/8-opened.svg',
 ];
+
+
+function getRandomIndex(length) {
+  return Math.floor(Math.random() * length);
+}
+
+function generateRandomString(maxLength) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const length = Math.floor(Math.random() * maxLength) + 1;
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters.charAt(randomIndex);
+  }
+  return result;
+}
 describe('Basic user flow for Origami Fortune Teller', () => {
   beforeAll(async () => {
     await page.goto('https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/');
@@ -50,31 +66,71 @@ describe('Basic user flow for Origami Fortune Teller', () => {
   });
   /**
    * Currently, this test is desgined to click the second button, change the input, save it, and then check to
-   * make sure that the user sees this new input. Test needs to be redesigned to click random buttons, enter randomly
-   * generated strings, randomly choose between pressing Enter or clicking Save, then checking the client-side.
+   * make sure that the user sees this new input.
    */
-  it('Changing preset then checking preset was changed using different methods of saving...', async () => {
-    console.log('Changing second preset...');
-    await page.$$eval('.sidebar button', (buttons, index) => {
-      buttons[index].click();
-    }, 1);
+  it('Changing preset randomly and checking preset was changed using different methods of saving...', async () => {
+    console.log('Changing preset randomly...');
+
+    const buttons = await page.$$('.sidebar button');
+    const randomButtonIndex = getRandomIndex(buttons.length);
+
+    await buttons[randomButtonIndex].click();
 
     await page.waitForSelector('#fortuneInput');
 
+    const randomText = generateRandomString(35);
     await page.$eval('#fortuneInput', (textbox) => {
       textbox.value = '';
     });
+    await page.waitForSelector('#fortuneInput');
+    await page.focus('#fortuneInput');
+    await page.keyboard.type(randomText);
 
-    await page.type('#fortuneInput', 'Will Never Happen');
+    const shouldClickSaveButton = Math.random() < 0.5;
+    if (shouldClickSaveButton) {
+      console.log('Clicking save button...');
+      const saveButton = await page.$('.saveButton');
+      await saveButton.click();
+    } else {
+      console.log('Pressing enter...');
+      await page.keyboard.press('Enter');
+    }
 
-    const saveButton = await page.$('.saveButton');
-    saveButton.click();
+    const buttonText = await page.$$eval('.sidebar button', (buttons, index) => {
+      const button = buttons[index];
+      return button.textContent.trim();
+    }, randomButtonIndex);
 
-    const buttonText = await page.$$eval('.sidebar button', (buttons) => {
-      const button2 = buttons[1];
-      return button2.textContent.trim();
+    expect(buttonText).toBe(randomText);
+  });
+  /**
+   * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below 
+   * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this 
+   * test doesn't work bc ithink the previous test is messing it up.
+   */
+  it('Clicking any flap on the closed SVG saves fortunes to localstorage...', async () => {
+    console.log('Without editing fortunes, checking presets are saved on first click...');
+    await page.waitForSelector('object');
+    const objectElementHandle = await page.$('object');
+    const frame = await objectElementHandle.contentFrame();
+    const flaps = await frame.$$('path[id$="-click"]');
+
+    const randomIndex = Math.floor(Math.random() * flaps.length);
+    await flaps[randomIndex].click();
+
+
+    const localStorageFortunes = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('fortunes'));
     });
-
-    expect(buttonText).toBe('Will Never Happen');
+    expect(localStorageFortunes).toBe([
+      'Outlook not so good',
+      'Signs point to yes',
+      'Cannot predict now',
+      'Reply hazy, try again later',
+      'It is certain',
+      'Don\'t Count on it',
+      'Better not tell you now',
+      'As I see it, yes',
+    ]);
   });
 });

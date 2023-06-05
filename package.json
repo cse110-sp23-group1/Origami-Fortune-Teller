@@ -4,7 +4,7 @@
     "scripts": {
         "lint-check": "npx eslint .",
         "lint-fix": "npx eslint --fix .",
-        "test": "jest"
+        "test": "jest && for run in {1..5}; do jest --testNamePattern='Changing preset randomly and checking preset was changed using different methods of saving...'; done"
     },
     "devDependencies": {
         "@babel/core": "^7.22.1",
