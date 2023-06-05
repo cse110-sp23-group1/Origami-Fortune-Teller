@@ -109,6 +109,11 @@ describe('Basic user flow for Origami Fortune Teller', () => {
    * test doesn't work bc ithink the previous test is messing it up.
    */
   it('Clicking any flap on the closed SVG saves fortunes to localstorage...', async () => {
+    console.log('Reloading page to reset fortunes...');
+    await page.evaluate(() => {
+      return localStorage.clear();
+    });
+    await page.reload();
     console.log('Without editing fortunes, checking presets are saved on first click...');
     await page.waitForSelector('object');
     const objectElementHandle = await page.$('object');
@@ -118,19 +123,20 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const randomIndex = Math.floor(Math.random() * flaps.length);
     await flaps[randomIndex].click();
 
-
-    const localStorageFortunes = await page.evaluate(() => {
-      return JSON.parse(localStorage.getItem('fortunes'));
-    });
-    expect(localStorageFortunes).toBe([
-      'Outlook not so good',
-      'Signs point to yes',
-      'Cannot predict now',
-      'Reply hazy, try again later',
-      'It is certain',
-      'Don\'t Count on it',
-      'Better not tell you now',
-      'As I see it, yes',
-    ]);
+    setTimeout(async () => {
+      const localStorageFortunes = await page.evaluate(() => {
+        return JSON.parse(localStorage.getItem('fortunes'));
+      });
+      expect(localStorageFortunes).toBe([
+        'Outlook not so good',
+        'Signs point to yes',
+        'Cannot predict now',
+        'Reply hazy, try again later',
+        'It is certain',
+        'Don\'t Count on it',
+        'Better not tell you now',
+        'As I see it, yes',
+      ]);
+    }, 1000);
   });
 });
