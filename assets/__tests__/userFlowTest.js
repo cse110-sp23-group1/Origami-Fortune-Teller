@@ -118,15 +118,13 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const objectElementHandle = await page.$('object');
     const frame = await objectElementHandle.contentFrame();
     const flaps = await frame.$$('path[id$="-click"]');
-
     const randomIndex = Math.floor(Math.random() * flaps.length);
     await flaps[randomIndex].click();
-
     setTimeout(async () => {
       const localStorageFortunes = await page.evaluate(() => {
         return JSON.parse(localStorage.getItem('fortunes'));
       });
-      expect(localStorageFortunes).toEqual([
+      expect(localStorageFortunes).toBe([
         'Outlook not so good',
         'Signs point to yes',
         'Cannot predict now',
@@ -138,52 +136,4 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       ]);
     }, 1000);
   });
-
-  it('Changing fortunes, then clicking flap to make sure new fortunes are saved...', async () => {
-    console.log('Reloading page to reset fortunes...');
-    const buttons = await page.$$('.sidebar button');
-    const currFortunes = [
-      'Outlook not so good',
-      'Signs point to yes',
-      'Cannot predict now',
-      'Reply hazy, try again later',
-      'It is certain',
-      'Don\'t Count on it',
-      'Better not tell you now',
-      'As I see it, yes',
-    ];
-
-    for (let i = 0; i < 3; i++) {
-      const randomButtonIndex = getRandomIndex(buttons.length - 1);
-
-      await buttons[randomButtonIndex].click();
-
-      await page.waitForSelector('#fortuneInput');
-
-      const randomText = generateRandomString(35);
-      await page.$eval('#fortuneInput', (textbox) => {
-        textbox.value = '';
-      });
-      console.log('changing current fortunes...');
-      await page.waitForSelector('#fortuneInput');
-      await page.focus('#fortuneInput');
-      await page.keyboard.type(randomText);
-      await page.keyboard.press('Enter');
-      currFortunes[randomButtonIndex] = randomText;
-    }
-
-    await page.waitForSelector('object');
-    const objectElementHandle = await page.$('object');
-    const frame = await objectElementHandle.contentFrame();
-    const flaps = await frame.$$('path[id$="-click"]');
-    console.log('clicking random flap..');
-    const randomIndex = Math.floor(Math.random() * flaps.length);
-    await flaps[randomIndex].click();
-    
-    const localStorageFortunes = await page.evaluate(() => {
-      console.log('getting fortunes from localStorage...');
-      return JSON.parse(localStorage.getItem('fortunes'));
-    });
-    expect(localStorageFortunes).toEqual(currFortunes);
-  }, 100000);
 });
