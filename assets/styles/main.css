@@ -17,7 +17,7 @@ object{
   width: 209px;
   height: 73px;
   left: 0px;
-
+  z-index: 1;
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
   cursor: pointer;
@@ -56,6 +56,7 @@ object{
 .fortuneInputBox {
   display: none;
   position: absolute;
+  z-index: 1;
   left: 500px;
   top: 510px;
 }
@@ -108,6 +109,22 @@ object{
   font-size: 2.5em;
   position: relative;
   animation: slideInFromTop 1s ease-in-out;
+}
+/*container for Origami*/
+.container {
+  position: relative;
+}
+
+/*Fortune Overlay when Origami is in opened state */
+.content {
+  position: absolute;
+  width: 100px;
+  top: 125px;
+  left: 205px;
+  color: white;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @keyframes slideInFromTop {
