@@ -15,7 +15,6 @@ const svgPaths = [
   'assets/images/origami/8-opened.svg',
 ];
 
-
 function getRandomIndex(length) {
   return Math.floor(Math.random() * length);
 }
@@ -72,7 +71,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     console.log('Changing preset randomly...');
 
     const buttons = await page.$$('.sidebar button');
-    const randomButtonIndex = getRandomIndex(buttons.length);
+    const randomButtonIndex = getRandomIndex(buttons.length - 1);
 
     await buttons[randomButtonIndex].click();
 
@@ -104,8 +103,8 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     expect(buttonText).toBe(randomText);
   });
   /**
-   * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below 
-   * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this 
+   * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below
+   * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this
    * test doesn't work bc ithink the previous test is messing it up.
    */
   it('Clicking any flap on the closed SVG saves fortunes to localstorage...', async () => {
@@ -127,7 +126,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       const localStorageFortunes = await page.evaluate(() => {
         return JSON.parse(localStorage.getItem('fortunes'));
       });
-      expect(localStorageFortunes).toBe([
+      expect(localStorageFortunes).toEqual([
         'Outlook not so good',
         'Signs point to yes',
         'Cannot predict now',
@@ -139,4 +138,52 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       ]);
     }, 1000);
   });
+
+  it('Changing fortunes, then clicking flap to make sure new fortunes are saved...', async () => {
+    console.log('Reloading page to reset fortunes...');
+    const buttons = await page.$$('.sidebar button');
+    const currFortunes = [
+      'Outlook not so good',
+      'Signs point to yes',
+      'Cannot predict now',
+      'Reply hazy, try again later',
+      'It is certain',
+      'Don\'t Count on it',
+      'Better not tell you now',
+      'As I see it, yes',
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const randomButtonIndex = getRandomIndex(buttons.length - 1);
+
+      await buttons[randomButtonIndex].click();
+
+      await page.waitForSelector('#fortuneInput');
+
+      const randomText = generateRandomString(35);
+      await page.$eval('#fortuneInput', (textbox) => {
+        textbox.value = '';
+      });
+      console.log('changing current fortunes...');
+      await page.waitForSelector('#fortuneInput');
+      await page.focus('#fortuneInput');
+      await page.keyboard.type(randomText);
+      await page.keyboard.press('Enter');
+      currFortunes[randomButtonIndex] = randomText;
+    }
+
+    await page.waitForSelector('object');
+    const objectElementHandle = await page.$('object');
+    const frame = await objectElementHandle.contentFrame();
+    const flaps = await frame.$$('path[id$="-click"]');
+    console.log('clicking random flap..');
+    const randomIndex = Math.floor(Math.random() * flaps.length);
+    await flaps[randomIndex].click();
+    
+    const localStorageFortunes = await page.evaluate(() => {
+      console.log('getting fortunes from localStorage...');
+      return JSON.parse(localStorage.getItem('fortunes'));
+    });
+    expect(localStorageFortunes).toEqual(currFortunes);
+  }, 100000);
 });
