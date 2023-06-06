@@ -154,3 +154,7 @@ object {
 	border-color: rgb(109, 14, 109);
 	color: #ffffff;
 }
+* {
+  font-family: 'Inter', sans-serif;
+} 
+
