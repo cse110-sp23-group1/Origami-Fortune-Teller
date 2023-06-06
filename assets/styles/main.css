@@ -144,13 +144,18 @@ object{
   animation: slideInFromTop 1s ease-in-out;
 }
 /*container for Origami*/
-.container {
+.origamiContainer {
   position: relative;
   pointer-events: none;
 }
 
+/* all of its descendants */
+.origamiContainer * {
+  pointer-events: auto;
+}
+
 /*Fortune Overlay when Origami is in opened state */
-.content {
+.origamiFortuneOverlay {
   position: absolute;
   width: 100px;
   top: 125px;
