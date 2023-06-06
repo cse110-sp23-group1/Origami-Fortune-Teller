@@ -117,23 +117,29 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     await page.waitForSelector('object');
     const objectElementHandle = await page.$('object');
     const frame = await objectElementHandle.contentFrame();
-    const flaps = await frame.$$('path[id$="-click"]');
-    const randomIndex = Math.floor(Math.random() * flaps.length);
-    await flaps[randomIndex].click();
-    setTimeout(async () => {
-      const localStorageFortunes = await page.evaluate(() => {
-        return JSON.parse(localStorage.getItem('fortunes'));
-      });
-      expect(localStorageFortunes).toBe([
-        'Outlook not so good',
-        'Signs point to yes',
-        'Cannot predict now',
-        'Reply hazy, try again later',
-        'It is certain',
-        'Don\'t Count on it',
-        'Better not tell you now',
-        'As I see it, yes',
-      ]);
-    }, 1000);
+    await frame.waitForSelector('path[id$="-click"]');
+    const flapElements = await frame.$$('path[id$="-click"]');
+    console.log(flapElements);
+    const randomIndex = Math.floor(Math.random() * flapElements.length);
+    console.log('Clicking random flap...');
+    await flapElements[randomIndex].hover();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    await flapElements[randomIndex].click();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const localStorageFortunes = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('fortunes'));
+    });
+    console.log('localStorageFortunes:', localStorageFortunes);
+    expect(localStorageFortunes).toEqual([
+      'Outlook not so good',
+      'Signs point to yes',
+      'Cannot predict now',
+      'Reply hazy, try again later',
+      'It is certain',
+      'Don\'t Count on it',
+      'Better not tell you now',
+      'As I see it, yes',
+    ]);
   });
 });
