@@ -50,6 +50,7 @@ object{
   z-index: 1;
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
+  border-radius: 10px;
   cursor: pointer;
   animation: easeInFortunes 1s ease-in-out;
 }
