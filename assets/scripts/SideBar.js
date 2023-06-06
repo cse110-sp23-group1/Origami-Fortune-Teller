@@ -8,16 +8,14 @@ export class SideBar {
    * Represents a sidebar of buttons.
    * @constructor
    * @param {*} textArray - array of strings to be used as button text
-   * @param {*} buttonHeight - height of each button in pixels
    * @throws {Error} if textArray is empty
    */
-  constructor(textArray, buttonHeight=73) {
+  constructor(textArray) {
     if (textArray.length === 0) {
       throw new Error('Sidebar cannot be empty!');
     }
 
     this.buttons = [];
-    this.buttonHeight = buttonHeight;
     this.textValues = textArray.slice(0, this.MAX_BUTTONS);
 
     this.#init();
@@ -86,8 +84,6 @@ function activateSidebarHandler() {
     fortunes.
 */
 function activateSidebarButtons() {
-  const buttonHeight = 73;
-
   // using defaultFortunes is a convenient
   // placeholder pending externalizing fortune
   // values and modularizing defaults
