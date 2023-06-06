@@ -146,6 +146,7 @@ object{
 /*container for Origami*/
 .container {
   position: relative;
+  pointer-events: none;
 }
 
 /*Fortune Overlay when Origami is in opened state */
