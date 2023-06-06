@@ -47,7 +47,7 @@ const svgPaths = [
 export class Origami {
   /**
    * @constructor
-   * @param {>} svgPath - an svg path
+   * @param {string} svgPath - an svg path
    */
   constructor() {
     // this number will change when we add SVG
@@ -72,6 +72,7 @@ export class Origami {
   /**
    * Creates object for the current SVG and adds click listeners.
    * @param {string} currentSVGPath - string that represents path of SVG file in our repo
+   * @memberOf my.namespace.Origami
    */
   generateSVG(currentSVGPath) {
     this.currentSVGPath = currentSVGPath;
@@ -229,12 +230,67 @@ export class Origami {
     this.generateSVG('./assets/images/origami/' + flapToOpen + '-Opened.svg');
     const randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     this.CURRENTSVG.onload = () => {
-      const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
-      fortuneTextElement.textContent = randomFortune;
-      document.querySelector('.restart').style.display = '';
+    this.displayFortune(flapToOpen, randomFortune);
+    document.querySelector('.restart').style.display = '';
     };
   }
 
+  /**
+   * Display fortune on the correct position of the svg
+   * @param {number} flapToOpen - The number of the flap to add the fortune in
+   * @param {string} fortune - The fortune to display
+   */
+  displayFortune(flapToOpen, fortune) {
+  // Check which flap is open with switch statement, based on the flapToOpen parameter
+  // It would change the css attribute of the content class in style.css.
+    const content = document.querySelector('.origamiFortuneOverlay');
+    switch (flapToOpen) {
+      case 1:
+        content.style.left = '50%';
+        content.style.top = '15%';
+        break;
+
+      case 2:
+        content.style.left = '57%';
+        content.style.top = '20%';
+        break;
+
+      case 3:
+        content.style.left = '57%';
+        content.style.top = '50%';
+        break;
+
+      case 4:
+        content.style.left = '50%';
+        content.style.top = '70%';
+        break;
+
+      case 5:
+        content.style.left = '41%';
+        content.style.top = '65%';
+        break;
+
+      case 6:
+        content.style.left = '33%';
+        content.style.top = '50%';
+        break;
+
+      case 7:
+        content.style.left = '34%';
+        content.style.top = '20%';
+        break;
+
+      case 8:
+        content.style.left = '41%';
+        content.style.top = '15%';
+        break;
+    }
+    const fortuneText = document.createElement('p');
+    fortuneText.textContent = fortune;
+    fortuneText.style.fontSize = '1.5em';
+    content.appendChild(fortuneText);
+    return;
+  }
   /**
    * Starts the animation with the specified number of animations and handles animation logic.
    * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.

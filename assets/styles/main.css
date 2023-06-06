@@ -7,19 +7,52 @@ object {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 100px;
+
+  @media screen and (max-width: 850px) {
+    width: 400px;
+  }
+}
+
+.sidebar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  height: calc(72px * 2 + 5);
+  max-width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: center;
+  place-content: center;
+  grid-gap: 3px;
+  place-content: center;
+
+  @media screen and (max-width: 850px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: calc(72px * 4 + 5);
+    transform: translate(-50%, -5%);
+  }
+    
 }
 
 /* Sidebar */
 .sidebar button {
   box-sizing: border-box;
-  position: absolute;
+  position: relative;
+
   width: 209px;
   height: 73px;
   left: 0px;
+  z-index: 1;
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
+  border-radius: 10px;
   cursor: pointer;
-  animation: slideInFromBottom 1s ease-in-out;
+  animation: easeInFortunes 1s ease-in-out;
   overflow-wrap: break-word;
 }
 
@@ -55,8 +88,10 @@ object {
 .fortuneInputBox {
   display: none;
   position: absolute;
-  left: 500px;
-  top: 510px;
+  z-index: 1;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 20vh;
 }
 
 .fortuneInputBox input {
@@ -67,6 +102,7 @@ object {
   border-radius: 10px;
   outline: none;
   box-shadow: none;
+  border: 1px solid #000000;
   transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
 
@@ -107,6 +143,28 @@ object {
   font-size: 2.5em;
   position: relative;
 }
+/*container for Origami*/
+.origamiContainer {
+  position: relative;
+  pointer-events: none;
+}
+
+/* all of its descendants */
+.origamiContainer * {
+  pointer-events: auto;
+}
+
+/*Fortune Overlay when Origami is in opened state */
+.origamiFortuneOverlay {
+  position: absolute;
+  width: 100px;
+  top: 125px;
+  left: 205px;
+  color: white;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 @keyframes slideInFromTop {
   0% {
@@ -119,13 +177,11 @@ object {
   }
 }
 
-@keyframes slideInFromBottom {
+@keyframes easeInFortunes {
   0% {
-    transform: translateY(100%);
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
     opacity: 1;
   }
 }
