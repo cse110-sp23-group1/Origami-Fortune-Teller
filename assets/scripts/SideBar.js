@@ -32,12 +32,27 @@ export class SideBar {
    * @private
    */
   #generateButtons() {
-    this.textValues.forEach((text) => {
+    this.textValues.forEach((text, index) => {
       const button = document.createElement('button');
       button.textContent = text;
+      button.style.top = `${index*this.buttonHeight}px`;
     });
 
     this.buttons.push(button);
+  }
+
+  /**
+   * Appending buttons to a container
+   * @param {*} container - HTMLElement to append buttons to
+   */
+  appendAllButtonsToContainer(container) {
+    if (!(container instanceof HTMLElement)) {
+      throw new Error(`SideBar.appendAllButtonsToContainer requires HTMLElement, but was given: ${typeof(container)}!`);
+    }
+
+    this.buttons.forEach((button) => {
+      container.appendChild(button);
+    });
   }
 
   setButtonClickHandler(someFunction) {
@@ -96,6 +111,7 @@ function activateSidebarButtons() {
     const button = document.createElement('button');
     button.textContent = fortune;
 
+    button.style.top = `${index*buttonHeight}px`;
     button.addEventListener('click', () => {
       openFortuneInput(index);
       openSound.play();
