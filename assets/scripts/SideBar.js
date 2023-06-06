@@ -103,7 +103,7 @@ function activateBackgroundCycler() {
 
   nextBackgroundButton.addEventListener('click', () => {
     currentBG = (++currentBG > ALL_TILES_LENGTH - 1) ? 0 : currentBG;
-    document.querySelector('body').style.backgroundImage = `url(assets/images/backgroundTiles/${ALL_TILES[currentBG]})`;
+    document.querySelector('#background').style.backgroundImage = `url(assets/images/backgroundTiles/${ALL_TILES[currentBG]})`;
   })
 
   document.querySelector('body').prepend(nextBackgroundButton);
