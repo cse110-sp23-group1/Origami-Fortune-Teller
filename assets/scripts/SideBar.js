@@ -8,16 +8,14 @@ export class SideBar {
    * Represents a sidebar of buttons.
    * @constructor
    * @param {*} textArray - array of strings to be used as button text
-   * @param {*} buttonHeight - height of each button in pixels
    * @throws {Error} if textArray is empty
    */
-  constructor(textArray, buttonHeight=73) {
+  constructor(textArray) {
     if (textArray.length === 0) {
       throw new Error('Sidebar cannot be empty!');
     }
 
     this.buttons = [];
-    this.buttonHeight = buttonHeight;
     this.textValues = textArray.slice(0, this.MAX_BUTTONS);
 
     this.#init();
@@ -32,27 +30,12 @@ export class SideBar {
    * @private
    */
   #generateButtons() {
-    this.textValues.forEach((text, index) => {
+    this.textValues.forEach((text) => {
       const button = document.createElement('button');
       button.textContent = text;
-      button.style.top = `${index*this.buttonHeight}px`;
     });
 
     this.buttons.push(button);
-  }
-
-  /**
-   * Appending buttons to a container
-   * @param {*} container - HTMLElement to append buttons to
-   */
-  appendAllButtonsToContainer(container) {
-    if (!(container instanceof HTMLElement)) {
-      throw new Error(`SideBar.appendAllButtonsToContainer requires HTMLElement, but was given: ${typeof(container)}!`);
-    }
-
-    this.buttons.forEach((button) => {
-      container.appendChild(button);
-    });
   }
 
   setButtonClickHandler(someFunction) {
@@ -101,8 +84,6 @@ function activateSidebarHandler() {
     fortunes.
 */
 function activateSidebarButtons() {
-  const buttonHeight = 73;
-
   // using defaultFortunes is a convenient
   // placeholder pending externalizing fortune
   // values and modularizing defaults
@@ -111,7 +92,6 @@ function activateSidebarButtons() {
     const button = document.createElement('button');
     button.textContent = fortune;
 
-    button.style.top = `${index*buttonHeight}px`;
     button.addEventListener('click', () => {
       openFortuneInput(index);
       openSound.play();

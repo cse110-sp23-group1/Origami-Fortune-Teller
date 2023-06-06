@@ -239,7 +239,7 @@ export class Origami {
   displayFortune(flapToOpen, fortune) {
   // Check which flap is open with switch statement, based on the flapToOpen parameter
   // It would change the css attribute of the content class in style.css.
-    const content = document.querySelector('.content');
+    const content = document.querySelector('.origamiFortuneOverlay');
     switch (flapToOpen) {
       case 1:
         content.style.left = '50%';
