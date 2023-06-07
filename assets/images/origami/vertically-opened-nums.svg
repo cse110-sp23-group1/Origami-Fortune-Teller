@@ -1,28 +1,28 @@
 <svg width="461" height="456" viewBox="0 0 461 456" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="Group 1">
-        <path id="Rectangle 4" d="M1.85226 453.314C-8.56442 440.814 28.3523 231.814 28.3523 231.814L213.024 231.814L213.024 416.814C213.024 416.814 12.2689 465.814 1.85226 453.314Z" fill="#06D6A0"/>
+        <path id="Rectangle 4" d="M1.85 453.31C-8.56 440.81 28.35 231.81 28.35 231.81L213.02 231.81L213.02 416.81C213.02 416.81 12.26 465.81 1.85 453.31Z" fill="#06D6A0"/>
     </g>
     <g id="Group 2">
-        <path id="Rectangle 4_2" d="M2.20449 9.29056C-8.21219 21.7905 28.7045 230.791 28.7045 230.791L213.376 230.791L213.376 45.7909C213.376 45.7909 12.6212 -3.20942 2.20449 9.29056Z" fill="#EF476F"/>
-        <path id="Line 1" d="M28 231.355L210 231.355" stroke="#EF476F" stroke-width="2"/>
+        <path id="Rectangle 4_2" d="M2.20 9.29C-8.21 21.79 28.70 230.79 28.70 230.79L213.37 230.79L213.37 45.79C213.37 45.79 12.62 -3.20 2.20 9.29Z" fill="#EF476F"/>
+        <path id="Line 1" d="M28 231.36L210 231.36" stroke="#EF476F" stroke-width="2"/>
     </g>
-    <path id="Line 3" d="M2.42152 10.3482L213.148 232.896" stroke="#962B44" stroke-width="2.00707"/>
-    <path id="Line 1_2" d="M1.7782 451.663L211.778 232.663" stroke="#00664C" stroke-width="2"/>
-    <path id="Rectangle 4_3" d="M433.5 442.503C421 452.92 212 416.003 212 416.003L212 231.332L397 231.332C397 231.332 446 432.086 433.5 442.503Z" fill="#FFD166"/>
-    <path id="Rectangle 5" d="M434.853 20.1838C422.353 9.76712 213.352 46.6838 213.352 46.6838L213.352 231.355L398.352 231.355C398.352 231.355 447.352 30.6005 434.853 20.1838Z" fill="#118AB2"/>
-    <line id="Line 1_3" x1="212.454" y1="232.176" x2="435.454" y2="17.1763" stroke="#094559" stroke-width="2"/>
-    <line id="Line 2" x1="213.839" y1="232.169" x2="434.39" y2="441.642" stroke="#987B38" stroke-width="2.00707"/>
-    <line id="Line 4" x1="210.995" y1="232.352" x2="399.005" y2="232.352" stroke="#00664C" stroke-width="2.00707"/>
-    <path id="Polygon 3" d="M127.414 144.794L54 233L213 233L213 47L127.414 144.794Z" fill="#962B44"/>
-    <path id="8-click" d="M127.414 144.794L54 233L213 233L213 47L127.414 144.794Z" fill="#962B44"/>
-    <path id="Polygon 4" d="M298.628 147.949L371 233H213V47L298.628 147.949Z" fill="#094559"/>
-    <path id="2-click" d="M298.628 147.949L371 233H213V47L298.628 147.949Z" fill="#094559"/>
-    <text id="2" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="250.852" y="190.409" pointer-events="none">2</tspan></text>
-    <path id="Polygon 3_2" d="M127.414 320.368L54 233.111L213 233.111L213 417.111L127.414 320.368Z" fill="#00664C"/>
-    <path id="6-click" d="M127.414 320.368L54 233.111L213 233.111L213 417.111L127.414 320.368Z" fill="#00664C"/>
-    <text id="6" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="150.141" y="316.409" pointer-events="none">6</tspan></text>
-    <path id="Polygon 4_2" d="M298.674 317.072L371.083 233H213V416.859L298.674 317.072Z" fill="#917535"/>
-    <path id="4-click" d="M298.674 317.072L371.083 233H213V416.859L298.674 317.072Z" fill="#917535"/>
-    <text id="4" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="249.684" y="316.409" pointer-events="none">4</tspan></text>
-    <text id="8" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="150.217" y="190.409" pointer-events="none">8</tspan></text>
+    <path id="Line 3" d="M2.42 10.35L213.14 232.90" stroke="#962B44" stroke-width="2.01"/>
+    <path id="Line 1_2" d="M1.78 451.66L211.78 232.66" stroke="#00664C" stroke-width="2"/>
+    <path id="Rectangle 4_3" d="M433.50 442.50C421.00 452.92 212.00 416.00 212.00 416.00L212.00 231.33L397.00 231.33C397.00 231.33 446.00 432.08 433.50 442.50Z" fill="#FFD166"/>
+    <path id="Rectangle 5" d="M434.85 20.18C422.35 9.77 213.35 46.68 213.35 46.68L213.35 231.36L398.35 231.36C398.35 231.36 447.35 30.60 434.85 20.18Z" fill="#118AB2"/>
+    <line id="Line 1_3" x1="212.45" y1="232.17" x2="435.45" y2="17.18" stroke="#094559" stroke-width="2"/>
+    <line id="Line 2" x1="213.84" y1="232.16" x2="434.39" y2="441.64" stroke="#987B38" stroke-width="2.01"/>
+    <line id="Line 4" x1="210.99" y1="232.35" x2="399.00" y2="232.35" stroke="#00664C" stroke-width="2.01"/>
+    <path id="Polygon 3" d="M127.4 144.8L54 233L213 233L213 47L127.4 144.8Z" fill="#962B44"/>
+    <path id="8-click" d="M127.4 144.8L54 233L213 233L213 47L127.4 144.8Z" fill="#962B44"/>
+    <path id="Polygon 4" d="M298.6 147.9L371 233H213V47L298.6 147.9Z" fill="#094559"/>
+    <path id="2-click" d="M298.6 147.9L371 233H213V47L298.6 147.9Z" fill="#094559"/>
+    <text id="2" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="250.9" y="190.4" pointer-events="none">2</tspan></text>
+    <path id="Polygon 3_2" d="M127.4 320.4L54 233.1L213 233.1L213 417.1L127.4 320.4Z" fill="#00664C"/>
+    <path id="6-click" d="M127.4 320.4L54 233.1L213 233.1L213 417.1L127.4 320.4Z" fill="#00664C"/>
+    <text id="6" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="150.1" y="316.4" pointer-events="none">6</tspan></text>
+    <path id="Polygon 4_2" d="M298.7 317.1L371.1 233H213V416.9L298.7 317.1Z" fill="#917535"/>
+    <path id="4-click" d="M298.7 317.1L371.1 233H213V416.9L298.7 317.1Z" fill="#917535"/>
+    <text id="4" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="249.7" y="316.4" pointer-events="none">4</tspan></text>
+    <text id="8" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="150.2" y="190.4" pointer-events="none">8</tspan></text>
 </svg>
