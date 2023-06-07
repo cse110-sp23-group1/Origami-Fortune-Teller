@@ -230,8 +230,8 @@ export class Origami {
     this.generateSVG('./assets/images/origami/' + flapToOpen + '-Opened.svg');
     const randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     this.CURRENTSVG.onload = () => {
-    this.displayFortune(flapToOpen, randomFortune);
-    document.querySelector('.restart').style.display = '';
+      this.displayFortune(flapToOpen, randomFortune);
+      document.querySelector('.restart').style.display = '';
     };
   }
 
