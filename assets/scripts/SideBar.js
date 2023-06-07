@@ -143,6 +143,7 @@ function openFortuneInput(buttonIndex) {
   getFortuneTextInput().value = getSidebarButtonContent(buttonIndex);
   getFortuneInputSaveButton().id = buttonIndex;
   getFortuneInputBox().style.display = 'block';
+	getFortuneTextInput().focus();
 }
 
 /*
