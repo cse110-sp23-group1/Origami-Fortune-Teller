@@ -195,9 +195,9 @@ object {
 .resetSide {
   background-color: rgb(250, 231, 255);
   color: black;
-  padding: 15px 30px;
+  padding: 10px 20px;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
