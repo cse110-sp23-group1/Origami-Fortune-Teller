@@ -27,4 +27,4 @@ jobs:
           folder: ./out
           repository-name: cse110-sp23-group1/origami-jsdocs
           branch: main
-          token: ${{ secrets.DEPLOY_KEY }}
+          token: ${{ secrets.JSDOCS_DEPLOY_KEY }}
