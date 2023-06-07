@@ -25,4 +25,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: ./out
-          branch: gh-pages-docs
+          repository-name: cse110-sp23-group1/origami-jsdocs
+          token: ${{ secrets.DEPLOY_KEY }}
