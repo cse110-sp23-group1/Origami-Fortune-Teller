@@ -64,39 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
   activateBackgroundCycler();
 });
 
-// ========================================================
-// BEGIN TODO REMOVE SECTION ==============================
-// ========================================================
-/*
-  STAGED FOR TESTING BACKGROUND TILE IMAGES!
-  DO NOT INCLUDE DURING PUSH TO MAIN!
-  (unless desired as feature in which case create issue and ADR etc lol)
-*/
-const ALL_TILES = {0: 'stripes.png', 1: 'sometyles.png', 2: 'papers.png', 3: 'tmp37vebrpc.png', 4: 'tmp3r80pcbm.png', 5: 'tmp71n4gpm5.png', 6: 'tmp7huuov4m.png', 7: 'tmp8s4molq6.png', 8: 'tmpa2e3x5p2.png', 9: 'tmpbfmfw45b.png', 10: 'tmpbga782h1.png', 11: 'tmpcyixwdwf.png', 12: 'tmpd9biyi3x.png', 13: 'tmpdkuc7ag6.png', 14: 'tmpeg_8fvq5.png', 15: 'tmpfw1nmeu3.png', 16: 'tmpj4bbxwcp.png', 17: 'tmpk6ps6erw.png', 18: 'tmpluj4qakk.png', 19: 'tmpmng_5r7j.png', 20: 'tmpoto892nv.png', 21: 'tmpqtfxp41c.png', 22: 'tmpvg8h_3br.png', 23: 'tmpxthx308c.png'}
-let currentBG = 0;
-const ALL_TILES_LENGTH = Object.keys(ALL_TILES).length;
-
-function activateBackgroundCycler() {
-  const nextBackgroundButton = document.createElement('button');
-  nextBackgroundButton.textContent = "NEXT BG";
-  nextBackgroundButton.style.position = 'absolute';
-  nextBackgroundButton.style.top = '0';
-  nextBackgroundButton.style.right = '0';
-  nextBackgroundButton.style.fontSize = '24px';
-
-  nextBackgroundButton.addEventListener('click', () => {
-    currentBG = (++currentBG > ALL_TILES_LENGTH - 1) ? 0 : currentBG;
-    document.querySelector('body').style.backgroundImage = `url(assets/images/backgroundTiles/${ALL_TILES[currentBG]})`;
-  })
-
-  document.querySelector('body').prepend(nextBackgroundButton);
-}
-
-// ========================================================
-// END TODO REMOVE SECTION ================================
-// ========================================================
-
-
 /*
     Handler for the fortune sidebar
 

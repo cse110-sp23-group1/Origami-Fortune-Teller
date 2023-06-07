@@ -204,6 +204,7 @@ object {
   margin-top: -10px;
   display: block;
   z-index: 10;
+  animation: easeInFortunes 1s ease-in-out;
 }
 
 .restart {
@@ -228,3 +229,6 @@ object {
   font-family: 'Inter', sans-serif;
 } 
 
+body {
+  background-image: url('../images/backgroundImage/background.png');
+}
