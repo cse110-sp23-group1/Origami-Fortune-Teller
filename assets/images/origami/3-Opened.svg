@@ -18,8 +18,6 @@
 <path id="Top-Left-1-Flap_2" d="M217 221L430 2.5H217V221Z" fill="#118AB2" stroke="#073E51" stroke-width="2"/>
 <text id="1" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="266.5" y="96.9">1</tspan></text>
 </g>
-</g>
-</svg>
 <g id="Bottom-Left-5">
 <path id="Bottom-Left-2-Flap_2" d="M217 219.5L4 438H217V219.5Z" fill="#06D6A0" stroke="#00664C" stroke-width="2"/>
 <text id="5" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="119.5" y="389.9">5</tspan></text>
@@ -35,5 +33,6 @@
 <g id="Top-Left-8">
 <path id="Top-Left-1-Flap_4" d="M216 220.5L3 2H216V220.5Z" fill="#EF476F" stroke="#962B44" stroke-width="2"/>
 <text id="8" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="52" font-weight="600" letter-spacing="0em"><tspan x="129.2" y="96.9">8</tspan></text>
+</g>
 </g>
 </svg>
