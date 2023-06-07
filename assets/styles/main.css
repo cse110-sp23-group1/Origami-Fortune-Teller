@@ -36,7 +36,7 @@ object {
     height: calc(72px * 4 + 5);
     transform: translate(-50%, -5%);
   }
-    
+  z-index: 1;
 }
 
 /* Sidebar */
