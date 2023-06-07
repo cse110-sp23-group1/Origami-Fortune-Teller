@@ -109,7 +109,6 @@ export class Origami {
     const currColor = event.target.getAttribute('fill');
     this.currFlapColor = currColor;
     const darkerShade = getDarkerShade(currColor);
-    console.log("Color Pair: " + currColor + ", " + darkerShade);
     event.target.setAttribute('fill', darkerShade);
     event.target.style.cursor = 'pointer';
   };
