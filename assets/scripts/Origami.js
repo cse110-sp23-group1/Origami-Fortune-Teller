@@ -1,5 +1,6 @@
 // Origami.js
 import {saveFortunesOnClick} from './SideBar.js';
+import { getDarkerShade, getOriginalColor } from './utilities/colors.js';
 const COLOR_BY_CLICK_REGION = {
   '#0D6E8E': 'blue',
   '#BF3858': 'red',
@@ -107,7 +108,8 @@ export class Origami {
   handleFlapMouseOver = (event) => {
     const currColor = event.target.getAttribute('fill');
     this.currFlapColor = currColor;
-    const darkerShade = this.getDarkerShade(currColor);
+    const darkerShade = getDarkerShade(currColor);
+    console.log("Color Pair: " + currColor + ", " + darkerShade);
     event.target.setAttribute('fill', darkerShade);
     event.target.style.cursor = 'pointer';
   };
@@ -131,16 +133,16 @@ export class Origami {
       if (lightColor == null) {
         const originalColor = DARK_COLOR_TO_COLOR[NUMBER_TO_DARK_COLOR[event.target.getAttribute('id').substring(0, 1)]];
         // if user hovers out of flap with a dark color, correct the color
-        if (this.getDarkerShade(event.target.getAttribute('fill')) == originalColor) {
+        if (getDarkerShade(event.target.getAttribute('fill')) == originalColor) {
           this.currFlapColor = originalColor;
-          event.target.setAttribute('fill', this.getOriginalColor(this.currFlapColor));
+          event.target.setAttribute('fill', getOriginalColor(this.currFlapColor));
           return;
         }
         event.target.setAttribute('fill', this.currFlapColor);
         return;
       }
       // if getAttribute returned a dark color, then lightColor is equal to getDarkerShade(originalColor).
-      event.target.setAttribute('fill', this.getOriginalColor(lightColor));
+      event.target.setAttribute('fill', getOriginalColor(lightColor));
       return;
     }
 
@@ -177,41 +179,6 @@ export class Origami {
       this.openFlap(flapToOpen);
     }
   };
-  /**
-   * Calculates and returns a darker shade of the given color.
-   * @param {string} color - The color in hexadecimal format (#RRGGBB).
-   * @return {string} The darker shade of the color in hexadecimal format (#RRGGBB).
-   */
-  getDarkerShade(color) {
-    const darkFactor = 0.8;
-    const r = parseInt(color.substr(1, 2), 16);
-    const g = parseInt(color.substr(3, 2), 16);
-    const b = parseInt(color.substr(5, 2), 16);
-    const darkR = Math.floor(r * darkFactor);
-    const darkG = Math.floor(g * darkFactor);
-    const darkB = Math.floor(b * darkFactor);
-    let newColor = `#${darkR.toString(16).padStart(2, '0')}${darkG.toString(16).padStart(2, '0')}${darkB.toString(16).padStart(2, '0')}`;
-    newColor = newColor.toUpperCase();
-    return newColor;
-  }
-
-  /**
-   * Calculates and returns the original color when a darker shade is passed.
-   * @param {string} darkerColor - The darker shade color in hexadecimal format (#RRGGBB).
-   * @return {string} The original color in hexadecimal format (#RRGGBB).
-   */
-  getOriginalColor(darkerColor) {
-    const darkFactor = 0.8;
-    const darkR = parseInt(darkerColor.substr(1, 2), 16);
-    const darkG = parseInt(darkerColor.substr(3, 2), 16);
-    const darkB = parseInt(darkerColor.substr(5, 2), 16);
-    const r = Math.ceil(darkR / darkFactor);
-    const g = Math.ceil(darkG / darkFactor);
-    const b = Math.ceil(darkB / darkFactor);
-    let originalColor = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-    originalColor = originalColor.toUpperCase();
-    return originalColor;
-  }
 
   /**
    * Opens the specified flap and displays fortune.

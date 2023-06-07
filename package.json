@@ -9,6 +9,7 @@
     "devDependencies": {
         "@babel/core": "^7.22.1",
         "@babel/preset-env": "^7.22.4",
+        "@babel/preset-modules": "^0.1.5",
         "babel-jest": "^29.5.0",
         "eslint": "^8.41.0",
         "eslint-config-google": "^0.14.0",
@@ -20,9 +21,19 @@
     },
     "jest": {
         "preset": "jest-puppeteer",
-        "verbose": true
+        "verbose": true,
+        "transform": {
+            "^.+\\.jsx?$": "babel-jest"
+        },
+        "transformIgnorePatterns": [
+            "/node_modules/",
+            "./assets/__tests__/userFlow.test.js"
+        ]
     },
     "dependencies": {
         "ts-jest": "^29.1.0"
+    },
+    "babel": {
+        "presets": ["@babel/preset-env", "@babel/preset-modules"]
     }
 }
