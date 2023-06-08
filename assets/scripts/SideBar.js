@@ -60,8 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     defaultFortunes = fortunes.english.default;
   }
   activateSidebarHandler();
-
-  activateBackgroundCycler();
 });
 
 /*
