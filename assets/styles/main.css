@@ -1,4 +1,4 @@
-object{
+object {
 	/* width, height values from Figma prototype */
 	width: auto; 
 	height: auto;
@@ -36,7 +36,7 @@ object{
     height: calc(72px * 4 + 5);
     transform: translate(-50%, -5%);
   }
-    
+  z-index: 1;
 }
 
 /* Sidebar */
@@ -53,6 +53,7 @@ object{
   border-radius: 10px;
   cursor: pointer;
   animation: easeInFortunes 1s ease-in-out;
+  overflow-wrap: break-word;
 }
 
 .sidebar button:hover {
@@ -141,7 +142,6 @@ object{
   margin-top: 5%;
   font-size: 2.5em;
   position: relative;
-  animation: slideInFromTop 1s ease-in-out;
 }
 /*container for Origami*/
 .origamiContainer {
@@ -184,4 +184,51 @@ object{
   100% {
     opacity: 1;
   }
+}
+
+.slide-in {
+  animation: slideInFromTop 1s ease-in-out;
+}
+
+/* Reset Buttons */
+.resetSide {
+  position: relative;
+  background-color: rgb(250, 231, 255);
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -10px;
+  display: block;
+  z-index: 10;
+  animation: easeInFortunes 1s ease-in-out;
+}
+
+.restart {
+  background-color: rgb(250, 231, 255);
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  display: block;
+}
+
+.restart:hover, .resetSide:hover {
+	background: rgb(151, 98, 164);
+	border-color: rgb(109, 14, 109);
+	color: #ffffff;
+}
+* {
+  font-family: 'Inter', sans-serif;
+} 
+
+body {
+  background-image: url('../images/backgroundImage/background.png');
 }

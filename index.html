@@ -5,7 +5,11 @@
     <title>Origami Fortune Teller</title>
     <link rel="icon" type="image/svg" href="favicon/favicon.svg" />
     <link rel="stylesheet" type="text/css" href="assets/styles/main.css" />
-    <script src="assets/scripts/main.js" type="module"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+	<script src="assets/scripts/main.js" type="module"></script>
   </head>
 
   <body>
@@ -15,9 +19,8 @@
     
     <div class="sidebar"></div>
 
-		<!-- Textbox that prompts user input -->
 		<div class="fortuneInputBox">
-			<input type="text" id="fortuneInput" class="text-input">
+			<input type="text" id="fortuneInput" class="text-input" maxlength="75">
 			<button class ="saveButton">Save</button>
 		</div>
 
@@ -27,6 +30,11 @@
         <p></p>
       </div>
     </div>
+
+    <div class="resetButtons">
+			<button class ="restart" >Restart</button>
+			<button class ="resetSide">Reset Fortunes</button>
+		</div>
 		
 	</body>
 </html>
