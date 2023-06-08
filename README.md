@@ -10,9 +10,26 @@ The main goal of this project is to provide an entertaining and interactive way 
 
 ## How to use
 
-<br>
+### add image of project when its done
+1.  **Open the Fortune Teller:** Access the website by clicking [here](https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/).
+    
+2.  **Explore the Buttons:** At the bottom of the webpage, you will find eight buttons. Each button represents the content for your fortune.
+    
+3.  **Change a fortune:** Click on one of the buttons with the content of the fortune you want to change. The button will display an input field.
+    
+4.  **Enter Your Fortune:** Enter the content of your fortune in the input field.
+    
+5.  **Save Your Fortune:** After entering your fortune, click the "Save" button to store it. The fortune will be saved and associated with the chosen button that you clicked.
+    
+6.  **Fold the Fortune Teller:** Once you have changed all the contents of the fortunes to that of your liking.  Interact with the fortune teller by clicking on one of the flaps of the paper origami which will trigger an animation. Repeat this action  until the origami turns into a square with numbers on it.
+    
+7.  **Enjoy the Fortunes:** Discover the hidden messages or fortunes you've saved by clicking one of the numbers which will unfold the paper origami and reveal the hidden fortune.
+    
+8.  **Resetting the Fortunes:** If you want to start fresh and delete all saved fortunes, you can click on the "Play Again" button. 
+    
+9.  **Have Fun!** Enjoy the interactive experience of the fortune origami teller.
 
-### JSDocs Integration
+## JSDocs Integration
 
 JSDocs is implemented via GitHub Actions, where [JSDoc Action](https://github.com/andstor/jsdoc-action) is used to build and [GitHub Pages Deploy Action](https://github.com/JamesIves/github-pages-deploy-action) is used to deploy. Every time the `main` branch gets pushed, a GitHub pages webpage is automatically created. The contents of the webpage is deployed on another repository, where we can host a GitHub Pages webpage to show our documentation. 
 
