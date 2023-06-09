@@ -108,6 +108,11 @@ function openFortuneInput(buttonIndex) {
   getFortuneTextInput().value = getSidebarButtonContent(buttonIndex);
   getFortuneInputSaveButton().id = buttonIndex;
   getFortuneInputBox().style.display = 'block';
+  getFortuneTextInput().focus();
+  document.querySelector('.resetSide').style.display = 'none';
+
+  const origamiContainer = document.querySelector('object');
+  origamiContainer.style.pointerEvents = 'none';
 }
 
 /*
@@ -119,6 +124,11 @@ function openFortuneInput(buttonIndex) {
 */
 function closeFortuneInput(needTosubmitFortune=false) {
   getFortuneInputBox().style.display = 'none';
+  document.querySelector('.resetSide').style.display = 'block';
+
+  const origamiContainer = document.querySelector('object');
+  origamiContainer.style.pointerEvents = 'auto';
+
   const closeSound = new Audio('assets/media/CloseFortune.mov');
   if (!needTosubmitFortune) {
     return;
@@ -250,4 +260,15 @@ export function saveFortunesOnClick() {
   saveFortunes();
   const fortunes = getFortunesFromStorage();
   return fortunes;
+}
+
+/**
+ * Resets the sidebar by clearing its content, generating new buttons, and clearing localStorage.
+ * @function
+ */
+export function resetSidebar() {
+  const sidebar = getSidebar();
+  sidebar.innerHTML = '';
+  activateSidebarButtons();
+  localStorage.clear();
 }
