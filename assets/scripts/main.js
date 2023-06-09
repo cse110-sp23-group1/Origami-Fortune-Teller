@@ -3,11 +3,19 @@ import {Origami} from './Origami.js';
 
 
 /**
- * Activators need on initial page load
+ * Activators needed on initial DOM load
  */
 document.addEventListener('DOMContentLoaded', () => {
   new Origami();
   activateSidebarHandler();
+});
+
+/**
+ * Activators needed on window loads
+ */
+window.addEventListener('load', () => {
+  toggleHeaderAnimation();
+  sessionStorage.removeItem('animationEnabled');
 });
 
 /**
@@ -29,8 +37,11 @@ document.querySelector('.resetSide').addEventListener('click', () => {
   location.reload();
 });
 
-
-function toggleAnimation() {
+/**
+ * If animations are enabled, add a slide-in to the title header
+ * @function
+ */
+function toggleHeaderAnimation() {
   const titleHeader = document.getElementById('titleHeader');
   const animationEnabled = sessionStorage.getItem('animationEnabled');
 
@@ -38,8 +49,3 @@ function toggleAnimation() {
     titleHeader.classList.add('slide-in');
   }
 }
-
-window.addEventListener('load', function() {
-  toggleAnimation();
-  sessionStorage.removeItem('animationEnabled');
-});
