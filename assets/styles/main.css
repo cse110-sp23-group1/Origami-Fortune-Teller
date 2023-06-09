@@ -1,3 +1,37 @@
+/* BEGIN VIGNETTE STYLES  */
+/* properties ordered by z-level */
+
+/* the background image has to be separate from body/vignette */
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/backgroundImage/background.png");
+  background-repeat: repeat;
+  z-index: -2; /* the very bottom */
+}
+
+/* this contains the vignette itself */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  /* shape at origin, color to grow from __ % of area to cover, color to grow to */
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.3) 100%,  transparent);
+  z-index: -1; /* -1 is below content but above the background */
+}
+
+body {
+  background: transparent;
+}
+/* END VIGNETTE STYLES */
+
 object {
 	/* width, height values from Figma prototype */
 	width: auto; 
@@ -138,7 +172,7 @@ object {
 /* Title Header */
 #titleHeader {
   text-align: center;
-  color: #ab50b3;
+  color: rgb(250, 231, 255);
   margin-top: 5%;
   font-size: 2.5em;
   position: relative;
