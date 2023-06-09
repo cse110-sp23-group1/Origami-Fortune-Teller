@@ -202,6 +202,7 @@ object {
   display: block;
   z-index: 10;
   animation: easeInFortunes 1s ease-in-out;
+  cursor: pointer;
 }
 
 .restart {
@@ -215,6 +216,7 @@ object {
   margin-right: auto;
   margin-top: 0px;
   display: block;
+  cursor: pointer;
 }
 
 .restart:hover, .resetSide:hover {
