@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Origami Fortune Teller</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="icon" type="image/svg" href="favicon/favicon.svg" />
     <link rel="stylesheet" type="text/css" href="assets/styles/main.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-	<script src="assets/scripts/main.js" type="module"></script>
+    <script src="assets/scripts/main.js" type="module"></script>
   </head>
 
   <body>
-    <header>
-      <h1 id="titleHeader">Origami Fortune Teller</h1>
-    </header>
+    <div id="background"></div>
     
-    <div class="sidebar"></div>
+      <header>
+        <h1 id="titleHeader">Origami Fortune Teller</h1>
+      </header>
+      
+      <div class="sidebar"></div>
 
-		<div class="fortuneInputBox">
-			<input type="text" id="fortuneInput" class="text-input" maxlength="75">
-			<button class ="saveButton">Save</button>
-		</div>
-
-    <div class="origamiContainer">
-      <object></object>
-      <div class="origamiFortuneOverlay">
-        <p></p>
+      <div class="fortuneInputBox">
+        <input type="text" id="fortuneInput" class="text-input" maxlength="75">
+        <button class ="saveButton">Save</button>
       </div>
-    </div>
 
-    <div class="resetButtons">
-			<button class ="restart" >Restart</button>
-			<button class ="resetSide">Reset Fortunes</button>
-		</div>
-		
+      <div class="origamiContainer">
+        <object></object>
+        <div class="origamiFortuneOverlay">
+          <p></p>
+        </div>
+      </div>
+
+      <div class="resetButtons">
+        <button class ="restart" >Restart</button>
+        <button class ="resetSide">Reset Fortunes</button>
+      </div>
+
 	</body>
 </html>
