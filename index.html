@@ -2,79 +2,84 @@
 <html lang="en">
   <head>
     <title>Origami Fortune Teller</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="icon" type="image/svg" href="favicon/favicon.svg" />
     <link rel="stylesheet" type="text/css" href="assets/styles/main.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-	<script src="assets/scripts/main.js" type="module"></script>
+    <script src="assets/scripts/main.js" type="module"></script>
 
-  <!-- BEGIN VIGNETTE STYLES -->
-  <style>
-    /* properties ordered by z-level */
+    <!-- BEGIN VIGNETTE STYLES -->
+    <style>
+      /* properties ordered by z-level */
 
-    /* the background image has to be separate from body/vignette */
-    #background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("assets/images/backgroundTiles/stripes.png");
-      background-repeat: repeat;
-      z-index: -2; /* the very bottom */
-    }
+      /* the background image has to be separate from body/vignette */
+      #background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("assets/images/backgroundTiles/stripes.png");
+        background-repeat: repeat;
+        z-index: -2; /* the very bottom */
+      }
 
-    /* this contains the vignette itself */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: radial-gradient(circle at center, black 40%, transparent);
-      z-index: -1; /* -1 is below content but above the background */
-    }
+      /* this contains the vignette itself */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: radial-gradient(circle at center, black 40%, transparent);
+        z-index: -1; /* -1 is below content but above the background */
+      }
 
-    body {
-      background: transparent;
-    }
+      body {
+        background: transparent;
+      }
 
-
-    #content {
-      position: relative;
-      z-index: 0; /* all the bits on top */
-    }
-  </style>
-  <!-- END VIGNETTE STYLES -->
-
+      #content {
+        position: relative;
+        z-index: 0; /* all the bits on top */
+      }
+    </style>
+    <!-- END VIGNETTE STYLES -->
   </head>
 
   <body>
     <div id="background"></div>
-    <div id="content">
-    <header>
-      <h1 id="titleHeader">Origami Fortune Teller</h1>
-    </header>
     
-    <div class="sidebar"></div>
+    <div id="content">
+      <header>
+        <h1 id="titleHeader">Origami Fortune Teller</h1>
+      </header>
+      
+      <div class="sidebar"></div>
 
-		<!-- Textbox that prompts user input -->
-		<div class="fortuneInputBox">
-			<input type="text" id="fortuneInput" class="text-input" maxlength="75">
-			<button class ="saveButton">Save</button>
-		</div>
+      <div class="fortuneInputBox">
+        <input type="text" id="fortuneInput" class="text-input" maxlength="75">
+        <button class ="saveButton">Save</button>
+      </div>
 
-		<div class="resetButtons">
-			<button class ="restart" >Restart</button>
-			<button class ="resetSide">Reset Fortunes</button>
-		</div>
+      <div class="origamiContainer">
+        <object></object>
+        <div class="origamiFortuneOverlay">
+          <p></p>
+        </div>
+      </div>
 
-		<object>
-			
-		</object>
-  </div>
+      <div class="resetButtons">
+        <button class ="restart" >Restart</button>
+        <button class ="resetSide">Reset Fortunes</button>
+      </div>
+
+    </div> <!-- end #content -->
 	</body>
 </html>
