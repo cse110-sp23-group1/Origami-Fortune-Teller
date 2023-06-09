@@ -4,19 +4,6 @@ import {fortunes} from '../fortunes.js';
 let defaultFortunes; // initialize default fortunes
 
 /*
-    Call on page load and loads in defaultFortunes
-    TODO: create fortune loading handler
-    and update button creation.
-*/
-document.addEventListener('DOMContentLoaded', () => {
-  defaultFortunes = getFortunesFromStorage();
-  if (!defaultFortunes) {
-    defaultFortunes = fortunes.english.default;
-  }
-  activateSidebarHandler();
-});
-
-/*
     Handler for the fortune sidebar
 
     The sidebar needs to:
@@ -25,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     to do so, it uses a helper function for each
 */
-function activateSidebarHandler() {
+export function activateSidebarHandler() {
+  defaultFortunes = getFortunesFromStorage();
+  if (!defaultFortunes) {
+    defaultFortunes = fortunes.english.default;
+  }
+
   activateSidebarButtons();
   activateFortuneInputHandler();
 }
