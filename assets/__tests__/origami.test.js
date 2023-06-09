@@ -21,13 +21,13 @@ describe('Testing different flaps on getOriginalColor()', () => {
   test('#0D6E8E lightens back to blue', () => {
     expect(getOriginalColor('#0D6E8E')).toBe('#118AB2');
   });
-  // failing, idk why
+  // changed color to match what original was
   test('#BF3858 lightens back to red', () => {
-    expect(getOriginalColor('#BF3858')).toBe('#962B44');
+    expect(getOriginalColor('#BF3858')).toBe('#EF466E');
   });
-  // failing idk why
+  // changed color to match what original was
   test('#04AB80 lightens back to green', () => {
-    expect(getOriginalColor('#04AB80')).toBe('#00664C');
+    expect(getOriginalColor('#04AB80')).toBe('#05D6A0');
   });
   test('#CCA751 lightens back to yellow', () => {
     expect(getOriginalColor('#CCA751')).toBe('#FFD166');
