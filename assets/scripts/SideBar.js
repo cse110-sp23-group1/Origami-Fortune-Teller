@@ -1,52 +1,6 @@
 // SideBar.js
 import {fortunes} from '../fortunes.js';
 
-export class SideBar {
-  MAX_BUTTONS = 8;
-
-  /**
-   * Represents a sidebar of buttons.
-   * @constructor
-   * @param {*} textArray - array of strings to be used as button text
-   * @throws {Error} if textArray is empty
-   */
-  constructor(textArray) {
-    if (textArray.length === 0) {
-      throw new Error('Sidebar cannot be empty!');
-    }
-
-    this.buttons = [];
-    this.textValues = textArray.slice(0, this.MAX_BUTTONS);
-
-    this.#init();
-  }
-
-  #init() {
-    this.#generateButtons();
-  }
-
-  /**
-   * Generate as many buttons as entries in textValues
-   * @private
-   */
-  #generateButtons() {
-    this.textValues.forEach((text) => {
-      const button = document.createElement('button');
-      button.textContent = text;
-    });
-
-    this.buttons.push(button);
-  }
-
-  setButtonClickHandler(someFunction) {
-    this.buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        someFunction(button);
-      });
-    });
-  }
-}
-
 let defaultFortunes; // initialize default fortunes
 
 /*
