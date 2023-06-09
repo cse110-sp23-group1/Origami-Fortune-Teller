@@ -64,7 +64,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     expect(buttonText).toEqual(expectedFortunes);
   });
   /**
-   * Currently, this test is desgined to click the second button, change the input, save it, and then check to
+   * Currently, this test is desgined to click a random button, change the input, save it, and then check to
    * make sure that the user sees this new input.
    */
   it('Changing preset randomly and checking preset was changed using different methods of saving...', async () => {
@@ -142,4 +142,70 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       'As I see it, yes',
     ]);
   });
+});
+
+/*
+TODO: Create test that randomly clicks a colored flap and checks the path on each
+animation to ensure the correct SVG is being shown each time. Also checks number of 
+SVG changes (animations) are correct.
+*/
+it('Checking a randomly clicked color flap outputs the correct number of animations and correct SVG each time...', async () => {
+
+});
+
+/*
+TODO: Create test that checks to make sure Reset Fortunes Button and Sidebar are gone
+after you click the fortune teller.
+*/
+it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune teller...', async ()=> {
+
+});
+
+/*
+TODO: Create test that checks to make sure Reset Fortunes actually resets the fortunes. Check the 
+text on the buttons and check LocalStorage.
+*/
+it('Checking Reset Fortunes Button resets fortunes on screen and in localStorage...', async () => {
+
+});
+
+/*
+TODO: Create test that after clicking a number on either SVG with nums, the correct SVGs are shown and
+there are the correct number of SVG changes (animations).
+*/
+it('Checking a randomly clicked number flap to output the correct number of animations and the correct SVG each time...', async () => {
+
+});
+
+/*
+TODO: Create test that ensure the correct SVG is being display after user clicks on the any of the last
+8 flaps.
+*/
+it('Checking correct SVG is displayed after clicking any of the last 8 flaps at the end to reveal fortune...', async () => {
+
+});
+
+/*
+TODO: After clicking on any of the 8 last flaps, create test that ensures the fortue being display is one of
+the fortunes from the localStorage.
+*/
+it('Checking clicking any random flap from the last 8 flaps to reveal fortune, reveals a random fortune from localStorage and display correctly...', async () => {
+
+});
+
+/*
+TODO: Create test that ensures Restart button changes SVG path back to closed, has the correct elements
+display on the screen (should be same elements when you enter page for the first time) and that the sidebar
+buttons still have the right text saved on them from localStorage.
+*/
+it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
+
+});
+
+/*
+TODO: (Extra if time) Create test that for any hover element if you hover over it, the correct functioanlity
+happens (aka color change) and the cursor changes from pointer to hand.
+*/
+it('Checking each hoverable element is randomly hovered over ans functions correctly with color and cursor changes...', async () => {
+
 });
