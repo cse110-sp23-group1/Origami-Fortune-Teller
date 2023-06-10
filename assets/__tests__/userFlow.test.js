@@ -151,7 +151,7 @@ animation to ensure the correct SVG is being shown each time. Also checks number
 SVG changes (animations) are correct.
 */
 it('Checking a randomly clicked color flap outputs the correct number of animations and correct SVG each time...', async () => {
-
+  
 });
 
 /*
@@ -159,7 +159,25 @@ TODO: Create test that checks to make sure Reset Fortunes Button and Sidebar are
 after you click the fortune teller.
 */
 it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune teller...', async ()=> {
+  // ERROR IS: "Exceeded timeout of 5000 ms for a test" Maybe add more timeouts?
+  // Find the fortune teller element and click it (How do I select the whole screen??)
+  console.log("Getting Whole Screen");
+  await page.click('html');
+  console.log("Whole screen received");
+  // timeout?
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Promise line ran");
 
+  // Wait for the sidebar and reset button to disappear
+  await page.waitForSelector('.sidebar', { hidden: true });
+  await page.waitForSelector('.reset-button', { hidden: true });
+  console.log("Buttons gone!!!");
+
+  // Check if the sidebar and reset button are hidden
+  const sidebarExists = await page.$$('.sidebar button');
+  const resetButtonExists = await page.$$('.resetSide');
+  expect(sidebarExists).to.be.null;
+  expect(resetButtonExists).to.be.null;
 });
 
 /*
@@ -249,7 +267,7 @@ it('Checking correct SVG is displayed after clicking any of the last 8 flaps at 
 });
 
 /*
-TODO: After clicking on any of the 8 last flaps, create test that ensures the fortue being display is one of
+TODO: After clicking on any of the 8 last flaps, create test that ensures the fortune being display is one of
 the fortunes from the localStorage.
 */
 it('Checking clicking any random flap from the last 8 flaps to reveal fortune, reveals a random fortune from localStorage and display correctly...', async () => {
