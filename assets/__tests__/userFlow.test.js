@@ -184,7 +184,6 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
     return localStorage.clear();
   });
   await page.reload();
-
   console.log('change a fortune');
   const buttons = await page.$$('.sidebar button');
   const randomButtonIndex = getRandomIndex(buttons.length - 1);
@@ -203,17 +202,17 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   await page.keyboard.press('Enter');
 
   console.log('Clicking reset fortunes button');
-  const resetButton = await page.$('.resetSide');
-  await resetButton.animationEnd();
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+  const resetButton = await page.$('button.resetSide');
   await resetButton.click();
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   const localStorageFortunes = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
 
   expect(localStorageFortunes).toBe(null);
-});
+}, 10000);
 
 /*
 Checks if the default fortunes are what the user sees. 
