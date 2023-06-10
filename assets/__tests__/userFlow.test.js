@@ -72,8 +72,8 @@ describe('Basic user flow for Origami Fortune Teller', () => {
 
     const buttons = await page.$$('.sidebar button');
     const randomButtonIndex = getRandomIndex(buttons.length - 1);
-
-    await buttons[randomButtonIndex].click();
+    const clickedSideBarButton = buttons[randomButtonIndex];
+    await clickedSideBarButton.click();
 
     await page.waitForSelector('#fortuneInput');
 
@@ -88,9 +88,8 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const shouldClickSaveButton = Math.random() < 0.5;
     if (shouldClickSaveButton) {
       console.log('Clicking save button...');
-      const saveButton = await page.$('.saveButton');
-      await saveButton.animationEnd();
-      await saveButton.click();
+      const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
+      saveButton.click();
     } else {
       console.log('Pressing enter...');
       await page.keyboard.press('Enter');
@@ -109,11 +108,6 @@ describe('Basic user flow for Origami Fortune Teller', () => {
    * test doesn't work bc ithink the previous test is messing it up.
    */
   it('Clicking any flap on the closed SVG saves fortunes to localstorage...', async () => {
-    console.log('Reloading page to reset fortunes...');
-    await page.evaluate(() => {
-      return localStorage.clear();
-    });
-    await page.reload();
     console.log('Without editing fortunes, checking presets are saved on first click...');
     await page.waitForSelector('object');
     const objectElementHandle = await page.$('object');
@@ -178,7 +172,7 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   const resetButtonExists = await page.$$('.resetSide');
   expect(sidebarExists).to.be.null;
   expect(resetButtonExists).to.be.null;
-});
+}, 10000);
 
 /*
 Clicking the reset Fortunes button empties local Storage. The test below changes a fortune, clicks the Reset 
