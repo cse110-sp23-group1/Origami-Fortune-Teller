@@ -193,12 +193,41 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   const resetButton = await page.$('.resetSide');
   await resetButton.click();
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const localStorageFortunes = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
 
   expect(localStorageFortunes).toBe(null);
+});
+
+/*
+Checks if the default fortunes are what the user sees. 
+*/
+it('Checking Fortunes are correct at start', async () => {
+  await page.evaluate(() => {
+    localStorage.clear();
+  });
+  await page.reload();
+
+  const buttons = await page.$$('.sidebar button');
+  await page.waitForTimeout(500);
+  const expected = [
+    'Outlook not so good',
+    'Signs point to yes',
+    'Cannot predict now',
+    'Reply hazy, try again later',
+    'It is certain',
+    'Don\'t Count on it',
+    'Better not tell you now',
+    'As I see it, yes'
+  ];
+  const actual = [];
+  for (let i = 0; i < buttons.length; i++) {
+    const text = await buttons[i].evaluate((button) => button.textContent);
+    actual.push(text);
+  }
+  expect(actual).toEqual(expected);
 });
 
 /*
