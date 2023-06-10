@@ -1,6 +1,6 @@
 // Origami.js
 import {saveFortunesOnClick} from './SideBar.js';
-import { getDarkerShade, getOriginalColor } from './utilities/colors.js';
+import {getDarkerShade, getOriginalColor} from './utilities/colors.js';
 const COLOR_BY_CLICK_REGION = {
   '#0D6E8E': 'blue',
   '#BF3858': 'red',
