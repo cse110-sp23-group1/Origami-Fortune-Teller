@@ -89,6 +89,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     if (shouldClickSaveButton) {
       console.log('Clicking save button...');
       const saveButton = await page.$('.saveButton');
+      await saveButton.animationEnd();
       await saveButton.click();
     } else {
       console.log('Pressing enter...');
@@ -191,6 +192,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
 
   console.log('Clicking reset fortunes button');
   const resetButton = await page.$('.resetSide');
+  await resetButton.animationEnd();
   await resetButton.click();
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
