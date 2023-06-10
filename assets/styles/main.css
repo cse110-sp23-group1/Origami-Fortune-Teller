@@ -53,7 +53,7 @@ object {
   height: calc(72px * 2 + 5);
   max-width: 100%;
   width: 1000px;
-  padding-top: 10vh;
+  padding-top: 5vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
