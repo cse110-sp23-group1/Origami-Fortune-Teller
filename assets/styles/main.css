@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-image: url("../images/backgroundImage/background.png");
   background-repeat: repeat;
   z-index: -2; /* the very bottom */
@@ -63,10 +63,12 @@ object {
   place-content: center;
 
   @media screen and (max-width: 850px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(4, 1fr);
     height: calc(72px * 4 + 5);
+    grid-gap: 5px;
   }
+
   z-index: 1;
 }
 
