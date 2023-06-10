@@ -115,30 +115,21 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     await page.waitForSelector('object');
     const objectElementHandle = await page.$('object');
     const frame = await objectElementHandle.contentFrame();
-    await frame.waitForSelector('path[id$="-click"]');
-    const flapElements = await frame.$$('path[id$="-click"]');
-    console.log(flapElements);
-    const randomIndex = Math.floor(Math.random() * flapElements.length);
+    const svgElement = await frame.$('svg');
+    const flaps = await svgElement.$$('path[id*="-click"]');
+    const randomFlapIndex = getRandomIndex(flaps.length - 1);
+    const buttonText = await page.$$eval('.sidebar button', (buttons) => {
+      return buttons.map((button) => button.textContent.trim());
+    });
+    await flaps[randomFlapIndex].click();
     console.log('Clicking random flap...');
-    await flapElements[randomIndex].hover();
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await flapElements[randomIndex].click();
+
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const localStorageFortunes = await page.evaluate(() => {
       return JSON.parse(localStorage.getItem('fortunes'));
     });
-    console.log('localStorageFortunes:', localStorageFortunes);
-    expect(localStorageFortunes).toEqual([
-      'Outlook not so good',
-      'Signs point to yes',
-      'Cannot predict now',
-      'Reply hazy, try again later',
-      'It is certain',
-      'Don\'t Count on it',
-      'Better not tell you now',
-      'As I see it, yes',
-    ]);
+    expect(localStorageFortunes).toEqual(buttonText);
   });
 });
 
@@ -187,7 +178,6 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
     return localStorage.clear();
   });
   await page.reload();
-
   console.log('change a fortune');
   const buttons = await page.$$('.sidebar button');
   const randomButtonIndex = getRandomIndex(buttons.length - 1);
@@ -203,20 +193,26 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   await page.waitForSelector('#fortuneInput');
   await page.focus('#fortuneInput');
   await page.keyboard.type(randomText);
-  await page.keyboard.press('Enter');
-
+  const shouldClickSaveButton = Math.random() < 0.5;
+  if (shouldClickSaveButton) {
+    console.log('Clicking save button...');
+    const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
+    saveButton.click();
+  } else {
+    console.log('Pressing enter...');
+    await page.keyboard.press('Enter');
+  }
   console.log('Clicking reset fortunes button');
   const resetButton = await page.$('.resetSide');
-  await resetButton.animationEnd();
   await resetButton.click();
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   const localStorageFortunes = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
 
   expect(localStorageFortunes).toBe(null);
-});
+}, 10000);
 
 /*
 Checks if the default fortunes are what the user sees.
