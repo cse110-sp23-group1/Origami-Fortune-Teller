@@ -1,6 +1,6 @@
 // Origami.js
 import {saveFortunesOnClick} from './SideBar.js';
-import {resetSidebar} from './SideBar.js';
+
 const COLOR_BY_CLICK_REGION = {
   '#0D6E8E': 'blue',
   '#BF3858': 'red',
@@ -66,9 +66,11 @@ export class Origami {
     this.#init();
     document.querySelector('.restart').style.display = 'none';
   }
+
   #init() {
     this.generateSVG(this.CLOSEDSVG);
   }
+
   /**
    * Creates object for the current SVG and adds click listeners.
    * @param {string} currentSVGPath - string that represents path of SVG file in our repo
@@ -83,6 +85,7 @@ export class Origami {
     this.CURRENTSVG.data = this.currentSVGPath;
     this.#addClickListeners();
   }
+
   /**
    * Activates handler for closed SVG or SVG with nums.
    */
@@ -91,6 +94,7 @@ export class Origami {
       this.activateHandler();
     }
   }
+
   /**
    * Adds click and hover functionality event listeners for the current SVG.
    */
@@ -186,6 +190,7 @@ export class Origami {
       this.openFlap(flapToOpen);
     }
   };
+
   /**
    * Calculates and returns a darker shade of the given color.
    * @param {string} color - The color in hexadecimal format (#RRGGBB).
@@ -285,12 +290,14 @@ export class Origami {
         content.style.top = '15%';
         break;
     }
+
     const fortuneText = document.createElement('p');
     fortuneText.textContent = fortune;
     fortuneText.style.fontSize = '1.5em';
+
     content.appendChild(fortuneText);
-    return;
   }
+
   /**
    * Starts the animation with the specified number of animations and handles animation logic.
    * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.
@@ -335,6 +342,7 @@ export class Origami {
         // if file is vertical w nums, show vertical opened
         this.generateSVG(this.OPENEDHORIZONTAL);
       }
+
       count++;
     }, 500);
   }
@@ -363,36 +371,3 @@ export class Origami {
     return this.CURRENTSVG.data.endsWith(svgPaths[5]);
   }
 }
-
-/**
- * Adds an event listener to the "restart" button and reloads the page.
- * @function
- */
-document.querySelector('.restart').addEventListener('click', () => {
-  document.querySelector('.resetSide').style.display = '';
-  location.reload();
-});
-
-/**
- * Adds an event listener to the "resetSide" button, calls the resetSidebar function, and reloads the page without playing animations.
- * @function
- */
-document.querySelector('.resetSide').addEventListener('click', () => {
-  resetSidebar();
-  sessionStorage.setItem('animationEnabled', 'false');
-  location.reload();
-});
-
-const titleHeader = document.getElementById('titleHeader');
-
-function toggleAnimation() {
-  const animationEnabled = sessionStorage.getItem('animationEnabled');
-  if (animationEnabled !== 'false') {
-    titleHeader.classList.add('slide-in');
-  }
-}
-
-window.addEventListener('load', function() {
-  toggleAnimation();
-  sessionStorage.removeItem('animationEnabled');
-});
