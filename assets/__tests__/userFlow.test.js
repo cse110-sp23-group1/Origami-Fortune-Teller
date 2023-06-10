@@ -165,8 +165,33 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
 TODO: Create test that checks to make sure Reset Fortunes actually resets the fortunes. Check the 
 text on the buttons and check LocalStorage.
 */
-it('Checking Reset Fortunes Button resets fortunes on screen and in localStorage...', async () => {
+it('Checking Reset Fortunes Button resets fortunes on in localStorage', async () => {
+  console.log('loading buttons');
+  const buttons = await page.$$('.sidebar button');
+  const randomButtonIndex = getRandomIndex(buttons.length - 1);
+  await buttons[randomButtonIndex].click();
+  await page.waitForSelector('#fortuneInput');
+  const randomText = generateRandomString(35);
+  await page.$eval('#fortuneInput', (textbox) => {
+    textbox.value = '';
+  });
+  await page.waitForSelector('#fortuneInput');
+  await page.focus('#fortuneInput');
+  await page.keyboard.type(randomText);
+  console.log('Clicking save button...');
+  const saveButton = await page.$('.saveButton');
+  await saveButton.click();
 
+  console.log('clicking reset fortunes button');
+  const resetButton = await page.$('.resetSide');
+  await resetButton.click();
+
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const localStorageFortunes = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem('fortunes'));
+  });
+
+  expect(localStorageFortunes).toBe(null);
 });
 
 /*
