@@ -29,9 +29,10 @@ function generateRandomString(maxLength) {
   }
   return result;
 }
+
 describe('Basic user flow for Origami Fortune Teller', () => {
   beforeAll(async () => {
-    await page.goto('https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/');
+    await page.goto('http://127.0.0.1:5500/');
   });
   /**
    * Test to determine current fortunes the user sees. If the user's localStorage is empty, then the user should be seeing
@@ -63,6 +64,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     });
     expect(buttonText).toEqual(expectedFortunes);
   });
+
   /**
    * Currently, this test is desgined to click a random button, change the input, save it, and then check to
    * make sure that the user sees this new input.
@@ -102,6 +104,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
 
     expect(buttonText).toBe(randomText);
   });
+
   /**
    * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below
    * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this
@@ -141,11 +144,11 @@ describe('Basic user flow for Origami Fortune Teller', () => {
 
 /*
 TODO: Create test that randomly clicks a colored flap and checks the path on each
-animation to ensure the correct SVG is being shown each time. Also checks number of 
+animation to ensure the correct SVG is being shown each time. Also checks number of
 SVG changes (animations) are correct.
 */
 it('Checking a randomly clicked color flap outputs the correct number of animations and correct SVG each time...', async () => {
-  
+
 });
 
 /*
@@ -155,17 +158,17 @@ after you click the fortune teller.
 it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune teller...', async ()=> {
   // ERROR IS: "Exceeded timeout of 5000 ms for a test" Maybe add more timeouts?
   // Find the fortune teller element and click it (How do I select the whole screen??)
-  console.log("Getting Whole Screen");
+  console.log('Getting Whole Screen');
   await page.click('html');
-  console.log("Whole screen received");
+  console.log('Whole screen received');
   // timeout?
   await new Promise((resolve) => setTimeout(resolve, 500));
-  console.log("Promise line ran");
+  console.log('Promise line ran');
 
   // Wait for the sidebar and reset button to disappear
-  await page.waitForSelector('.sidebar', { hidden: true });
-  await page.waitForSelector('.reset-button', { hidden: true });
-  console.log("Buttons gone!!!");
+  await page.waitForSelector('.sidebar', {hidden: true});
+  await page.waitForSelector('.reset-button', {hidden: true});
+  console.log('Buttons gone!!!');
 
   // Check if the sidebar and reset button are hidden
   const sidebarExists = await page.$$('.sidebar button');
@@ -175,8 +178,8 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
 }, 10000);
 
 /*
-Clicking the reset Fortunes button empties local Storage. The test below changes a fortune, clicks the Reset 
-Fortunes Button, and checks local Storage to make sure it is empty. 
+Clicking the reset Fortunes button empties local Storage. The test below changes a fortune, clicks the Reset
+Fortunes Button, and checks local Storage to make sure it is empty.
 */
 it('Checking Reset Fortunes Button resets fortunes in localStorage', async () => {
   console.log('reset page');
@@ -216,7 +219,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
 });
 
 /*
-Checks if the default fortunes are what the user sees. 
+Checks if the default fortunes are what the user sees.
 */
 it('Checking Fortunes are correct at start', async () => {
   await page.evaluate(() => {
@@ -234,7 +237,7 @@ it('Checking Fortunes are correct at start', async () => {
     'It is certain',
     'Don\'t Count on it',
     'Better not tell you now',
-    'As I see it, yes'
+    'As I see it, yes',
   ];
   const actual = [];
   for (let i = 0; i < buttons.length; i++) {
