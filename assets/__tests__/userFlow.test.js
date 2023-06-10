@@ -29,9 +29,10 @@ function generateRandomString(maxLength) {
   }
   return result;
 }
+
 describe('Basic user flow for Origami Fortune Teller', () => {
   beforeAll(async () => {
-    await page.goto('https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/');
+    await page.goto('http://127.0.0.1:5500/');
   });
   /**
    * Test to determine current fortunes the user sees. If the user's localStorage is empty, then the user should be seeing
@@ -63,6 +64,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     });
     expect(buttonText).toEqual(expectedFortunes);
   });
+
   /**
    * Currently, this test is desgined to click a random button, change the input, save it, and then check to
    * make sure that the user sees this new input.
@@ -102,6 +104,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
 
     expect(buttonText).toBe(randomText);
   });
+
   /**
    * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below
    * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this
