@@ -190,11 +190,17 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   await page.waitForSelector('#fortuneInput');
   await page.focus('#fortuneInput');
   await page.keyboard.type(randomText);
-  await page.keyboard.press('Enter');
-
+  const shouldClickSaveButton = Math.random() < 0.5;
+  if (shouldClickSaveButton) {
+    console.log('Clicking save button...');
+    const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
+    saveButton.click();
+  } else {
+    console.log('Pressing enter...');
+    await page.keyboard.press('Enter');
+  }
   console.log('Clicking reset fortunes button');
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  const resetButton = await page.$('button.resetSide');
+  const resetButton = await page.$('.resetSide');
   await resetButton.click();
 
   await new Promise((resolve) => setTimeout(resolve, 500));
