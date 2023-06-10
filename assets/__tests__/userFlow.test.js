@@ -32,7 +32,7 @@ function generateRandomString(maxLength) {
 
 describe('Basic user flow for Origami Fortune Teller', () => {
   beforeAll(async () => {
-    await page.goto('http://127.0.0.1:5500/');
+    await page.goto('https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/');
   });
   /**
    * Test to determine current fortunes the user sees. If the user's localStorage is empty, then the user should be seeing
