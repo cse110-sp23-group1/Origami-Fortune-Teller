@@ -43,6 +43,9 @@ object {
   @media screen and (max-width: 850px) {
     width: 400px;
   }
+  @media screen and (max-height: 850px) {
+    width: 400px;
+  }
 }
 
 .sidebar {
@@ -172,7 +175,7 @@ object {
 #titleHeader {
   text-align: center;
   color: rgb(250, 231, 255);
-  margin-top: 5%;
+  margin-top: 7.5vh;
   font-size: 2.5em;
   position: relative;
 }
