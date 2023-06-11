@@ -119,7 +119,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const frame = await objectElementHandle.contentFrame();
     const svgElement = await frame.$('svg');
     const flaps = await svgElement.$$('path[id*="-click"]');
-    const randomFlapIndex = getRandomIndex(flaps.length - 1);
+    const randomFlapIndex = getRandomIndex(flaps.length);
     const buttonText = await page.$$eval('.sidebar button', (buttons) => {
       return buttons.map((button) => button.textContent.trim());
     });
@@ -154,7 +154,7 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   const frame = await objectElementHandle.contentFrame();
   const svgElement = await frame.$('svg');
   const flaps = await svgElement.$$('path[id*="-click"]');
-  const randomFlapIndex = getRandomIndex(flaps.length - 1);
+  const randomFlapIndex = getRandomIndex(flaps.length);
   console.log('clicking random flap...');
   await flaps[randomFlapIndex].click();
   console.log('Clicking random flap...');
@@ -190,7 +190,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   await page.reload();
   console.log('change a fortune');
   const buttons = await page.$$('.sidebar button');
-  const randomButtonIndex = getRandomIndex(buttons.length - 1);
+  const randomButtonIndex = getRandomIndex(buttons.length);
 
   await buttons[randomButtonIndex].click();
 
@@ -220,8 +220,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   const localStorageFortunes = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
-  // for now this is null, but once sam's branch is merged, this will
-  // need to be .toBe(array of presets)
+  // null because fortunes are not saved until you change a preset or click a flap after reset
   expect(localStorageFortunes).toBe(null);
 }, 10000);
 
@@ -275,7 +274,7 @@ it('Checking correct SVG is displayed after clicking any of the last 8 flaps at 
   const frame = await objectElementHandle.contentFrame();
   const svgElement = await frame.$('svg');
   const flaps = await svgElement.$$('path[id*="-click"]');
-  const randomFlapIndex = getRandomIndex(flaps.length - 1);
+  const randomFlapIndex = getRandomIndex(flaps.length);
   await flaps[randomFlapIndex].click();
   await flaps[randomFlapIndex].click();
   await flaps[randomFlapIndex].click();
@@ -315,40 +314,57 @@ display on the screen (should be same elements when you enter page for the first
 buttons still have the right text saved on them from localStorage.
 */
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
-  // Simulates first click
+  // Simulates first click on closed svg
   await page.waitForSelector('object');
-  const objectElementHandle = await page.$('object');
-  const frame = await objectElementHandle.contentFrame();
-  const svgElement = await frame.$('svg');
+  let objectElementHandle = await page.$('object');
+  let frame = await objectElementHandle.contentFrame();
+  let svgElement = await frame.$('svg');
   let flaps = await svgElement.$$('path[id*="-click"]');
-  let randomFlapIndex = getRandomIndex(flaps.length - 1);
+  let randomFlapIndex = getRandomIndex(flaps.length);
   await flaps[randomFlapIndex].click();
-  console.log('Clicking random flap...');
+  console.log('Clicking random closed flap...');
   // Saves current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
-
-  // Need to figure out how to click on one of the #-click
+  // wait 5 seconds for animation to finish 500 ms * y e l l o w = 3000 ms + network
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  // click on numbered svg
+  objectElementHandle = await page.$('object');
+  frame = await objectElementHandle.contentFrame();
+  svgElement = await frame.$('svg');
   flaps = await svgElement.$$('path[id*="-click"]');
-  randomFlapIndex = getRandomIndex(flaps.length - 1);
+  console.log(flaps);
+  randomFlapIndex = getRandomIndex(flaps.length);
+  console.log('Clicking on a numbered flap...');
+  console.log(flaps);
+  console.log(randomFlapIndex);
+  await flaps[randomFlapIndex].click();
+  // wait 5 seconsd for animation to finish 500 ms * 8 = 4000 ms + network
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  // click on 8 opened svg
+  objectElementHandle = await page.$('object');
+  frame = await objectElementHandle.contentFrame();
+  svgElement = await frame.$('svg');
+  flaps = await svgElement.$$('path[id*="-click"]');
+  randomFlapIndex = getRandomIndex(flaps.length);
+  console.log('clicking random flap from the 8 selecitons..');
+  console.log(flaps);
   await flaps[randomFlapIndex].click();
 
-  // Third and final click
-  flaps = await svgElement.$$('path[id*="-click"]');
-  randomFlapIndex = getRandomIndex(flaps.length - 1);
-  await flaps[randomFlapIndex].click();
+  // wait 5 seconds for new svg to display
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
 
   // Click reset button
-  console.log('Clicking reset fortunes button');
-  const resetButton = await page.$('.resetSide');
-  await resetButton.click();
-  console.log('RESET CLICKED');
+  console.log('Clicking reset button');
+  const restartButton = await page.$('.restart');
+  await restartButton.click();
 
-  // CODE BREAKS HERE!!!
+  // wait 2 seconds for reset to go through
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  // TODO: Might need a Promise all here???????????
-  // Wait for the frame to reload
   await frame.waitForNavigation();
   console.log('FRAME HAS RELOADED');
   // TODO: Might need a Promise all here
@@ -382,7 +398,7 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(goodFortunes).toBe(8);
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
   expect(sidebarDisplayStyle).toStrictEqual('grid');
-});
+}, 20000);
 
 /*
 TODO: (Extra if time) Create test that for any hover element if you hover over it, the correct functioanlity
