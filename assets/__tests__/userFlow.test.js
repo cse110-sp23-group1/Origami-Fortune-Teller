@@ -157,21 +157,21 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   await flaps[randomFlapIndex].click();
   console.log('Clicking random flap...');
 
-  const sidebarDisplayStyle = await frame.$eval('.sidebar', (sidebar) => {
+  const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
   });
 
-  const resetButtonDisplayStyle = await frame.$eval('.resetSide', (resetButton) => {
+  const resetButtonDisplayStyle = await frame.$$('.resetSide', (resetButton) => {
     return window.getComputedStyle(resetButton).display;
   });
 
-  const inputBoxDisplayStyle = await frame.$eval('.fortuneInputBox', (inputBox) => {
+  const inputBoxDisplayStyle = await frame.$$('.fortuneInputBox', (inputBox) => {
     return window.getComputedStyle(inputBox).display;
   });
 
-  expect(sidebarDisplayStyle).toBe('none');
-  expect(resetButtonDisplayStyle).toBe('none');
-  expect(inputBoxDisplayStyle).toBe('none');
+  expect(sidebarDisplayStyle).toStrictEqual([]);
+  expect(resetButtonDisplayStyle).toStrictEqual([]);
+  expect(inputBoxDisplayStyle).toStrictEqual([]);
 });
 
 /*
