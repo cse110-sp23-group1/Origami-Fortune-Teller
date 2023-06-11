@@ -47,7 +47,7 @@ const svgPaths = [
 export class Origami {
   /**
    * @constructor
-   * @param {>} svgPath - an svg path
+   * @param {string} svgPath - an svg path
    */
   constructor() {
     // this number will change when we add SVG
@@ -64,13 +64,17 @@ export class Origami {
     this.fortunes = null;
     this.isAnimationRunning = false;
     this.#init();
+    document.querySelector('.restart').style.display = 'none';
   }
+
   #init() {
     this.generateSVG(this.CLOSEDSVG);
   }
+
   /**
    * Creates object for the current SVG and adds click listeners.
    * @param {string} currentSVGPath - string that represents path of SVG file in our repo
+   * @memberOf my.namespace.Origami
    */
   generateSVG(currentSVGPath) {
     this.currentSVGPath = currentSVGPath;
@@ -78,6 +82,7 @@ export class Origami {
     this.CURRENTSVG.data = this.currentSVGPath;
     this.#addClickListeners();
   }
+
   /**
    * Activates handler for closed SVG or SVG with nums.
    */
@@ -86,6 +91,7 @@ export class Origami {
       this.activateHandler();
     }
   }
+
   /**
    * Adds click and hover functionality event listeners for the current SVG.
    */
@@ -164,9 +170,12 @@ export class Origami {
       this.fortunes = saveFortunesOnClick();
       const numAnimations = COLOR_BY_CLICK_REGION[event.target.getAttribute('fill')].length;
       const sideBar = document.querySelector('.sidebar');
+      const fortuneBox = document.querySelector('.fortuneInputBox');
       if (sideBar) {
         sideBar.style.display = 'none';
+        fortuneBox.style.display = 'none';
       }
+      document.querySelector('.resetSide').style.display = 'none';
       this.currentTurn++;
       this.startAnimation(numAnimations);
     } else if (this.isVerticalWithNums() || this.isHorizontalWithNums()) {
@@ -188,8 +197,7 @@ export class Origami {
     const randomFortune = this.fortunes[Math.floor(Math.random() * 7)];
     this.CURRENTSVG.onload = () => {
       this.displayFortune(flapToOpen, randomFortune);
-      // const fortuneTextElement = this.CURRENTSVG.contentDocument.querySelector('#fortuneText');
-      // fortuneTextElement.textContent = randomFortune;
+      document.querySelector('.restart').style.display = '';
     };
   }
 
@@ -201,7 +209,7 @@ export class Origami {
   displayFortune(flapToOpen, fortune) {
   // Check which flap is open with switch statement, based on the flapToOpen parameter
   // It would change the css attribute of the content class in style.css.
-    const content = document.querySelector('.content');
+    const content = document.querySelector('.origamiFortuneOverlay');
     switch (flapToOpen) {
       case 1:
         content.style.left = '50%';
@@ -243,12 +251,14 @@ export class Origami {
         content.style.top = '15%';
         break;
     }
+
     const fortuneText = document.createElement('p');
     fortuneText.textContent = fortune;
     fortuneText.style.fontSize = '1.5em';
+
     content.appendChild(fortuneText);
-    return;
   }
+
   /**
    * Starts the animation with the specified number of animations and handles animation logic.
    * Origami animates between horizontally and vertically opened SVGs every 500ms, for a total of numAnimations - 1 times.
@@ -293,6 +303,7 @@ export class Origami {
         // if file is vertical w nums, show vertical opened
         this.generateSVG(this.OPENEDHORIZONTAL);
       }
+
       count++;
     }, 500);
   }

@@ -1,83 +1,7 @@
 // SideBar.js
 import {fortunes} from '../fortunes.js';
 
-export class SideBar {
-  MAX_BUTTONS = 8;
-
-  /**
-   * Represents a sidebar of buttons.
-   * @constructor
-   * @param {*} textArray - array of strings to be used as button text
-   * @param {*} buttonHeight - height of each button in pixels
-   * @throws {Error} if textArray is empty
-   */
-  constructor(textArray, buttonHeight=73) {
-    if (textArray.length === 0) {
-      throw new Error('Sidebar cannot be empty!');
-    }
-
-    this.buttons = [];
-    this.buttonHeight = buttonHeight;
-    this.textValues = textArray.slice(0, this.MAX_BUTTONS);
-
-    this.#init();
-  }
-
-  #init() {
-    this.#generateButtons();
-  }
-
-  /**
-   * Generate as many buttons as entries in textValues
-   * @private
-   */
-  #generateButtons() {
-    this.textValues.forEach((text, index) => {
-      const button = document.createElement('button');
-      button.textContent = text;
-      button.style.top = `${index*this.buttonHeight}px`;
-    });
-
-    this.buttons.push(button);
-  }
-
-  /**
-   * Appending buttons to a container
-   * @param {*} container - HTMLElement to append buttons to
-   */
-  appendAllButtonsToContainer(container) {
-    if (!(container instanceof HTMLElement)) {
-      throw new Error(`SideBar.appendAllButtonsToContainer requires HTMLElement, but was given: ${typeof(container)}!`);
-    }
-
-    this.buttons.forEach((button) => {
-      container.appendChild(button);
-    });
-  }
-
-  setButtonClickHandler(someFunction) {
-    this.buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        someFunction(button);
-      });
-    });
-  }
-}
-
 let defaultFortunes; // initialize default fortunes
-
-/*
-    Call on page load and loads in defaultFortunes
-    TODO: create fortune loading handler
-    and update button creation.
-*/
-document.addEventListener('DOMContentLoaded', () => {
-  defaultFortunes = getFortunesFromStorage();
-  if (!defaultFortunes) {
-    defaultFortunes = fortunes.english.default;
-  }
-  activateSidebarHandler();
-});
 
 /*
     Handler for the fortune sidebar
@@ -88,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     to do so, it uses a helper function for each
 */
-function activateSidebarHandler() {
+export function activateSidebarHandler() {
+  defaultFortunes = getFortunesFromStorage();
+  if (!defaultFortunes) {
+    defaultFortunes = fortunes.english.default;
+  }
+
   activateSidebarButtons();
   activateFortuneInputHandler();
 }
@@ -101,8 +30,6 @@ function activateSidebarHandler() {
     fortunes.
 */
 function activateSidebarButtons() {
-  const buttonHeight = 73;
-
   // using defaultFortunes is a convenient
   // placeholder pending externalizing fortune
   // values and modularizing defaults
@@ -111,7 +38,6 @@ function activateSidebarButtons() {
     const button = document.createElement('button');
     button.textContent = fortune;
 
-    button.style.top = `${index*buttonHeight}px`;
     button.addEventListener('click', () => {
       openFortuneInput(index);
       openSound.play();
@@ -128,6 +54,11 @@ function openFortuneInput(buttonIndex) {
   getFortuneTextInput().value = getSidebarButtonContent(buttonIndex);
   getFortuneInputSaveButton().id = buttonIndex;
   getFortuneInputBox().style.display = 'block';
+  getFortuneTextInput().focus();
+  document.querySelector('.resetSide').style.display = 'none';
+
+  const origamiContainer = document.querySelector('object');
+  origamiContainer.style.pointerEvents = 'none';
 }
 
 /*
@@ -139,6 +70,11 @@ function openFortuneInput(buttonIndex) {
 */
 function closeFortuneInput(needTosubmitFortune=false) {
   getFortuneInputBox().style.display = 'none';
+  document.querySelector('.resetSide').style.display = 'block';
+
+  const origamiContainer = document.querySelector('object');
+  origamiContainer.style.pointerEvents = 'auto';
+
   const closeSound = new Audio('assets/media/CloseFortune.mov');
   if (!needTosubmitFortune) {
     return;
@@ -181,15 +117,7 @@ function activateFortuneInputHandler() {
   });
 
   document.addEventListener('click', (event) => {
-    const target = event.target;
-    const fortuneInputBox = getFortuneInputBox();
-    const fortuneInputSaveButton = getFortuneInputSaveButton();
-    if (
-      fortuneInputBox.style.display === 'block' &&
-      !target.closest('.sidebar') &&
-      target !== fortuneInputSaveButton &&
-      !fortuneInputBox.contains(target)
-    ) {
+    if (isInputExitClick(event.target)) {
       closeFortuneInput();
     }
   });
@@ -197,6 +125,26 @@ function activateFortuneInputHandler() {
   getFortuneInputSaveButton().addEventListener('click', () => {
     closeFortuneInput(true);
   });
+}
+
+/**
+ * @function isInputExitClick helps click listener decide if fortune input should end based
+ *  on a click
+ * @param {Object} target - the target of a click event
+ * @returns {boolean} - true if the click implies fortune input should exit
+ */
+function isInputExitClick(target) {
+  const fortuneInputBox = getFortuneInputBox();
+  const fortuneInputSaveButton = getFortuneInputSaveButton();
+
+  const inputBoxBlocking = fortuneInputBox.style.display === 'block';
+
+  const isNearSidebar = target.closest('.sidebar');
+  const isSaveButton = target === fortuneInputSaveButton;
+  const isInputBox = fortuneInputBox.contains(target);
+
+  const isNearMissClick = isNearSidebar || isSaveButton || isInputBox;
+  return inputBoxBlocking && !isNearMissClick;
 }
 
 function getFortuneInputSaveButton() {
@@ -232,7 +180,6 @@ function setSidebarButtonContent(index, content) {
  * @param {Array<Object>} fortune - Array of user inputted fortunes
  * @returns {boolean} - Returns true if the fortune was saved successfully
  */
-
 function saveFortunesToStorage(fortunes) {
   return localStorage.setItem('fortunes', JSON.stringify(fortunes));
 }
@@ -270,4 +217,15 @@ export function saveFortunesOnClick() {
   saveFortunes();
   const fortunes = getFortunesFromStorage();
   return fortunes;
+}
+
+/**
+ * Resets the sidebar by clearing its content, generating new buttons, and clearing localStorage.
+ * @function
+ */
+export function resetSidebar() {
+  const sidebar = getSidebar();
+  sidebar.innerHTML = '';
+  activateSidebarButtons();
+  localStorage.clear();
 }

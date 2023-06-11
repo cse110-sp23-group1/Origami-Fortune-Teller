@@ -1,4 +1,38 @@
-object{
+/* BEGIN VIGNETTE STYLES  */
+/* properties ordered by z-level */
+
+/* the background image has to be separate from body/vignette */
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url("../images/backgroundImage/background.png");
+  background-repeat: repeat;
+  z-index: -2; /* the very bottom */
+}
+
+/* this contains the vignette itself */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  /* shape at origin, color to grow from __ % of area to cover, color to grow to */
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.3) 100%,  transparent);
+  z-index: -1; /* -1 is below content but above the background */
+}
+
+body {
+  background: transparent;
+}
+/* END VIGNETTE STYLES */
+
+object {
 	/* width, height values from Figma prototype */
 	width: auto; 
 	height: auto;
@@ -6,22 +40,56 @@ object{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 100px;
+  @media screen and (max-width: 850px) {
+    width: 400px;
+  }
+  @media screen and (max-height: 850px) {
+    width: 400px;
+  }
+}
+
+.sidebar {
+  margin: auto;
+  position: relative;
+  bottom: 0;
+
+  height: calc(72px * 2 + 5);
+  max-width: 100%;
+  width: 1000px;
+  padding-top: 5vh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: center;
+  place-content: center;
+  grid-gap: 3px;
+  place-content: center;
+
+  @media screen and (max-width: 850px) {
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(4, 1fr);
+    height: calc(72px * 4 + 5);
+    grid-gap: 5px;
+  }
+
+  z-index: 1;
 }
 
 /* Sidebar */
 .sidebar button {
   box-sizing: border-box;
+  position: relative;
 
-  position: absolute;
   width: 209px;
   height: 73px;
   left: 0px;
-
+  z-index: 1;
   background: rgb(250, 231, 255);
   border: 1px solid #000000;
+  border-radius: 10px;
   cursor: pointer;
-  animation: slideInFromBottom 1s ease-in-out;
+  animation: easeInFortunes 1s ease-in-out;
+  overflow-wrap: break-word;
 }
 
 .sidebar button:hover {
@@ -56,8 +124,10 @@ object{
 .fortuneInputBox {
   display: none;
   position: absolute;
-  left: 500px;
-  top: 510px;
+  z-index: 2;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 20vh;
 }
 
 .fortuneInputBox input {
@@ -68,6 +138,7 @@ object{
   border-radius: 10px;
   outline: none;
   box-shadow: none;
+  border: 1px solid #000000;
   transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
 
@@ -103,11 +174,32 @@ object{
 /* Title Header */
 #titleHeader {
   text-align: center;
-  color: #ab50b3;
-  margin-top: 5%;
+  color: rgb(250, 231, 255);
+  margin-top: 7.5vh;
   font-size: 2.5em;
   position: relative;
-  animation: slideInFromTop 1s ease-in-out;
+}
+/*container for Origami*/
+.origamiContainer {
+  position: relative;
+  pointer-events: none;
+}
+
+/* all of its descendants */
+.origamiContainer * {
+  pointer-events: auto;
+}
+
+/*Fortune Overlay when Origami is in opened state */
+.origamiFortuneOverlay {
+  position: absolute;
+  width: 100px;
+  top: 125px;
+  left: 205px;
+  color: white;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @keyframes slideInFromTop {
@@ -121,13 +213,56 @@ object{
   }
 }
 
-@keyframes slideInFromBottom {
+@keyframes easeInFortunes {
   0% {
-    transform: translateY(100%);
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
     opacity: 1;
   }
+}
+
+.slide-in {
+  animation: slideInFromTop 1s ease-in-out;
+}
+
+/* Reset Buttons */
+.resetSide {
+  position: relative;
+  background-color: rgb(250, 231, 255);
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -10px;
+  display: block;
+  z-index: 10;
+  animation: easeInFortunes 1s ease-in-out;
+  cursor: pointer;
+}
+
+.restart {
+  background-color: rgb(250, 231, 255);
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  display: block;
+  cursor: pointer;
+}
+
+.restart:hover, .resetSide:hover {
+	background: rgb(151, 98, 164);
+	border-color: rgb(109, 14, 109);
+	color: #ffffff;
+}
+* {
+  font-family: 'Inter', sans-serif;
 }
