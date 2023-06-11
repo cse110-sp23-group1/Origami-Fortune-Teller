@@ -73,7 +73,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     console.log('Changing preset randomly...');
 
     const buttons = await page.$$('.sidebar button');
-    const randomButtonIndex = getRandomIndex(buttons.length - 1);
+    const randomButtonIndex = getRandomIndex(buttons.length);
     const clickedSideBarButton = buttons[randomButtonIndex];
     await clickedSideBarButton.click();
 
@@ -96,6 +96,8 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       console.log('Pressing enter...');
       await page.keyboard.press('Enter');
     }
+    // wait 1001 ms for the 1001 ms animation to happen
+    await new Promise((resolve) => setTimeout(resolve, 1001));
 
     const buttonText = await page.$$eval('.sidebar button', (buttons, index) => {
       const button = buttons[index];
