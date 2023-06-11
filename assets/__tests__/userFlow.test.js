@@ -312,7 +312,74 @@ display on the screen (should be same elements when you enter page for the first
 buttons still have the right text saved on them from localStorage.
 */
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
+  // Simulates first click
+  await page.waitForSelector('object');
+  let objectElementHandle = await page.$('object');
+  let frame = await objectElementHandle.contentFrame();
+  const svgElement = await frame.$('svg');
+  let flaps = await svgElement.$$('path[id*="-click"]');
+  let randomFlapIndex = getRandomIndex(flaps.length - 1);
+  await flaps[randomFlapIndex].click();
+  console.log('Clicking random flap...');  
+  
+  // Saves current fortunes from localStorage
+  const localStorageFortunesPre = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem('fortunes'));
+  });
 
+  // Need to figure out how to click on one of the #-click
+  flaps = await svgElement.$$('path[id*="-click"]');
+  randomFlapIndex = getRandomIndex(flaps.length - 1);
+  await flaps[randomFlapIndex].click();
+
+  // Third and final click
+  flaps = await svgElement.$$('path[id*="-click"]');
+  randomFlapIndex = getRandomIndex(flaps.length - 1);
+  await flaps[randomFlapIndex].click();
+
+  // Click reset button
+  console.log('Clicking reset fortunes button');
+  const resetButton = await page.$('.resetSide');
+  await resetButton.click();
+  console.log('RESET CLICKED');
+  
+  // CODE BREAKS HERE!!!
+
+  // TODO: Might need a Promise all here???????????
+  // Wait for the frame to reload
+  await frame.waitForNavigation();
+  console.log("FRAME HAS RELOADED");
+  // TODO: Might need a Promise all here
+
+  // Do we need to get new frame here????
+  // await page.waitForSelector('object');
+  // objectElementHandle = await page.$('object');
+  // frame = await objectElementHandle.contentFrame();
+  
+  // Checks if sidebarDisplayStyle exists
+  const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
+    return window.getComputedStyle(sidebar).display;
+  });
+  console.log(sidebarDisplayStyle);
+
+  // Checks if all fortunes in sidebar boxes is same as before
+  const buttons = await page.$$('.sidebar button');
+  let goodFortunes = 0;
+  for (let i = 0; i < buttons.length; i++) {
+    const text = await buttons[i].evaluate((button) => button.textContent);
+    if(localStorageFortunesPre.contains(text)) {
+      goodFortunes++;
+    }
+  }
+
+  // Gets fortunes after reset
+  const localStorageFortunesPost = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem('fortunes'));
+  });
+  
+  expect(goodFortunes).toBe(8);
+  expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
+  expect(sidebarDisplayStyle).toStrictEqual("grid");
 });
 
 /*
