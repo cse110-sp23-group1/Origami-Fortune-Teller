@@ -180,8 +180,10 @@ Fortunes Button, and checks local Storage to make sure it is empty.
 */
 it('Checking Reset Fortunes Button resets fortunes in localStorage', async () => {
   console.log('reset page');
+  await page.reload();
   await page.evaluate(() => {
-    return localStorage.clear();
+    localStorage.clear();
+    localStorage.removeItem('fortune');
   });
   await page.reload();
   console.log('change a fortune');
@@ -225,11 +227,12 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
 Checks if the default fortunes are what the user sees.
 */
 it('Checking Fortunes are correct at start', async () => {
+  await page.reload();
   await page.evaluate(() => {
     localStorage.clear();
+    localStorage.removeItem('fortune');
   });
   await page.reload();
-
   const buttons = await page.$$('.sidebar button');
   await page.waitForTimeout(500);
   const expected = [
