@@ -243,6 +243,7 @@ it('Checking Fortunes are correct at start', async () => {
     'As I see it, yes',
   ];
   const actual = [];
+
   for (let i = 0; i < buttons.length; i++) {
     const text = await buttons[i].evaluate((button) => button.textContent);
     actual.push(text);
@@ -263,6 +264,37 @@ TODO: Create test that ensure the correct SVG is being display after user clicks
 8 flaps.
 */
 it('Checking correct SVG is displayed after clicking any of the last 8 flaps at the end to reveal fortune...', async () => {
+
+//stimulates clicking the flaps
+await page.waitForSelector('object');
+const objectElementHandle = await page.$('object');
+const frame = await objectElementHandle.contentFrame();
+const svgElement = await frame.$('svg');
+const flaps = await svgElement.$$('path[id*="-click"]');
+const randomFlapIndex = getRandomIndex(flaps.length - 1);
+await flaps[randomFlapIndex].click();
+await flaps[randomFlapIndex].click();
+await flaps[randomFlapIndex].click();
+
+//Need to grab flapData properly (NOT WORKING)
+//Need to properly grab the data from the p tag in order to compare it with contents of the data in local storage.
+const flapData = await page.$$('.origamiFortuneOverlay p');
+console.log(flapData);
+
+const textContent = await flapData[0].evaluate((p) => p.textContent);
+
+//This tests to see if the text is in the array of changes. If it is set the foundFortune to true
+console.log(textContent)
+const buttons = await page.$$('.sidebar button');
+let foundFortune = false;
+for (let i = 0; i < buttons.length; i++) {
+  const text = await buttons[i].evaluate((button) => button.textContent);
+  if(text === "Change to the fortune clicked") {
+    foundFortune = true;
+    return;
+  }
+}
+expect(foundFortune).toEqual(true);
 
 });
 
