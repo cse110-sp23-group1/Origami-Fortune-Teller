@@ -14,7 +14,21 @@ const svgPaths = [
   'assets/images/origami/7-opened.svg',
   'assets/images/origami/8-opened.svg',
 ];
-
+function getRandomEvenFlap() {
+  const nums = [2, 4, 6, 8];
+  const index = Math.floor(Math.random() * nums.length);
+  return nums[index];
+}
+function getRandomOddFlap() {
+  const nums = [1, 3, 5, 7];
+  const index = Math.floor(Math.random() * nums.length);
+  return nums[index];
+}
+function getRandomOpenedFlap() {
+  const nums = [1, 2, 3, 4, 5, 6, 7, 8];
+  const index = Math.floor(Math.random() * nums.length);
+  return nums[index];
+}
 function getRandomIndex(length) {
   return Math.floor(Math.random() * length);
 }
@@ -318,64 +332,75 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   await page.waitForSelector('object');
   let objectElementHandle = await page.$('object');
   let frame = await objectElementHandle.contentFrame();
+  await frame.waitForSelector('svg');
   let svgElement = await frame.$('svg');
-  let flaps = await svgElement.$$('path[id*="-click"]');
+  await svgElement.waitForSelector('path[id*="-click"]');
+  const flaps = await svgElement.$$('path[id*="-click"]');
   let randomFlapIndex = getRandomIndex(flaps.length);
-  await flaps[randomFlapIndex].click();
+  // this doesn't always work??
   console.log('Clicking random closed flap...');
+  await flaps[randomFlapIndex].click();
+
   // Saves current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
+
   // wait 5 seconds for animation to finish 500 ms * y e l l o w = 3000 ms + network
   await new Promise((resolve) => setTimeout(resolve, 5000));
+
   // click on numbered svg
+  await page.waitForSelector('object');
   objectElementHandle = await page.$('object');
+  // const currentSVG = await page.$eval('object', (element) => element.getAttribute('data'));
   frame = await objectElementHandle.contentFrame();
+  await frame.waitForSelector('svg');
   svgElement = await frame.$('svg');
-  flaps = await svgElement.$$('path[id*="-click"]');
-  console.log(flaps);
-  randomFlapIndex = getRandomIndex(flaps.length);
-  console.log('Clicking on a numbered flap...');
-  console.log(flaps);
-  console.log(randomFlapIndex);
-  await flaps[randomFlapIndex].click();
+
+  randomFlapIndex = getRandomOddFlap();
+  const oddFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+  // if oddflap is null, it must be the vertical fortune teller being shown...
+  if (oddFlap === null) {
+    randomFlapIndex = getRandomEvenFlap();
+    await svgElement.waitForSelector(`text[id="${randomFlapIndex}"]`);
+    const evenFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+    console.log('Clicking on vertical fortune teller...');
+    await evenFlap.click();
+  } else {
+    console.log('Clicking on horizontal fortune teller...');
+    await oddFlap.click();
+  }
+
+
   // wait 5 seconsd for animation to finish 500 ms * 8 = 4000 ms + network
   await new Promise((resolve) => setTimeout(resolve, 5000));
 
   // click on 8 opened svg
+  await page.waitForSelector('object');
   objectElementHandle = await page.$('object');
   frame = await objectElementHandle.contentFrame();
   svgElement = await frame.$('svg');
-  flaps = await svgElement.$$('path[id*="-click"]');
-  randomFlapIndex = getRandomIndex(flaps.length);
-  console.log('clicking random flap from the 8 selecitons..');
-  console.log(flaps);
-  await flaps[randomFlapIndex].click();
+  randomFlapIndex = getRandomOpenedFlap();
+  const fortuneFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+  console.log('Clicking on a fortune to reveal...');
+  await fortuneFlap.click();
 
   // wait 5 seconds for new svg to display
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
 
   // Click reset button
   console.log('Clicking reset button');
   const restartButton = await page.$('.restart');
   await restartButton.click();
-
   // wait 2 seconds for reset to go through
   await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  await frame.waitForNavigation();
-  console.log('FRAME HAS RELOADED');
-  // TODO: Might need a Promise all here
-
-  // Do we need to get new frame here????
-  // await page.waitForSelector('object');
-  // objectElementHandle = await page.$('object');
-  // frame = await objectElementHandle.contentFrame();
+  await page.waitForSelector('object');
+  const currentSVG = await page.$eval('object', (element) => element.getAttribute('data'));
+  expect(currentSVG).toBe(svgPaths[0]);
 
   // Checks if sidebarDisplayStyle exists
-  const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
+  const sidebarDisplayStyle = await frame.$('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
   });
   console.log(sidebarDisplayStyle);
@@ -398,7 +423,7 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(goodFortunes).toBe(8);
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
   expect(sidebarDisplayStyle).toStrictEqual('grid');
-}, 20000);
+}, 30000);
 
 /*
 TODO: (Extra if time) Create test that for any hover element if you hover over it, the correct functioanlity
