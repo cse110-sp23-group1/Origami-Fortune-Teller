@@ -267,38 +267,36 @@ TODO: Create test that ensure the correct SVG is being display after user clicks
 8 flaps.
 */
 it('Checking correct SVG is displayed after clicking any of the last 8 flaps at the end to reveal fortune...', async () => {
+  // stimulates clicking the flaps
+  await page.waitForSelector('object');
+  const objectElementHandle = await page.$('object');
+  const frame = await objectElementHandle.contentFrame();
+  const svgElement = await frame.$('svg');
+  const flaps = await svgElement.$$('path[id*="-click"]');
+  const randomFlapIndex = getRandomIndex(flaps.length - 1);
+  await flaps[randomFlapIndex].click();
+  await flaps[randomFlapIndex].click();
+  await flaps[randomFlapIndex].click();
 
-//stimulates clicking the flaps
-await page.waitForSelector('object');
-const objectElementHandle = await page.$('object');
-const frame = await objectElementHandle.contentFrame();
-const svgElement = await frame.$('svg');
-const flaps = await svgElement.$$('path[id*="-click"]');
-const randomFlapIndex = getRandomIndex(flaps.length - 1);
-await flaps[randomFlapIndex].click();
-await flaps[randomFlapIndex].click();
-await flaps[randomFlapIndex].click();
+  // Need to grab flapData properly (NOT WORKING)
+  // Need to properly grab the data from the p tag in order to compare it with contents of the data in local storage.
+  const flapData = await page.$$('.origamiFortuneOverlay p');
+  console.log(flapData);
 
-//Need to grab flapData properly (NOT WORKING)
-//Need to properly grab the data from the p tag in order to compare it with contents of the data in local storage.
-const flapData = await page.$$('.origamiFortuneOverlay p');
-console.log(flapData);
+  const textContent = await flapData[0].evaluate((p) => p.textContent);
 
-const textContent = await flapData[0].evaluate((p) => p.textContent);
-
-//This tests to see if the text is in the array of changes. If it is set the foundFortune to true
-console.log(textContent)
-const buttons = await page.$$('.sidebar button');
-let foundFortune = false;
-for (let i = 0; i < buttons.length; i++) {
-  const text = await buttons[i].evaluate((button) => button.textContent);
-  if(text === "Change to the fortune clicked") {
-    foundFortune = true;
-    return;
+  // This tests to see if the text is in the array of changes. If it is set the foundFortune to true
+  console.log(textContent);
+  const buttons = await page.$$('.sidebar button');
+  let foundFortune = false;
+  for (let i = 0; i < buttons.length; i++) {
+    const text = await buttons[i].evaluate((button) => button.textContent);
+    if (text === 'Change to the fortune clicked') {
+      foundFortune = true;
+      return;
+    }
   }
-}
-expect(foundFortune).toEqual(true);
-
+  expect(foundFortune).toEqual(true);
 });
 
 /*
@@ -317,14 +315,13 @@ buttons still have the right text saved on them from localStorage.
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
   // Simulates first click
   await page.waitForSelector('object');
-  let objectElementHandle = await page.$('object');
-  let frame = await objectElementHandle.contentFrame();
+  const objectElementHandle = await page.$('object');
+  const frame = await objectElementHandle.contentFrame();
   const svgElement = await frame.$('svg');
   let flaps = await svgElement.$$('path[id*="-click"]');
   let randomFlapIndex = getRandomIndex(flaps.length - 1);
   await flaps[randomFlapIndex].click();
-  console.log('Clicking random flap...');  
-  
+  console.log('Clicking random flap...');
   // Saves current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
@@ -345,20 +342,20 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   const resetButton = await page.$('.resetSide');
   await resetButton.click();
   console.log('RESET CLICKED');
-  
+
   // CODE BREAKS HERE!!!
 
   // TODO: Might need a Promise all here???????????
   // Wait for the frame to reload
   await frame.waitForNavigation();
-  console.log("FRAME HAS RELOADED");
+  console.log('FRAME HAS RELOADED');
   // TODO: Might need a Promise all here
 
   // Do we need to get new frame here????
   // await page.waitForSelector('object');
   // objectElementHandle = await page.$('object');
   // frame = await objectElementHandle.contentFrame();
-  
+
   // Checks if sidebarDisplayStyle exists
   const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
@@ -370,7 +367,7 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   let goodFortunes = 0;
   for (let i = 0; i < buttons.length; i++) {
     const text = await buttons[i].evaluate((button) => button.textContent);
-    if(localStorageFortunesPre.contains(text)) {
+    if (localStorageFortunesPre.contains(text)) {
       goodFortunes++;
     }
   }
@@ -379,10 +376,10 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   const localStorageFortunesPost = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
-  
+
   expect(goodFortunes).toBe(8);
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
-  expect(sidebarDisplayStyle).toStrictEqual("grid");
+  expect(sidebarDisplayStyle).toStrictEqual('grid');
 });
 
 /*
