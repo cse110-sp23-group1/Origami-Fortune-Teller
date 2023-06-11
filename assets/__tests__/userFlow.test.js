@@ -330,14 +330,13 @@ buttons still have the right text saved on them from localStorage.
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
   // Simulates first click on closed svg
   await page.waitForSelector('object');
-  let objectElementHandle = await page.$('object');
-  let frame = await objectElementHandle.contentFrame();
+  const objectElementHandle = await page.$('object');
+  const frame = await objectElementHandle.contentFrame();
   await frame.waitForSelector('svg');
-  let svgElement = await frame.$('svg');
-  await svgElement.waitForSelector('path[id*="-click"]');
-  const flaps = await svgElement.$$('path[id*="-click"]');
-  let randomFlapIndex = getRandomIndex(flaps.length);
-  // this doesn't always work??
+  const svgElement = await frame.waitForSelector('svg');
+  await frame.waitForSelector('path[id*="-click"]');
+  const flaps = await frame.$$('path[id*="-click"]');
+  const randomFlapIndex = getRandomIndex(flaps.length);
   console.log('Clicking random closed flap...');
   await flaps[randomFlapIndex].click();
 
@@ -351,19 +350,18 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
 
   // click on numbered svg
   await page.waitForSelector('object');
-  objectElementHandle = await page.$('object');
-  // const currentSVG = await page.$eval('object', (element) => element.getAttribute('data'));
-  frame = await objectElementHandle.contentFrame();
-  await frame.waitForSelector('svg');
-  svgElement = await frame.$('svg');
+  const objectElementHandle2 = await page.$('object');
+  const frame2 = await objectElementHandle2.contentFrame();
+  await frame2.waitForSelector('svg');
+  const svgElement2 = await frame2.$('svg');
 
-  randomFlapIndex = getRandomOddFlap();
-  const oddFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+  const randomFlapIndex2 = getRandomOddFlap();
+  const oddFlap = await svgElement2.$(`text[id="${randomFlapIndex2}"]`);
   // if oddflap is null, it must be the vertical fortune teller being shown...
   if (oddFlap === null) {
-    randomFlapIndex = getRandomEvenFlap();
-    await svgElement.waitForSelector(`text[id="${randomFlapIndex}"]`);
-    const evenFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+    const randomFlapIndex3 = getRandomEvenFlap();
+    await frame2.waitForSelector(`text[id="${randomFlapIndex3}"]`);
+    const evenFlap = await svgElement2.$(`text[id="${randomFlapIndex3}"]`);
     console.log('Clicking on vertical fortune teller...');
     await evenFlap.click();
   } else {
@@ -371,23 +369,21 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
     await oddFlap.click();
   }
 
-
-  // wait 5 seconsd for animation to finish 500 ms * 8 = 4000 ms + network
+  // wait 5 seconds for animation to finish 500 ms * 8 = 4000 ms + network
   await new Promise((resolve) => setTimeout(resolve, 5000));
 
   // click on 8 opened svg
   await page.waitForSelector('object');
-  objectElementHandle = await page.$('object');
-  frame = await objectElementHandle.contentFrame();
-  svgElement = await frame.$('svg');
-  randomFlapIndex = getRandomOpenedFlap();
-  const fortuneFlap = await svgElement.$(`text[id="${randomFlapIndex}"]`);
+  const objectElementHandle3 = await page.$('object');
+  const frame3 = await objectElementHandle3.contentFrame();
+  const svgElement3 = await frame3.$('svg');
+  const randomFlapIndex4 = getRandomOpenedFlap();
+  const fortuneFlap = await svgElement3.$(`text[id="${randomFlapIndex4}"]`);
   console.log('Clicking on a fortune to reveal...');
   await fortuneFlap.click();
 
   // wait 5 seconds for new svg to display
   await new Promise((resolve) => setTimeout(resolve, 2000));
-
 
   // Click reset button
   console.log('Clicking reset button');
@@ -400,17 +396,17 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(currentSVG).toBe(svgPaths[0]);
 
   // Checks if sidebarDisplayStyle exists
-  const sidebarDisplayStyle = await frame.$('.sidebar', (sidebar) => {
+  const sidebarDisplayStyle = await frame.$eval('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
   });
   console.log(sidebarDisplayStyle);
 
-  // Checks if all fortunes in sidebar boxes is same as before
+  // Checks if all fortunes in sidebar boxes are the same as before
   const buttons = await page.$$('.sidebar button');
   let goodFortunes = 0;
   for (let i = 0; i < buttons.length; i++) {
     const text = await buttons[i].evaluate((button) => button.textContent);
-    if (localStorageFortunesPre.contains(text)) {
+    if (localStorageFortunesPre.includes(text)) {
       goodFortunes++;
     }
   }
@@ -423,7 +419,8 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(goodFortunes).toBe(8);
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
   expect(sidebarDisplayStyle).toStrictEqual('grid');
-}, 30000);
+}, 20000);
+
 
 /*
 TODO: (Extra if time) Create test that for any hover element if you hover over it, the correct functioanlity
