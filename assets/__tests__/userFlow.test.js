@@ -43,7 +43,24 @@ function generateRandomString(maxLength) {
   }
   return result;
 }
+async function clickSaveorEnter(randomButtonIndex) {
+  const shouldClickSaveButton = Math.random() < 0.5;
+  if (shouldClickSaveButton) {
+    console.log('Clicking save button...');
+    const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
+    saveButton.click();
+  } else {
+    console.log('Pressing enter...');
+    await page.keyboard.press('Enter');
+  }
+}
+async function getButtonText() {
+  const buttonText = await page.$$eval('.sidebar button', (buttons) => {
+    return buttons.map((button) => button.textContent.trim());
+  });
 
+  return buttonText;
+}
 describe('Basic user flow for Origami Fortune Teller', () => {
   beforeAll(async () => {
     await page.goto('https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/');
@@ -73,9 +90,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       'Better not tell you now',
       'As I see it, yes',
     ];
-    const buttonText = await page.$$eval('.sidebar button', (buttons) => {
-      return buttons.map((button) => button.textContent.trim());
-    });
+    const buttonText = await getButtonText();
     expect(buttonText).toEqual(expectedFortunes);
   });
 
@@ -99,15 +114,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     await page.focus('#fortuneInput');
     await page.keyboard.type(randomText);
 
-    const shouldClickSaveButton = Math.random() < 0.5;
-    if (shouldClickSaveButton) {
-      console.log('Clicking save button...');
-      const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
-      saveButton.click();
-    } else {
-      console.log('Pressing enter...');
-      await page.keyboard.press('Enter');
-    }
+    await clickSaveorEnter(randomButtonIndex);
     // wait 1001 ms for the 1001 ms animation to happen
     await new Promise((resolve) => setTimeout(resolve, 1001));
 
@@ -130,9 +137,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const svgElement = await frame.$('svg');
     const flaps = await svgElement.$$('path[id*="-click"]');
     const randomFlapIndex = getRandomIndex(flaps.length);
-    const buttonText = await page.$$eval('.sidebar button', (buttons) => {
-      return buttons.map((button) => button.textContent.trim());
-    });
+    const buttonText = await getButtonText();
     await flaps[randomFlapIndex].click();
     console.log('Clicking random flap...');
 
@@ -198,15 +203,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   await page.waitForSelector('#fortuneInput');
   await page.focus('#fortuneInput');
   await page.keyboard.type(randomText);
-  const shouldClickSaveButton = Math.random() < 0.5;
-  if (shouldClickSaveButton) {
-    console.log('Clicking save button...');
-    const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
-    saveButton.click();
-  } else {
-    console.log('Pressing enter...');
-    await page.keyboard.press('Enter');
-  }
+  await clickSaveorEnter(randomButtonIndex);
   console.log('Clicking reset fortunes button');
   await page.waitForTimeout(1500);
   const resetButton = await page.$('.resetSide');
