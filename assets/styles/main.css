@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-image: url("../images/backgroundImage/background.png");
   background-repeat: repeat;
   z-index: -2; /* the very bottom */
@@ -40,22 +40,23 @@ object {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 100px;
-
   @media screen and (max-width: 850px) {
+    width: 400px;
+  }
+  @media screen and (max-height: 850px) {
     width: 400px;
   }
 }
 
 .sidebar {
-  position: absolute;
+  margin: auto;
+  position: relative;
   bottom: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   height: calc(72px * 2 + 5);
   max-width: 100%;
-
+  width: 1000px;
+  padding-top: 5vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -65,11 +66,12 @@ object {
   place-content: center;
 
   @media screen and (max-width: 850px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(4, 1fr);
     height: calc(72px * 4 + 5);
-    transform: translate(-50%, -5%);
+    grid-gap: 5px;
   }
+
   z-index: 1;
 }
 
@@ -122,7 +124,7 @@ object {
 .fortuneInputBox {
   display: none;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 50%;
   transform: translate(-50%, -50%);
   bottom: 20vh;
@@ -173,7 +175,7 @@ object {
 #titleHeader {
   text-align: center;
   color: rgb(250, 231, 255);
-  margin-top: 5%;
+  margin-top: 7.5vh;
   font-size: 2.5em;
   position: relative;
 }
@@ -239,6 +241,7 @@ object {
   display: block;
   z-index: 10;
   animation: easeInFortunes 1s ease-in-out;
+  cursor: pointer;
 }
 
 .restart {
@@ -252,6 +255,7 @@ object {
   margin-right: auto;
   margin-top: 0px;
   display: block;
+  cursor: pointer;
 }
 
 .restart:hover, .resetSide:hover {
