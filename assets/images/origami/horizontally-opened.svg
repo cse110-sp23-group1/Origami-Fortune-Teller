@@ -1,13 +1,13 @@
 <svg width="456" height="461" viewBox="0 0 456 461" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="Top-Right-Flap">
-        <path id="Top-Right-Diagonal" d="M3.69 2.13L222.69 212.13" stroke="#962B44" stroke-width="2"/>
         <path id="Top-Right-Flap_2" d="M2.04 2.20C14.54 -8.21 223.54 28.70 223.54 28.70V213.37H38.54C38.54 213.37 -10.45 12.62 2.04 2.20Z" fill="#EF476F"/>
+        <path id="Top-Left-Diagonal" d="M3.69 2.13L222.69 212.13" stroke="#962B44" stroke-width="2"/>
         <path id="Top-Right-Shadow" d="M137 141.35L224.31 78.35L224.31 213.19L40.20 214.78L137 141.35Z" fill="#962B44"/>
     </g>
     <g id="Top-Left-Flap">
         <path id="Top-Left-Flap_2" d="M446.06 2.56C433.56 -7.86 224.56 29.05 224.56 29.05V213.73H409.56C409.56 213.73 458.56 12.97 446.06 2.56Z" fill="#118AB2"/>
         <path id="Top-Left-Orthogonal" d="M224 28.35L224 210.35" stroke="#962B44" stroke-width="2"/>
-        <path id="Top-Left-Diagonal" d="M445.00 2.77L222.45 213.5" stroke="#094559" stroke-width="2.00"/>
+        <path id="Top-Right-Diagonal" d="M445.00 2.77L222.45 213.5" stroke="#094559" stroke-width="2.00"/>
         <path id="Top-Left-Shadow" d="M309.46 140.69L224.91 77.55L225.02 212.23L408.97 213.56L309.46 140.69Z" fill="#073E51"/>
     </g>
     <g id="Bottom-Right-Flap">
