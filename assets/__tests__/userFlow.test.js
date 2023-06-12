@@ -1,38 +1,38 @@
 const svgPaths = [
   'assets/images/origami/closed.svg',
-  'assets/images/origami/horizontally-opened-nums.svg',
-  'assets/images/origami/vertically-opened-nums.svg',
-  'assets/images/origami/horizontally-opened.svg',
-  'assets/images/origami/vertically-opened.svg',
-  'assets/images/origami/opened.svg',
-  'assets/images/origami/1-opened.svg',
-  'assets/images/origami/2-opened.svg',
-  'assets/images/origami/3-opened.svg',
-  'assets/images/origami/4-opened.svg',
-  'assets/images/origami/5-opened.svg',
-  'assets/images/origami/6-opened.svg',
-  'assets/images/origami/7-opened.svg',
-  'assets/images/origami/8-opened.svg',
 ];
-function getRandomEvenFlap() {
-  const nums = [2, 4, 6, 8];
-  const index = Math.floor(Math.random() * nums.length);
-  return nums[index];
-}
+/**
+ * Gets a random Odd Numbered Flap
+ * @returns Random Odd number between 1 3 5 7
+ */
 function getRandomOddFlap() {
   const nums = [1, 3, 5, 7];
   const index = Math.floor(Math.random() * nums.length);
   return nums[index];
 }
+/**
+ * Gets a random flap from the end to reveal fortune.
+ * @returns A random opened flap from the end from 1 to 8
+ */
 function getRandomOpenedFlap() {
   const nums = [1, 2, 3, 4, 5, 6, 7, 8];
   const index = Math.floor(Math.random() * nums.length);
   return nums[index];
 }
+/**
+ * Fucntion used in support to click on a flap randomly.
+ * @param {Integer} length A parameter of current length of object.
+ * @returns A random number from 0 to a given length
+ */
 function getRandomIndex(length) {
   return Math.floor(Math.random() * length);
 }
 
+/**
+ * Function to generate a random string to test on the buttons.
+ * @param {Integer} maxLength Passed in max length of a string to generate.
+ * @returns A random string of maxLength from characters
+ */
 function generateRandomString(maxLength) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const length = Math.floor(Math.random() * maxLength) + 1;
@@ -58,7 +58,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const currentSVG = await page.$eval('object', (element) => element.getAttribute('data'));
     expect(currentSVG).toBe(svgPaths[0]);
 
-    console.log('checking current fortunes...');
+    console.log('Checking current fortunes...');
     const localStorageFortunes = await page.evaluate(() => {
       return JSON.parse(localStorage.getItem('fortunes'));
     });
@@ -80,7 +80,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
   });
 
   /**
-   * Currently, this test is desgined to click a random button, change the input, save it, and then check to
+   * This test is desgined to click a random button, change the input, save it, and then check to
    * make sure that the user sees this new input.
    */
   it('Changing preset randomly and checking preset was changed using different methods of saving...', async () => {
@@ -90,9 +90,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
     const randomButtonIndex = getRandomIndex(buttons.length);
     const clickedSideBarButton = buttons[randomButtonIndex];
     await clickedSideBarButton.click();
-
     await page.waitForSelector('#fortuneInput');
-
     const randomText = generateRandomString(35);
     await page.$eval('#fortuneInput', (textbox) => {
       textbox.value = '';
@@ -122,9 +120,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
   });
 
   /**
-   * Clicking any flap should save the current fortunes listed in localStorage. Currently, the test below
-   * is making sure if the user edits nothing, the default fortunes are saved to localStorage, but this
-   * test doesn't work bc ithink the previous test is messing it up.
+   * Test to make sure clicking any flap should save the current fortunes listed in localStorage.
    */
   it('Clicking any flap on the closed SVG saves fortunes to localstorage...', async () => {
     console.log('Without editing fortunes, checking presets are saved on first click...');
@@ -149,10 +145,9 @@ describe('Basic user flow for Origami Fortune Teller', () => {
   });
 });
 
-/*
-TODO: Create test that checks to make sure Reset Fortunes Button and Sidebar are gone
-after you click the fortune teller.
-*/
+/**
+ * Test to make sure buttons and sidebar disappear after clicking on fortune teller.
+ */
 it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune teller...', async ()=> {
   await page.waitForSelector('object');
   const objectElementHandle = await page.$('object');
@@ -162,7 +157,6 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   const randomFlapIndex = getRandomIndex(flaps.length);
   console.log('clicking random flap...');
   await flaps[randomFlapIndex].click();
-  console.log('Clicking random flap...');
 
   const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
@@ -181,26 +175,22 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   expect(inputBoxDisplayStyle).toStrictEqual([]);
 });
 
-/*
-Clicking the reset Fortunes button empties local Storage. The test below changes a fortune, clicks the Reset
-Fortunes Button, and checks local Storage to make sure it is empty.
-*/
+/**
+ * The test below changes a fortune, clicks the Reset Fortunes Button, and checks local Storage to make sure it is empty.
+ */
 it('Checking Reset Fortunes Button resets fortunes in localStorage', async () => {
-  console.log('reset page');
+  console.log('Resetting page');
   await page.reload();
   await page.evaluate(() => {
     localStorage.clear();
     localStorage.removeItem('fortune');
   });
   await page.reload();
-  console.log('change a fortune');
+  console.log('Changing fortune...');
   const buttons = await page.$$('.sidebar button');
   const randomButtonIndex = getRandomIndex(buttons.length);
-
   await buttons[randomButtonIndex].click();
-
   await page.waitForSelector('#fortuneInput');
-
   const randomText = generateRandomString(35);
   await page.$eval('#fortuneInput', (textbox) => {
     textbox.value = '';
@@ -230,9 +220,9 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
   expect(localStorageFortunes).toBe(null);
 }, 10000);
 
-/*
-Checks if the default fortunes are what the user sees.
-*/
+/**
+ * Test to make sure default fortunes is what user sees first time entering our site.
+ */
 it('Checking Fortunes are correct at start', async () => {
   await page.reload();
   await page.evaluate(() => {
@@ -261,56 +251,11 @@ it('Checking Fortunes are correct at start', async () => {
   expect(actual).toEqual(expected);
 });
 
-/*
-TODO: Create test that ensure the correct SVG is being display after user clicks on the any of the last
-8 flaps.
-*/
-it('Checking correct SVG is displayed after clicking any of the last 8 flaps at the end to reveal fortune...', async () => {
-  // stimulates clicking the flaps
-  await page.waitForSelector('object');
-  const objectElementHandle = await page.$('object');
-  const frame = await objectElementHandle.contentFrame();
-  const svgElement = await frame.$('svg');
-  const flaps = await svgElement.$$('path[id*="-click"]');
-  const randomFlapIndex = getRandomIndex(flaps.length);
-  await flaps[randomFlapIndex].click();
-  await flaps[randomFlapIndex].click();
-  await flaps[randomFlapIndex].click();
-
-  // Need to grab flapData properly (NOT WORKING)
-  // Need to properly grab the data from the p tag in order to compare it with contents of the data in local storage.
-  const flapData = await page.$$('.origamiFortuneOverlay p');
-  console.log(flapData);
-
-  const textContent = await flapData[0].evaluate((p) => p.textContent);
-
-  // This tests to see if the text is in the array of changes. If it is set the foundFortune to true
-  console.log(textContent);
-  const buttons = await page.$$('.sidebar button');
-  let foundFortune = false;
-  for (let i = 0; i < buttons.length; i++) {
-    const text = await buttons[i].evaluate((button) => button.textContent);
-    if (text === 'Change to the fortune clicked') {
-      foundFortune = true;
-      return;
-    }
-  }
-  expect(foundFortune).toEqual(true);
-});
-
-/*
-TODO: After clicking on any of the 8 last flaps, create test that ensures the fortune being display is one of
-the fortunes from the localStorage.
-*/
-it('Checking clicking any random flap from the last 8 flaps to reveal fortune, reveals a random fortune from localStorage and display correctly...', async () => {
-
-});
-
-/*
-TODO: Create test that ensures Restart button changes SVG path back to closed, has the correct elements
-display on the screen (should be same elements when you enter page for the first time) and that the sidebar
-buttons still have the right text saved on them from localStorage.
-*/
+/**
+ * Test to make sure flow of origami works. Then, at the end, the fortune revealed exists in local storage
+ * Also, when user clicks restart button, closedSVG is shown, sidebar buttons have correct text, and local storage
+ * remains the same.
+ */
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
   // Simulates first click on closed svg
   await page.waitForSelector('object', {timeout: 2000});
@@ -318,36 +263,14 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   const frame = await objectElementHandle.contentFrame();
   await objectElementHandle.boundingBox();
   await frame.waitForSelector('svg');
-  const svgElement = await frame.waitForSelector('svg', {timeout: 2000});
-  await frame.waitForSelector('path[id*="-click"]', {timeout: 2000});
-  const flaps = await frame.$$('path[id*="-click"]');
-  console.log(flaps);
-  const randomFlapIndex = getRandomIndex(flaps.length);
-  console.log('Clicking random closed flap...');
-  console.log(flaps[randomFlapIndex]);
-  flaps[randomFlapIndex].click();
-  // Inspect element properties using evaluate
-  const flapProperties = await frame.evaluate((flap) => {
-    const boundingBox = flap.getBoundingClientRect();
-    const computedStyle = getComputedStyle(flap);
-    return {
-      id: flap.id,
-      isVisible: flap.offsetParent !== null,
-      boundingBox: {
-        x: boundingBox.x,
-        y: boundingBox.y,
-        width: boundingBox.width,
-        height: boundingBox.height,
-      },
-      color: computedStyle.color,
-      backgroundColor: computedStyle.backgroundColor,
-      // Add more CSS properties as needed
-    };
-  }, flaps[randomFlapIndex]);
+  await frame.waitForSelector('svg', {timeout: 2000});
+  await frame.waitForSelector('#lower-right-click', {timeout: 2000});
+  const flap = await frame.$('#lower-right-click');
+  console.log('Clicking closed flap...');
+  flap.click();
 
-
-  console.log('Flap properties:', flapProperties);
-  // Saves current fortunes from localStorage
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  // Get current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
@@ -361,20 +284,10 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   const frame2 = await objectElementHandle2.contentFrame();
   await frame2.waitForSelector('svg');
   const svgElement2 = await frame2.$('svg');
-
   const randomFlapIndex2 = getRandomOddFlap();
   const oddFlap = await svgElement2.$(`text[id="${randomFlapIndex2}"]`);
-  // if oddflap is null, it must be the vertical fortune teller being shown...
-  if (oddFlap === null) {
-    const randomFlapIndex3 = getRandomEvenFlap();
-    await frame2.waitForSelector(`text[id="${randomFlapIndex3}"]`);
-    const evenFlap = await svgElement2.$(`text[id="${randomFlapIndex3}"]`);
-    console.log('Clicking on vertical fortune teller...');
-    await evenFlap.click();
-  } else {
-    console.log('Clicking on horizontal fortune teller...');
-    await oddFlap.click();
-  }
+  console.log('Clicking a number on fortune teller...');
+  await oddFlap.click();
 
   // wait 5 seconds for animation to finish 500 ms * 8 = 4000 ms + network
   await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -391,22 +304,27 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
 
   // wait 5 seconds for new svg to display
   await new Promise((resolve) => setTimeout(resolve, 2000));
-
+  console.log('Grabbing text on flap...');
+  await page.waitForSelector('.origamiFortuneOverlay');
+  const text = await page.$eval('.origamiFortuneOverlay > p:nth-child(2)', (element) => element.textContent);
+  const expectedLocalStorage = await page.evaluate(() => {
+    return JSON.parse(localStorage.getItem('fortunes'));
+  });
+  expect(expectedLocalStorage).toContain(text);
   // Click reset button
   console.log('Clicking reset button');
   const restartButton = await page.$('.restart');
   await restartButton.click();
   // wait 2 seconds for reset to go through
+  await page.waitForNavigation();
   await new Promise((resolve) => setTimeout(resolve, 2000));
   await page.waitForSelector('object');
   const currentSVG = await page.$eval('object', (element) => element.getAttribute('data'));
   expect(currentSVG).toBe(svgPaths[0]);
-
   // Checks if sidebarDisplayStyle exists
-  const sidebarDisplayStyle = await frame.$eval('.sidebar', (sidebar) => {
+  const sidebarDisplayStyle = await page.$eval('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
   });
-  console.log(sidebarDisplayStyle);
 
   // Checks if all fortunes in sidebar boxes are the same as before
   const buttons = await page.$$('.sidebar button');
