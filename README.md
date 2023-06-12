@@ -9,8 +9,9 @@ The website features a user-friendly interface that emulates the folding process
 The main goal of this project is to provide an entertaining and interactive way for users to receive random fortunes. Whether used for fun or as a digital substitute for the traditional paper fortune teller, the Origami Fortune Teller App offers a nostalgic experience with a modern twist.
 
 ## How to use
+![Image of fortune teller game](assets/images/readMeImage/readMeImage.png)
 
-### add image of project when its done
+
 1.  **Open the Fortune Teller:** Access the website by clicking [here](https://cse110-sp23-group1.github.io/Origami-Fortune-Teller/).
     
 2.  **Explore the Buttons:** At the bottom of the webpage, you will find eight buttons. Each button represents the content for your fortune.
