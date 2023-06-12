@@ -227,6 +227,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
     await page.keyboard.press('Enter');
   }
   console.log('Clicking reset fortunes button');
+  await page.waitForTimeout(1500);
   const resetButton = await page.$('.resetSide');
   await resetButton.click();
 
