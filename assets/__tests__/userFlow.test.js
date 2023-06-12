@@ -150,15 +150,6 @@ describe('Basic user flow for Origami Fortune Teller', () => {
 });
 
 /*
-TODO: Create test that randomly clicks a colored flap and checks the path on each
-animation to ensure the correct SVG is being shown each time. Also checks number of
-SVG changes (animations) are correct.
-*/
-it('Checking a randomly clicked color flap outputs the correct number of animations and correct SVG each time...', async () => {
-
-});
-
-/*
 TODO: Create test that checks to make sure Reset Fortunes Button and Sidebar are gone
 after you click the fortune teller.
 */
@@ -268,14 +259,6 @@ it('Checking Fortunes are correct at start', async () => {
     actual.push(text);
   }
   expect(actual).toEqual(expected);
-});
-
-/*
-TODO: Create test that after clicking a number on either SVG with nums, the correct SVGs are shown and
-there are the correct number of SVG changes (animations).
-*/
-it('Checking a randomly clicked number flap to output the correct number of animations and the correct SVG each time...', async () => {
-
 });
 
 /*
@@ -444,12 +427,3 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
   expect(sidebarDisplayStyle).toStrictEqual('grid');
 }, 20000);
-
-
-/*
-TODO: (Extra if time) Create test that for any hover element if you hover over it, the correct functioanlity
-happens (aka color change) and the cursor changes from pointer to hand.
-*/
-it('Checking each hoverable element is randomly hovered over ans functions correctly with color and cursor changes...', async () => {
-
-});
