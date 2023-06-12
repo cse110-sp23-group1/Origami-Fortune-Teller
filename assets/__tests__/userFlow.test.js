@@ -43,6 +43,10 @@ function generateRandomString(maxLength) {
   }
   return result;
 }
+/**
+ * Used to see if we should click save or press enter
+ * @param {*} randomButtonIndex a random button Index
+ */
 async function clickSaveorEnter(randomButtonIndex) {
   const shouldClickSaveButton = Math.random() < 0.5;
   if (shouldClickSaveButton) {
@@ -54,6 +58,10 @@ async function clickSaveorEnter(randomButtonIndex) {
     await page.keyboard.press('Enter');
   }
 }
+/**
+ * Function returns the text of buttons on the sidebar.
+ * @returns The text of the buttons on the sidebar.
+ */
 async function getButtonText() {
   const buttonText = await page.$$eval('.sidebar button', (buttons) => {
     return buttons.map((button) => button.textContent.trim());
@@ -264,17 +272,14 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   await frame.waitForSelector('#lower-right-click', {timeout: 2000});
   const flap = await frame.$('#lower-right-click');
   console.log('Clicking closed flap...');
-  flap.click();
-
+  flap.click()
   await new Promise((resolve) => setTimeout(resolve, 500));
   // Get current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
-
   // wait 5 seconds for animation to finish 500 ms * y e l l o w = 3000 ms + network
   await new Promise((resolve) => setTimeout(resolve, 5000));
-
   // click on numbered svg
   await page.waitForSelector('object');
   const objectElementHandle2 = await page.$('object');
