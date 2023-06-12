@@ -4,7 +4,7 @@
     "scripts": {
         "lint-check": "npx eslint .",
         "lint-fix": "npx eslint --fix .",
-        "test": "for run in {1..10}; do jest && echo 'pass' && break; done"
+        "test": "jest"
     },
     "devDependencies": {
         "@babel/core": "^7.22.1",
