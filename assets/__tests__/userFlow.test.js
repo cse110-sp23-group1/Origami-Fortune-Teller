@@ -20,7 +20,7 @@ function getRandomOpenedFlap() {
   return nums[index];
 }
 /**
- * Fucntion used in support to click on a flap randomly.
+ * Function used in support to click on a flap randomly.
  * @param {Integer} length A parameter of current length of object.
  * @returns A random number from 0 to a given length
  */
@@ -28,6 +28,21 @@ function getRandomIndex(length) {
   return Math.floor(Math.random() * length);
 }
 
+/**
+ * Function used to get the default fortunes.
+ * @returns An array with the default fortunes.
+ */
+function getDefaultFortunes() {
+  return [
+    'Outlook not so good',
+    'Signs point to yes',
+    'Cannot predict now',
+    'Reply hazy, try again later',
+    'It is certain',
+    'Don\'t Count on it',
+    'Better not tell you now',
+    'As I see it, yes'];
+}
 /**
  * Function to generate a random string to test on the buttons.
  * @param {Integer} maxLength Passed in max length of a string to generate.
@@ -49,12 +64,11 @@ function generateRandomString(maxLength) {
  */
 async function clickSaveorEnter(randomButtonIndex) {
   const shouldClickSaveButton = Math.random() < 0.5;
+  console.log('saving fortunes');
   if (shouldClickSaveButton) {
-    console.log('Clicking save button...');
     const saveButton = await page.$(`button[id="${randomButtonIndex.toString()}"]`);
     saveButton.click();
   } else {
-    console.log('Pressing enter...');
     await page.keyboard.press('Enter');
   }
 }
@@ -88,16 +102,7 @@ describe('Basic user flow for Origami Fortune Teller', () => {
       return JSON.parse(localStorage.getItem('fortunes'));
     });
 
-    const expectedFortunes = localStorageFortunes || [
-      'Outlook not so good',
-      'Signs point to yes',
-      'Cannot predict now',
-      'Reply hazy, try again later',
-      'It is certain',
-      'Don\'t Count on it',
-      'Better not tell you now',
-      'As I see it, yes',
-    ];
+    const expectedFortunes = localStorageFortunes || getDefaultFortunes();
     const buttonText = await getButtonText();
     expect(buttonText).toEqual(expectedFortunes);
   });
@@ -228,7 +233,7 @@ it('Checking Reset Fortunes Button resets fortunes in localStorage', async () =>
 /**
  * Test to make sure default fortunes is what user sees first time entering our site.
  */
-it('Checking Fortunes are correct at start', async () => {
+it('Checking Fortunes displayed are correct at start', async () => {
   await page.reload();
   await page.evaluate(() => {
     localStorage.clear();
@@ -237,16 +242,7 @@ it('Checking Fortunes are correct at start', async () => {
   await page.reload();
   const buttons = await page.$$('.sidebar button');
   await page.waitForTimeout(500);
-  const expected = [
-    'Outlook not so good',
-    'Signs point to yes',
-    'Cannot predict now',
-    'Reply hazy, try again later',
-    'It is certain',
-    'Don\'t Count on it',
-    'Better not tell you now',
-    'As I see it, yes',
-  ];
+  const expected = getDefaultFortunes();
   const actual = [];
 
   for (let i = 0; i < buttons.length; i++) {
@@ -272,7 +268,7 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   await frame.waitForSelector('#lower-right-click', {timeout: 2000});
   const flap = await frame.$('#lower-right-click');
   console.log('Clicking closed flap...');
-  flap.click()
+  flap.click();
   await new Promise((resolve) => setTimeout(resolve, 500));
   // Get current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
