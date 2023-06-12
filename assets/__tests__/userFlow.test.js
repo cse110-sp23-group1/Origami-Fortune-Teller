@@ -329,17 +329,40 @@ buttons still have the right text saved on them from localStorage.
 */
 it('Checking restart button changes SVG back to closed, has correct elements on screen, and sidebar buttons have correct text and localStorage is unchanged...', async () => {
   // Simulates first click on closed svg
-  await page.waitForSelector('object');
+  await page.waitForSelector('object', {timeout: 2000});
   const objectElementHandle = await page.$('object');
   const frame = await objectElementHandle.contentFrame();
+  await objectElementHandle.boundingBox();
   await frame.waitForSelector('svg');
-  const svgElement = await frame.waitForSelector('svg');
-  await frame.waitForSelector('path[id*="-click"]');
+  const svgElement = await frame.waitForSelector('svg', {timeout: 2000});
+  await frame.waitForSelector('path[id*="-click"]', {timeout: 2000});
   const flaps = await frame.$$('path[id*="-click"]');
+  console.log(flaps);
   const randomFlapIndex = getRandomIndex(flaps.length);
   console.log('Clicking random closed flap...');
-  await flaps[randomFlapIndex].click();
+  console.log(flaps[randomFlapIndex]);
+  flaps[randomFlapIndex].click();
+  // Inspect element properties using evaluate
+  const flapProperties = await frame.evaluate((flap) => {
+    const boundingBox = flap.getBoundingClientRect();
+    const computedStyle = getComputedStyle(flap);
+    return {
+      id: flap.id,
+      isVisible: flap.offsetParent !== null,
+      boundingBox: {
+        x: boundingBox.x,
+        y: boundingBox.y,
+        width: boundingBox.width,
+        height: boundingBox.height,
+      },
+      color: computedStyle.color,
+      backgroundColor: computedStyle.backgroundColor,
+      // Add more CSS properties as needed
+    };
+  }, flaps[randomFlapIndex]);
 
+
+  console.log('Flap properties:', flapProperties);
   // Saves current fortunes from localStorage
   const localStorageFortunesPre = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
