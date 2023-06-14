@@ -170,11 +170,11 @@ it('Checking Reset Fortunes Button and Sidebar disappear after clicking fortune 
   await page.waitForSelector('object');
   const objectElementHandle = await page.$('object');
   const frame = await objectElementHandle.contentFrame();
-  const svgElement = await frame.$('svg');
-  const flaps = await svgElement.$$('path[id*="-click"]');
-  const randomFlapIndex = getRandomIndex(flaps.length);
-  console.log('clicking random flap...');
-  await flaps[randomFlapIndex].click();
+  await frame.waitForSelector('svg');
+  await frame.waitForSelector('#lower-right-click', {timeout: 2000});
+  const flap = await frame.$('#lower-right-click');
+  console.log('Clicking closed flap...');
+  flap.click();
 
   const sidebarDisplayStyle = await frame.$$('.sidebar', (sidebar) => {
     return window.getComputedStyle(sidebar).display;
