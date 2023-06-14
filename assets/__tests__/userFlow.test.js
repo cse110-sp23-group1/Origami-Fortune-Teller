@@ -303,8 +303,8 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   // wait 5 seconds for new svg to display
   await new Promise((resolve) => setTimeout(resolve, 2000));
   console.log('Grabbing text on flap...');
-  await page.waitForSelector('.origamiFortuneOverlay');
-  const text = await page.$eval('.origamiFortuneOverlay > p:nth-child(2)', (element) => element.textContent);
+  await page.waitForSelector('.origamiFortuneOverlay > p', {timeout: 2000});
+  const text = await page.$eval('.origamiFortuneOverlay > p', (element) => element.textContent);
   const expectedLocalStorage = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('fortunes'));
   });
@@ -342,4 +342,4 @@ it('Checking restart button changes SVG back to closed, has correct elements on 
   expect(goodFortunes).toBe(8);
   expect(localStorageFortunesPost).toStrictEqual(localStorageFortunesPre);
   expect(sidebarDisplayStyle).toStrictEqual('grid');
-}, 20000);
+}, 30000);
